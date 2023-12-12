@@ -238,7 +238,7 @@ public class Implementacion_metodos implements Metodos {
                 
             }else if(campo_busqueda.equals(acceso.getEntradaPinyin())){   //  BUSQUEDA POR PINYIN
                 
-                auxiliar_elemento = acceso.getEntradaPinyin().trim();   
+                auxiliar_elemento = acceso.getEntradaPinyin().trim();   //
                 auxiliar_campo = "Fonetica";   
                 
                 campo_busqueda = acceso.getEntradaPinyin().trim();
