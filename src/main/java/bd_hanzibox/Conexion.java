@@ -3,6 +3,7 @@ package bd_hanzibox;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -75,6 +76,10 @@ public class Conexion {
         return instancia;
         
     }   // patron Singleton !
+
+    public PreparedStatement prepareStatement(String select__from_hanzi_entrada_WHERE__LIKE_) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 }

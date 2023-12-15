@@ -18,7 +18,7 @@ public interface Metodos {
     
     public boolean buscarExistencia(String hanzi_ingresado);    // funcionalizado
     
-    public void mostrarTabla(String campo_busqueda, ventana_principal acceso);  // funcionalizado
+    public void mostrarTabla(String columna_busqueda, ventana_principal acceso);  // funcionalizado
     
     public int contarInput();
     
