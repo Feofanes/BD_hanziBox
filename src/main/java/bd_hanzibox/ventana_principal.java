@@ -28,6 +28,7 @@ public class ventana_principal extends javax.swing.JFrame {
         static private String entradaRadical_2;
         static private String entradaRadical_3;
         static private String entradaRadical_4;
+        static private String parametro_busqueda;
         
         static private String msj_advertencia;
         
@@ -410,68 +411,78 @@ public class ventana_principal extends javax.swing.JFrame {
     //  BUSCAR Y MOSTRAR EN TABLA ---- FUNCIONANDO
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
         
-        //  creamos variables que seran parametros de busqueda
-        entradaHanzi = jTextField_entrada.getText();
-        entradaPinyin = jTextField_pinyin.getText();
-        entradaTraduccion = jTextField_traduccion.getText();
-        entradaRadical = jComboBox_radical.getSelectedItem().toString();
-        
-        String elemento_busqueda = "";
-        String columna_de_busqueda = "";
+        Conexion conexion = Conexion.getInstance(); 
         
         Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
         
+        String columna_busqueda = "";
         
-        //  evaluamos que campo guiara la busqueda
-        if(!entradaHanzi.isBlank() && entradaPinyin.isBlank() && entradaTraduccion.isBlank() && entradaRadical.isBlank()){
+        if(!jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
+                && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
             
-            elemento_busqueda = entradaHanzi;
-            columna_de_busqueda = "Hanzi";
+            columna_busqueda = "Hanzi";
             
-            //limpiar_campos();
+            parametro_busqueda = jTextField_entrada.getText();
             
-        }else if(entradaHanzi.isBlank() && !entradaPinyin.isBlank() && entradaTraduccion.isBlank() && entradaRadical.isBlank()){
-        
-            elemento_busqueda = entradaPinyin;
-            columna_de_busqueda = "Fonetica";
-            //limpiar_campos();
+            System.out.println("columna_busqueda equivale a " + "Hanzi");
+            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
-        }else if(entradaHanzi.isBlank() && entradaPinyin.isBlank() && !entradaTraduccion.isBlank() && entradaRadical.isBlank()){
-        
-            elemento_busqueda = entradaTraduccion;
-            columna_de_busqueda = "Traduccion";
-            //limpiar_campos();
+        }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
+                && !jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
             
-        }else if(entradaHanzi.isBlank() && entradaPinyin.isBlank() && entradaTraduccion.isBlank() && !entradaRadical.isBlank()){
-        
-            elemento_busqueda = entradaRadical;
-            columna_de_busqueda = "Radical";
-            //limpiar_campos();
+            columna_busqueda = "Fonetica";
             
-        }else if(entradaHanzi.isBlank() && entradaPinyin.isBlank() && entradaTraduccion.isBlank() && entradaRadical.isBlank()){
+            parametro_busqueda = jTextField_pinyin.getText();
             
-            jLabel_advertencia.setText("Se muestra toda la base de datos");
-            elemento_busqueda = "";
-            columna_de_busqueda = "Ninguna";
+            System.out.println("columna_busqueda equivale a " + "Fonetica");
+            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
-        }else{
             
-            //limpiar_campos();
+        }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
+                && jTextField_pinyin.getText().isBlank() && !jTextField_traduccion.getText().isBlank()){
             
-            jLabel_advertencia.setText("Introduzca un solo parametro de busqueda");
-            elemento_busqueda = null;
+            columna_busqueda = "Traduccion";
+            
+            parametro_busqueda = jTextField_traduccion.getText();
+            
+            System.out.println("columna_busqueda equivale a " + "Traduccion");
+            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            
+        }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() != 0 
+                && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
+            
+            columna_busqueda = "Radical";
+            
+            parametro_busqueda = jComboBox_radical.getSelectedItem().toString();
+            
+            System.out.println("columna_busqueda equivale a " + "Radical");
+            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            
+        }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
+                && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
+            
+            //columna_busqueda = "Entrada";
+            
+            parametro_busqueda = "";
+            
+            System.out.println("columna_busqueda equivale a " + "Radical" + "deberia mostrar todo");
+            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            
+        } else{
+            
+            columna_busqueda = null;
+            
+            //msj_advertencia = "Introduzca un solo parametro de busqueda";
+            
+            
             
         }
         
-        System.out.println("en ventana_principal elemento_busqueda: " + elemento_busqueda);
-        System.out.println("en ventana_principal entradaHanzi: " + entradaHanzi);
-        System.out.println("en ventana_principal la columna donde se buscara sera: " + columna_de_busqueda);
         
         
-        aplicar_metodo.mostrarTabla(elemento_busqueda, this);
+        aplicar_metodo.mostrarTabla(columna_busqueda, this);
         
         
-       
     }//GEN-LAST:event_jButton_buscarActionPerformed
 
     //  BORRAR ELEMENTOS DE LA TABLA
@@ -794,6 +805,16 @@ public class ventana_principal extends javax.swing.JFrame {
     public static void setMsj_advertencia(String msj_advertencia) {
         ventana_principal.msj_advertencia = msj_advertencia;
     }
+
+    public static String getParametro_busqueda() {
+        return parametro_busqueda;
+    }
+
+    public static void setParametro_busqueda(String parametro_busqueda) {
+        ventana_principal.parametro_busqueda = parametro_busqueda;
+    }
+    
+    
     
     
     
