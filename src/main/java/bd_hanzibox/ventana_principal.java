@@ -29,6 +29,9 @@ public class ventana_principal extends javax.swing.JFrame {
         static private String entradaRadical_3;
         static private String entradaRadical_4;
         static private String parametro_busqueda;
+        //static private String total_radicales;
+        static private StringBuilder total_radicales;
+        
         
         static private String msj_advertencia;
         
@@ -391,14 +394,45 @@ public class ventana_principal extends javax.swing.JFrame {
         entradaPinyin = jTextField_pinyin.getText();
         entradaTraduccion = jTextField_traduccion.getText();
         entradaEjemplo = jTextField_ejemplo.getText();
+        
         entradaRadical = jComboBox_radical.getSelectedItem().toString();
+        entradaRadical_2 = jComboBox_radical_2.getSelectedItem().toString();
+        entradaRadical_3 = jComboBox_radical_3.getSelectedItem().toString();
+        entradaRadical_4 = jComboBox_radical_4.getSelectedItem().toString();
         
         miHanzi.setIdiograma(entradaHanzi); //  usamos la captura para setear el objeto
         miHanzi.setFonetica(entradaPinyin);
         miHanzi.setTraduccion(entradaTraduccion);
         miHanzi.setEjemplo(entradaEjemplo);
-        miHanzi.setRadical(entradaRadical);
         
+        miHanzi.setRadical(entradaRadical);
+        miHanzi.setRadical(entradaRadical_2);
+        miHanzi.setRadical(entradaRadical_3);
+        miHanzi.setRadical(entradaRadical_4);
+        
+        // Supongamos que tienes las entradas en un array o lista
+        String[] entradas = {entradaRadical, entradaRadical_2, entradaRadical_3, entradaRadical_4};
+
+        // Inicializamos total_radicales como un espacio en blanco
+        total_radicales = new StringBuilder();
+
+        // Recorremos las entradas y construimos total_radicales
+        for (String entrada : entradas) {
+            if (!entrada.isBlank()) {
+                total_radicales.append(entrada).append(" ");
+            } else {
+                total_radicales.append("    ");
+            }
+        }
+
+        // Establecemos el valor resultante en miHanzi
+        miHanzi.setRadical(total_radicales.toString());
+
+        
+        
+        
+        
+        System.out.println("esto en ventana " + total_radicales);
         
         aplicar_metodo.modificar(miHanzi, this);  // aplicamos el metodo
         
@@ -461,8 +495,6 @@ public class ventana_principal extends javax.swing.JFrame {
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
             
-            //columna_busqueda = "Entrada";
-            
             parametro_busqueda = "";
             
             System.out.println("columna_busqueda equivale a " + "Radical" + "deberia mostrar todo");
@@ -472,20 +504,16 @@ public class ventana_principal extends javax.swing.JFrame {
             
             columna_busqueda = null;
             
-            //msj_advertencia = "Introduzca un solo parametro de busqueda";
-            
-            
             
         }
         
-        
-        
         aplicar_metodo.mostrarTabla(columna_busqueda, this);
         
+        limpiar_campos();
         
     }//GEN-LAST:event_jButton_buscarActionPerformed
 
-    //  BORRAR ELEMENTOS DE LA TABLA
+    //  BORRAR ELEMENTOS DE LA TABLA ---- FUNCIONANDO
     private void jButton_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_borrarActionPerformed
         
         //  creamos variables que seran parametros de busqueda
@@ -512,6 +540,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
         } 
         
+        limpiar_campos();
         
     }//GEN-LAST:event_jButton_borrarActionPerformed
 
@@ -813,6 +842,79 @@ public class ventana_principal extends javax.swing.JFrame {
     public static void setParametro_busqueda(String parametro_busqueda) {
         ventana_principal.parametro_busqueda = parametro_busqueda;
     }
+
+    public JComboBox<String> getjComboBox_radical_2() {
+        return jComboBox_radical_2;
+    }
+
+    public void setjComboBox_radical_2(JComboBox<String> jComboBox_radical_2) {
+        this.jComboBox_radical_2 = jComboBox_radical_2;
+    }
+
+    public JComboBox<String> getjComboBox_radical_3() {
+        return jComboBox_radical_3;
+    }
+
+    public void setjComboBox_radical_3(JComboBox<String> jComboBox_radical_3) {
+        this.jComboBox_radical_3 = jComboBox_radical_3;
+    }
+
+    public JComboBox<String> getjComboBox_radical_4() {
+        return jComboBox_radical_4;
+    }
+
+    public void setjComboBox_radical_4(JComboBox<String> jComboBox_radical_4) {
+        this.jComboBox_radical_4 = jComboBox_radical_4;
+        
+    }
+
+    public static String getEntradaRadical_2() {
+        return entradaRadical_2;
+    }
+
+    public static void setEntradaRadical_2(String entradaRadical_2) {
+        ventana_principal.entradaRadical_2 = entradaRadical_2;
+    }
+
+    public static String getEntradaRadical_3() {
+        return entradaRadical_3;
+    }
+
+    public static void setEntradaRadical_3(String entradaRadical_3) {
+        ventana_principal.entradaRadical_3 = entradaRadical_3;
+    }
+
+    public static String getEntradaRadical_4() {
+        return entradaRadical_4;
+    }
+
+    public static void setEntradaRadical_4(String entradaRadical_4) {
+        ventana_principal.entradaRadical_4 = entradaRadical_4;
+    }
+
+    /*
+    public static String getTotal_radicales() {
+        return total_radicales;
+    }
+
+    public static void setTotal_radicales(String total_radicales) {
+        ventana_principal.total_radicales = total_radicales;
+    }
+    */
+
+    public static StringBuilder getTotal_radicales() {
+        return total_radicales;
+    }
+
+    public static void setTotal_radicales(StringBuilder total_radicales) {
+        ventana_principal.total_radicales = total_radicales;
+    }
+    
+    
+    
+    
+    
+    
     
     
     
