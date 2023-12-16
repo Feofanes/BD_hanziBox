@@ -2,6 +2,7 @@
 package Interfaces;
 
 import Entradas.Hanzi;
+import Entradas.Hanzi_molde;
 import java.sql.Connection;
 import bd_hanzibox.*;
 import bd_hanzibox.ventana_principal;
@@ -98,8 +99,16 @@ public class Implementacion_metodos implements Metodos {
             String infoPinyin = acceso.getEntradaPinyin();
             String infoTraduccion = acceso.getEntradaTraduccion();
             String infoEjemplo = acceso.getEntradaEjemplo();
-            String infoRadical = acceso.getEntradaRadical();
             String infoHanzi = acceso.getEntradaHanzi();
+            
+            String infoRadical = acceso.getEntradaRadical();
+            String infoRadical_2 = acceso.getEntradaRadical_2();
+            String infoRadical_3 = acceso.getEntradaRadical_3(); 
+            String infoRadical_4 = acceso.getEntradaRadical_4();
+            
+            String todos_radicales = acceso.getTotal_radicales().toString();
+            
+            
             
             // solo modificara en los campos donde se ingreso informacion
             if (infoPinyin != null && !infoPinyin.isBlank()) {
@@ -137,16 +146,19 @@ public class Implementacion_metodos implements Metodos {
 
             }
 
-            if (infoRadical != null && !infoRadical.isBlank()) {
+            //if (!todos_radicales.isBlank()) {
 
                 PreparedStatement modificar = conectar.prepareStatement(
                         "update hanzi_entrada set Radical = ? where Hanzi = ?");
 
-                modificar.setString(1, infoRadical);
+                modificar.setString(1, todos_radicales);
                 modificar.setString(2, infoHanzi);
                 modificar.executeUpdate();
 
-            }
+            //}
+            
+            System.out.println("esto en metodos " + todos_radicales);
+            
 
             conexion.desconectar();
 
@@ -346,8 +358,6 @@ public class Implementacion_metodos implements Metodos {
                 
                 ResultSet consulta = agregar.executeQuery();
                 
-                
-                    
                 if(consulta.next()){
                     
                     registros_encontrados = consulta.getInt(1);
@@ -362,13 +372,118 @@ public class Implementacion_metodos implements Metodos {
                             
                         }
         
-        
-        
-        
         return registros_encontrados;
         
 
     }   //  FUNCIONANDO
+
+    //  CONSTATA QUE EL HANZI INGRESADO NO EXISTA PREVIAMENTE EN LA TABLA "HANZI"
+    @Override
+    public boolean corroborarSingularidad(Hanzi hanzi_ingresado) {
+        
+        Connection conectar = conexion.conectar();  // conectamos
+        
+        boolean hanzi_singular = false;  //  variable que retornaremos
+        
+        //String aux = hanzi_ingresado.getIdiograma_conjunto().toString();
+        
+        try{
+            
+            //  buscamos en el campo
+            PreparedStatement corroborando_singularidad = conectar.prepareStatement("SELECT * FROM hanzi WHERE Hanzi = ?");
+            
+            //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
+            corroborando_singularidad.setString(1, hanzi_ingresado.getIdiograma());
+            
+            //  la consulta en si
+            ResultSet consulta = corroborando_singularidad.executeQuery();
+            
+            //  cambiamos el valor de la instancia de retorno segun corresponda a la busqueda
+            if(consulta.next()){
+                
+                hanzi_singular = true;
+                
+            }else{
+                
+                hanzi_singular = false;
+                
+            }
+            
+            conexion.desconectar();
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+        return hanzi_singular;
+        
+    }
+
+    @Override
+    public void agregarSingularidades(Hanzi hanzi) {
+        
+        try{
+            
+            Connection conectar = conexion.conectar();
+            
+                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Radical, Pinyin) "
+                        + "values (?,?,?)");
+
+                agregar.setString(1, hanzi.getIdiograma());
+                agregar.setString(2, hanzi.getRadical());
+                agregar.setString(3, hanzi.getFonetica());
+                
+                agregar.executeUpdate();
+
+                conexion.desconectar();
+                
+            }catch(Exception e){
+                
+                    e.printStackTrace();
+                    
+                    //System.out.println("Error en metodo agregar singularidad");
+        
+        }
+        
+        
+        
+        
+    }
+
+    @Override
+    public int contarHanziUnicos() {
+        
+        int registros_encontrados = 0;
+        
+        try{
+            
+            Connection conectar = conexion.conectar();
+            
+                PreparedStatement agregar = conectar.prepareStatement("Select COUNT(Hanzi) from hanzi");
+                
+                ResultSet consulta = agregar.executeQuery();
+                
+                if(consulta.next()){
+                    
+                    registros_encontrados = consulta.getInt(1);
+                    
+                }
+                
+                conexion.desconectar();
+                
+                        }catch(Exception e){
+                            
+                            e.printStackTrace();
+                            
+                        }
+        
+        return registros_encontrados;
+        
+        
+        
+    }
 }
 
             
