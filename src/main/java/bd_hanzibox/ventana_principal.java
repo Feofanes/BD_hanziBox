@@ -2,10 +2,14 @@
 package bd_hanzibox;
 
 import Entradas.Hanzi;
+import Entradas.Hanzi_molde;
 import Interfaces.Implementacion_metodos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,8 +33,10 @@ public class ventana_principal extends javax.swing.JFrame {
         static private String entradaRadical_3;
         static private String entradaRadical_4;
         static private String parametro_busqueda;
-        //static private String total_radicales;
+        
         static private StringBuilder total_radicales;
+        
+        static private ArrayList hanzi_individual;
         
         
         static private String msj_advertencia;
@@ -38,6 +44,8 @@ public class ventana_principal extends javax.swing.JFrame {
         static private int n_hanzi_introducidos;
         
         private int n_input;
+        
+        private int n_hanzi_unicos;
         
         
     //  CONSTRUCTOR
@@ -51,7 +59,11 @@ public class ventana_principal extends javax.swing.JFrame {
         
         n_input = aplicar.contarInput();
         
-        jLabel_contador_entradas.setText("La base de datos cuenta con " + n_input + " entradas");
+        n_hanzi_unicos = aplicar.contarHanziUnicos();
+        
+        jLabel_contador_entradas.setText("Palabras/expresiones: " + n_input );
+        
+        jLabel_contador_entradas_unicas.setText("Hanzis: " + n_hanzi_unicos);
         
         limpiar_campos();
         
@@ -105,6 +117,7 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_2 = new javax.swing.JComboBox<>();
         jComboBox_radical_3 = new javax.swing.JComboBox<>();
         jComboBox_radical_4 = new javax.swing.JComboBox<>();
+        jLabel_contador_entradas_unicas = new javax.swing.JLabel();
 
         jTextField3.setText("jTextField1");
 
@@ -172,17 +185,17 @@ public class ventana_principal extends javax.swing.JFrame {
         busqueda_resultados.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         busqueda_resultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Codigo", "Radical", "Hanzi", "Fonetica", "Traduccion", "Ejemplo"
+                "Radical", "Hanzi", "Fonetica", "Traduccion", "Ejemplo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -192,7 +205,7 @@ public class ventana_principal extends javax.swing.JFrame {
         busqueda_resultados.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane1.setViewportView(busqueda_resultados);
 
-        jLabel_contador_entradas.setText("La base de datos cuenta con:");
+        jLabel_contador_entradas.setText("Palabras/expresiones:");
 
         jComboBox_radical_2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"", "一", "口", "人" }));
         jComboBox_radical_2.setSelectedItem("");
@@ -206,6 +219,8 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_4.setSelectedItem("");
         jComboBox_radical_4.setEnabled(false);
 
+        jLabel_contador_entradas_unicas.setText("Hanzis:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -213,9 +228,6 @@ public class ventana_principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel_contador_entradas)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
@@ -254,7 +266,12 @@ public class ventana_principal extends javax.swing.JFrame {
                                         .addComponent(jButton_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton_borrar)))))
-                        .addGap(71, 71, 71))))
+                        .addGap(71, 71, 71))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel_contador_entradas_unicas)
+                            .addComponent(jLabel_contador_entradas))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,7 +312,9 @@ public class ventana_principal extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel_contador_entradas)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_contador_entradas_unicas)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -312,10 +331,14 @@ public class ventana_principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextField_entradaActionPerformed
 
+    
+    // --------------------------- BOTONES -------------------------------------
+    
+    
     //  AGREGAR ENTRADAS A LA BD ---- FUNCIONANDO
     private void jButton_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_agregarActionPerformed
         
-        //  PRIMERO CORROBORAR LA EXISTENCIA O NO DE LA ENTRADA ACTUAL
+        //  PRIMERO CORROBORAR LA EXISTENCIA O NO DE LA ENTRADA ACTUAL EN HANZI_ENTRADAS
         
         Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
         Hanzi miHanzi = new Hanzi();    // creamos objeto
@@ -335,7 +358,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             jLabel_advertencia.setText("Entrada invalida. Ingrese un Hanzi");
             
-                    } else {
+        } else {
 
             //  capturamos las entradas
             entradaPinyin = jTextField_pinyin.getText();
@@ -352,20 +375,31 @@ public class ventana_principal extends javax.swing.JFrame {
             miHanzi.setEjemplo(entradaEjemplo);
             
             //  este condicional es necesario de lo contrario los radicales quedan pegados sin saberse a que hanzi corresponden
+            
+            if(entradaRadical.isBlank()){ 
+                
+                entradaRadical.trim();      // estoy teniendo problemas con los espacios, por eso el trim
+                entradaRadical = "     ";
+                
+            }
+            
             if(entradaRadical_2.isBlank()){ 
                 
+                entradaRadical_2.trim();
                 entradaRadical_2 = "     ";
                 
             }
             
             if(entradaRadical_3.isBlank()){
                 
+                entradaRadical_3.trim();
                 entradaRadical_3 = "     ";
                 
             }
             
             if(entradaRadical_4.isBlank()){
                 
+                entradaRadical_4.trim();
                 entradaRadical_4 = "     ";
                 
             }
@@ -377,7 +411,103 @@ public class ventana_principal extends javax.swing.JFrame {
             jLabel_advertencia.setText("Entrada agregada a la Base de Datos");
 
         }
-
+        
+        //  AGREGAR HANZI INDIVIDUALES A LA TABLA "HANZI"   --------------------
+        
+        //  recuperar cada info y setearla al obj
+        
+        Hanzi_molde miHanzi_molde = new Hanzi_molde();  //  instancio
+        
+        ArrayList <String> lista_hanzi = new ArrayList();   // array donde se guarda cada hanzi de la entrada
+        ArrayList <String> lista_pinyin = new ArrayList();
+        ArrayList <String> lista_radical = new ArrayList();
+        
+        ArrayList <String> lista_hanzi_deglosados = new ArrayList();
+        
+        //  HANZI
+        for(int i=0; i<entradaHanzi.length(); i++){ // degloso la entrada en string de hanzi
+            
+            char simbolo = entradaHanzi.charAt(i);
+            
+            String hanzi_individual = String.valueOf(simbolo);
+            
+            lista_hanzi.add(hanzi_individual);
+            
+        }
+        
+        miHanzi_molde.setIdiograma_conjunto(lista_hanzi);   //  seteo el atributo
+        
+        //  PINYIN
+        
+        String[] acumulador = entradaPinyin.split(" ");
+        
+        for(String e : acumulador){
+            
+            lista_pinyin.add(e);
+            
+        }
+        
+        miHanzi_molde.setPinyin_conjunto(lista_pinyin);
+        
+        //  RADICALES
+        
+        String acumulador_radical = miHanzi.getRadical().replace("     ", "x");   // esto reemplaza espacios por una X para que sea mas identificable ante un error
+        
+        for(int i=0; i<acumulador_radical.length(); i++){ // degloso la entrada en string de hanzi
+            
+            char simbolo_rad = acumulador_radical.charAt(i);
+            
+            if(acumulador_radical.charAt(i) == 'x'){
+                
+                simbolo_rad = ' ';
+                
+            }
+            
+            String radical_individual = String.valueOf(simbolo_rad);
+            
+            lista_radical.add(radical_individual);
+            
+        }
+        
+        miHanzi_molde.setRadical_conjunto(lista_radical);
+        
+        System.out.println(miHanzi_molde.getIdiograma_conjunto());
+        System.out.println(miHanzi_molde.getPinyin_conjunto());
+        System.out.println(miHanzi_molde.getRadical_conjunto());
+        
+        //  CORROBORAR EXISTENCIA PREVIO A AGREGAR
+        
+        //  iteramos creando un obj por cada hanzi ingresado en la misma entrada
+        for(int i=0; i < miHanzi_molde.getIdiograma_conjunto().size(); i++){
+            
+            Hanzi_molde x = new Hanzi_molde();
+            
+            x.setIdiograma_conjunto(miHanzi_molde.getIdiograma_conjunto());
+            x.setPinyin_conjunto(miHanzi_molde.getPinyin_conjunto());
+            x.setRadical_conjunto(miHanzi_molde.getRadical_conjunto());
+            
+            Hanzi singularidad = new Hanzi();   
+            
+            singularidad.setIdiograma(miHanzi_molde.getIdiograma_conjunto().get(i).toString()); // seteamos un obj con el getter en posicion i.toString() del obj obj 
+            singularidad.setFonetica(miHanzi_molde.getPinyin_conjunto().get(i).toString()); //  esto lo hacemos para pasarle al metodo corroborarSingularidad 
+            singularidad.setRadical(miHanzi_molde.getRadical_conjunto().get(i).toString()); // un obj Hanzi
+            
+            System.out.println("sigularidad es " + singularidad.getIdiograma() + singularidad.getFonetica() + singularidad.getRadical());
+            
+            boolean corroboracion_sing = aplicar_metodo.corroborarSingularidad(singularidad);
+            
+            if(corroboracion_sing == false){
+                
+                aplicar_metodo.agregarSingularidades(singularidad);
+            
+            }else{
+                
+                System.out.println(singularidad.getIdiograma() + " no se agrego porque ya esta");
+                
+            }
+            
+        }
+         
         limpiar_campos();
         
     }//GEN-LAST:event_jButton_agregarActionPerformed
@@ -458,8 +588,8 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_entrada.getText();
             
-            System.out.println("columna_busqueda equivale a " + "Hanzi");
-            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            //System.out.println("columna_busqueda equivale a " + "Hanzi");
+            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && !jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
@@ -468,8 +598,8 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_pinyin.getText();
             
-            System.out.println("columna_busqueda equivale a " + "Fonetica");
-            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            //System.out.println("columna_busqueda equivale a " + "Fonetica");
+            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
@@ -479,8 +609,8 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_traduccion.getText();
             
-            System.out.println("columna_busqueda equivale a " + "Traduccion");
-            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            //System.out.println("columna_busqueda equivale a " + "Traduccion");
+            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() != 0 
                 && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
@@ -489,16 +619,16 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jComboBox_radical.getSelectedItem().toString();
             
-            System.out.println("columna_busqueda equivale a " + "Radical");
-            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            //System.out.println("columna_busqueda equivale a " + "Radical");
+            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
             
             parametro_busqueda = "";
             
-            System.out.println("columna_busqueda equivale a " + "Radical" + "deberia mostrar todo");
-            System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            //System.out.println("columna_busqueda equivale a " + "Radical" + "deberia mostrar todo");
+            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
         } else{
             
@@ -523,7 +653,6 @@ public class ventana_principal extends javax.swing.JFrame {
         entradaEjemplo = jTextField_ejemplo.getText();
         entradaRadical = jComboBox_radical.getSelectedItem().toString();
         
-        
         Hanzi miHanzi = new Hanzi();    // instanciamos el obj para setear con la entrada
         
         miHanzi.setIdiograma(entradaHanzi); //  seteamos con la entrada
@@ -544,8 +673,9 @@ public class ventana_principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton_borrarActionPerformed
 
+    // -------------------------------------------------------------------------
     
-    //  HABILITAR LOS COMBO DE ACUERDO AL NUMERO DE HANZI INGRESADO (1-4)
+    //  HABILITAR LOS COMBO DE ACUERDO AL NUMERO DE HANZI INGRESADO (1-4)  ---- FUNCIONANDO   
     private void jTextField_entradaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_entradaKeyReleased
         
         jTextField_entrada.getDocument().addDocumentListener(new DocumentListener(){
@@ -575,10 +705,10 @@ public class ventana_principal extends javax.swing.JFrame {
                 
                 entradaHanzi = jTextField_entrada.getText();
                 int n_hanzi_introducidos = entradaHanzi.length();
-                System.out.println("El número de hanzi escritos es de " + n_hanzi_introducidos);
+                //System.out.println("El número de hanzi escritos es de " + n_hanzi_introducidos);
 
                 if (n_hanzi_introducidos == 1) {
-                    System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracter");
+                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracter");
                     
                     jComboBox_radical_2.setEnabled(false);
                     jComboBox_radical_3.setEnabled(false);
@@ -591,13 +721,13 @@ public class ventana_principal extends javax.swing.JFrame {
                     jComboBox_radical_4.setEnabled(false);
 
                     
-                    System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
+                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
                 } else if (n_hanzi_introducidos == 3) {
                     
                     jComboBox_radical_3.setEnabled(true);
                     jComboBox_radical_4.setEnabled(false);
                     
-                    System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
+                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
                 } else if (n_hanzi_introducidos == 4) {
                     
                     jComboBox_radical_4.setEnabled(true);
@@ -607,7 +737,7 @@ public class ventana_principal extends javax.swing.JFrame {
                     
                     
                     
-                    System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
+                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
                 }
         
         }
@@ -892,16 +1022,6 @@ public class ventana_principal extends javax.swing.JFrame {
         ventana_principal.entradaRadical_4 = entradaRadical_4;
     }
 
-    /*
-    public static String getTotal_radicales() {
-        return total_radicales;
-    }
-
-    public static void setTotal_radicales(String total_radicales) {
-        ventana_principal.total_radicales = total_radicales;
-    }
-    */
-
     public static StringBuilder getTotal_radicales() {
         return total_radicales;
     }
@@ -973,6 +1093,7 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_advertencia;
     private javax.swing.JLabel jLabel_contador_entradas;
+    private javax.swing.JLabel jLabel_contador_entradas_unicas;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField3;
