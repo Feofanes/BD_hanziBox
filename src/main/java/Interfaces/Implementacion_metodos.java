@@ -233,6 +233,8 @@ public class Implementacion_metodos implements Metodos {
 
             busqueda_resultados.setModel(modelo);
             
+            busqueda_resultados.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            
             Connection conexionMySQL = conexion.conectar();
             
             if(columna_busqueda == null){
@@ -255,18 +257,18 @@ public class Implementacion_metodos implements Metodos {
                 ResultSetMetaData datos = consulta.getMetaData();
             int cantidadColumnas = datos.getColumnCount();
             
-            modelo.addColumn("Codigo");
+            //modelo.addColumn("Codigo");
             modelo.addColumn("Radical");
             modelo.addColumn("Hanzi");
             modelo.addColumn("Fonetica");
             modelo.addColumn("Traduccion");
             modelo.addColumn("Ejemplo");
             
-            int anchos [] = {40, 40, 40, 40, 40, 40};
+            //int anchos [] = {40, 40, 40, 40, 40};
             
             for(int i = 0; i < cantidadColumnas; i++){
                 
-                busqueda_resultados.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+                busqueda_resultados.getColumnModel().getColumn(i);
                 
             }
             
@@ -307,18 +309,18 @@ public class Implementacion_metodos implements Metodos {
             ResultSetMetaData datos = consulta.getMetaData();
             int cantidadColumnas = datos.getColumnCount();
             
-            modelo.addColumn("Codigo");
+            //modelo.addColumn("Codigo");
             modelo.addColumn("Radical");
             modelo.addColumn("Hanzi");
             modelo.addColumn("Fonetica");
             modelo.addColumn("Traduccion");
             modelo.addColumn("Ejemplo");
             
-            int anchos [] = {40, 40, 40, 40, 40, 40};
+            //int anchos [] = {40, 40, 40, 40, 40};
             
             for(int i = 0; i < cantidadColumnas; i++){
                 
-                busqueda_resultados.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+                busqueda_resultados.getColumnModel().getColumn(i);
                 
             }
             
@@ -419,8 +421,9 @@ public class Implementacion_metodos implements Metodos {
         
         return hanzi_singular;
         
-    }
+    }   //  FUNCIONANDO
 
+    //  AGREGA A "HANZI" DE MANERA INDIVIDUALIZADA CADA HANZI CON SU RADICAL Y PINYIN
     @Override
     public void agregarSingularidades(Hanzi hanzi) {
         
@@ -450,8 +453,9 @@ public class Implementacion_metodos implements Metodos {
         
         
         
-    }
+    }   //  FUNCIONANDO
 
+    //  CONTAR LA CANTIDAD DE HANZIS UNICOS QUE HAY
     @Override
     public int contarHanziUnicos() {
         
@@ -483,7 +487,7 @@ public class Implementacion_metodos implements Metodos {
         
         
         
-    }
+    }   //  FUNCIONANDO
 }
 
             
