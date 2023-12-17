@@ -26,7 +26,8 @@ public class Implementacion_metodos implements Metodos {
     static String auxiliar_campo;
     
     // instanciamos la conxion para acceder a esta desde los metodos
-    Conexion conexion = Conexion.getInstance(); 
+    Conexion conexion = Conexion.getInstance();
+    Connection conectar = conexion.conectar();
     
 
     //---------------------------- METODOS -------------------------------------
@@ -107,8 +108,6 @@ public class Implementacion_metodos implements Metodos {
             String infoRadical_4 = acceso.getEntradaRadical_4();
             
             String todos_radicales = acceso.getTotal_radicales().toString();
-            
-            
             
             // solo modificara en los campos donde se ingreso informacion
             if (infoPinyin != null && !infoPinyin.isBlank()) {
@@ -239,7 +238,7 @@ public class Implementacion_metodos implements Metodos {
             
             if(columna_busqueda == null){
                 
-                System.out.println("error");
+                //System.out.println("error");
                 
                 acceso.setMsj_advertencia("Introduzca un solo parametro de busqueda");
                 
@@ -251,7 +250,7 @@ public class Implementacion_metodos implements Metodos {
             
                 ResultSet consulta = seleccion.executeQuery();
                 
-                    System.out.println("Entro en el condicional de TODO");
+                    //System.out.println("Entro en el condicional de TODO");
                 
                 
                 ResultSetMetaData datos = consulta.getMetaData();
@@ -488,6 +487,94 @@ public class Implementacion_metodos implements Metodos {
         
         
     }   //  FUNCIONANDO
+
+    //  MODIFICAR RADICAL O PINYIN EN TABLA HANZI
+    @Override
+    public void modificarSingularidad(Hanzi hanzi, ventana_principal acceso) {
+        
+        try{
+            
+            String infoHanzi = acceso.getEntradaHanzi();
+            String infoPinyin = acceso.getEntradaPinyin();
+            
+            String infoRadical = acceso.getEntradaRadical();
+            String infoRadical_2 = acceso.getEntradaRadical_2();
+            String infoRadical_3 = acceso.getEntradaRadical_3(); 
+            String infoRadical_4 = acceso.getEntradaRadical_4();
+            
+            System.out.println("en la ventana de metodos el hanzi introducido fue " + infoHanzi);
+            
+            // solo modificara en los campos donde se ingreso informacion
+            if (infoPinyin != null && !infoPinyin.isBlank()) {
+
+                PreparedStatement modificar = conectar.prepareStatement(
+                        "update hanzi set Pinyin = ? where Hanzi = ?");
+
+                modificar.setString(1, infoPinyin);
+                modificar.setString(2, infoHanzi);
+                modificar.executeUpdate();
+                
+            }
+                
+              if (!infoRadical.isBlank()) {
+
+                PreparedStatement modificarRad_01 = conectar.prepareStatement(
+                        "update hanzi set Radical = ? where Hanzi = ?");
+
+                modificarRad_01.setString(1, infoRadical);
+                modificarRad_01.setString(2, infoHanzi);
+                modificarRad_01.executeUpdate();
+                
+                System.out.println("entro en el condicional para modificar radical");
+
+            }
+
+            if (!infoRadical_2.isBlank()) {
+
+                PreparedStatement modificarRad_02 = conectar.prepareStatement(
+                        "update hanzi set Radical = ? where Hanzi = ?");
+
+                modificarRad_02.setString(1, infoRadical_2);
+                modificarRad_02.setString(2, infoHanzi);
+                modificarRad_02.executeUpdate();
+
+            }
+
+            if (!infoRadical_3.isBlank()) {
+
+                PreparedStatement modificarRad_03 = conectar.prepareStatement(
+                        "update hanzi set Radical = ? where Hanzi = ?");
+
+                modificarRad_03.setString(1, infoRadical_3);
+                modificarRad_03.setString(2, infoHanzi);
+                modificarRad_03.executeUpdate();
+
+            }
+
+            if (!infoRadical_4.isBlank()) {
+
+                PreparedStatement modificarRad_04 = conectar.prepareStatement(
+                        "update hanzi set Radical = ? where Hanzi = ?");
+
+                modificarRad_04.setString(1, infoRadical_4);
+                modificarRad_04.setString(2, infoHanzi);
+                modificarRad_04.executeUpdate();
+
+            }
+            
+            conexion.desconectar();
+
+        }catch(SQLException e){
+            
+            e.printStackTrace();;
+            
+        }
+        
+        
+        
+        
+        
+    }
 }
 
             

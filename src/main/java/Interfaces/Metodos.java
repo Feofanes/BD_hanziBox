@@ -25,6 +25,8 @@ public interface Metodos {
     
     public void agregarSingularidades(Hanzi hanzi);
     
+    public void modificarSingularidad(Hanzi hanzi, ventana_principal acceso);
+    
     public int contarInput();   //  funcionalizado
     
     public int contarHanziUnicos();

@@ -514,6 +514,8 @@ public class ventana_principal extends javax.swing.JFrame {
     //  MODIFICAR ---- FUNCIONANDO
     private void jButton_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarActionPerformed
         
+        //  MODIFICACIONES EN LA TABLA HANZI_ENTRADA
+        
         Hanzi miHanzi = new Hanzi();    // creamos objeto
         
         Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
@@ -539,7 +541,7 @@ public class ventana_principal extends javax.swing.JFrame {
         miHanzi.setRadical(entradaRadical_3);
         miHanzi.setRadical(entradaRadical_4);
         
-        // Supongamos que tienes las entradas en un array o lista
+        // las entradas en un array o lista
         String[] entradas = {entradaRadical, entradaRadical_2, entradaRadical_3, entradaRadical_4};
 
         // Inicializamos total_radicales como un espacio en blanco
@@ -557,15 +559,21 @@ public class ventana_principal extends javax.swing.JFrame {
         // Establecemos el valor resultante en miHanzi
         miHanzi.setRadical(total_radicales.toString());
 
-        
-        
-        
-        
-        System.out.println("esto en ventana " + total_radicales);
+        //System.out.println("esto en ventana " + total_radicales);
         
         aplicar_metodo.modificar(miHanzi, this);  // aplicamos el metodo
         
         jLabel_advertencia.setText("Entrada " + miHanzi.getIdiograma() + " fue modificada");
+        
+        
+        //  MODIFICACIONES EN LA TABLA HANZI
+        
+        
+        aplicar_metodo.modificarSingularidad(miHanzi, this);
+        
+        
+        
+        
         
         limpiar_campos();
         
