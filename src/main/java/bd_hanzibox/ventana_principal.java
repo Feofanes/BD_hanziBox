@@ -4,6 +4,8 @@ package bd_hanzibox;
 import Entradas.Hanzi;
 import Entradas.Hanzi_molde;
 import Interfaces.Implementacion_metodos;
+import java.awt.Component;
+import java.awt.Container;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,7 +14,9 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -50,6 +54,13 @@ public class ventana_principal extends javax.swing.JFrame {
         
     //  CONSTRUCTOR
     public ventana_principal() {
+        
+        panel_ventana miPanel = new panel_ventana(this);
+        
+        setContentPane(miPanel);
+        
+        miPanel.setVisible(true);
+
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -68,7 +79,7 @@ public class ventana_principal extends javax.swing.JFrame {
         limpiar_campos();
         
     }
-
+    
     
     //  METODOS
     
@@ -118,6 +129,9 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_3 = new javax.swing.JComboBox<>();
         jComboBox_radical_4 = new javax.swing.JComboBox<>();
         jLabel_contador_entradas_unicas = new javax.swing.JLabel();
+        jMenuBar_barraSup = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         jTextField3.setText("jTextField1");
 
@@ -220,6 +234,19 @@ public class ventana_principal extends javax.swing.JFrame {
 
         jLabel_contador_entradas_unicas.setText("Hanzis:");
 
+        jMenu1.setText("BD");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+        jMenuBar_barraSup.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar_barraSup.add(jMenu2);
+
+        setJMenuBar(jMenuBar_barraSup);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -313,7 +340,7 @@ public class ventana_principal extends javax.swing.JFrame {
                 .addComponent(jLabel_contador_entradas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel_contador_entradas_unicas)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -438,6 +465,8 @@ public class ventana_principal extends javax.swing.JFrame {
         
         //  PINYIN
         
+        if(!entradaPinyin.isBlank()){
+        
         String[] acumulador = entradaPinyin.split(" ");
         
         for(String e : acumulador){
@@ -447,6 +476,8 @@ public class ventana_principal extends javax.swing.JFrame {
         }
         
         miHanzi_molde.setPinyin_conjunto(lista_pinyin);
+        
+        }
         
         //  RADICALES
         
@@ -681,6 +712,7 @@ public class ventana_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_borrarActionPerformed
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     
     //  HABILITAR LOS COMBO DE ACUERDO AL NUMERO DE HANZI INGRESADO (1-4)  ---- FUNCIONANDO   
     private void jTextField_entradaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_entradaKeyReleased
@@ -767,6 +799,18 @@ public class ventana_principal extends javax.swing.JFrame {
     private void jComboBox_radicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_radicalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_radicalActionPerformed
+
+    //  AL HACER CLICK SE DEBE VISUALIZAR LA BD TOTAL EN TODA LA VENTANA
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
     
     
     //  GETTERS AND SETTERS ----------------------------------------------------
@@ -1038,16 +1082,6 @@ public class ventana_principal extends javax.swing.JFrame {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     //  GETTERS AND SETTERS ----------------------------------------------------
 
     public static void main(String args[]) {
@@ -1101,6 +1135,9 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_advertencia;
     private javax.swing.JLabel jLabel_contador_entradas;
     private javax.swing.JLabel jLabel_contador_entradas_unicas;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar_barraSup;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField3;
@@ -1110,10 +1147,30 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_traduccion;
     // End of variables declaration//GEN-END:variables
 
-    
-        
-
-    
-
-
+  
 }
+
+class panel_ventana extends JPanel {
+    public panel_ventana(JFrame ventana_principal) {
+        // Obtén el contentPane del JFrame
+        Container contentPane = ventana_principal.getContentPane();
+
+        // Obtén los componentes del contentPane
+        Component[] components = contentPane.getComponents();
+
+        // Agrega los componentes al JPanel
+        for (Component component : components) {
+            add(component);
+        }
+    }
+}
+
+    
+
+    
+    
+
+    
+    
+    
+

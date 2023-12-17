@@ -430,6 +430,31 @@ public class Implementacion_metodos implements Metodos {
             
             Connection conectar = conexion.conectar();
             
+            if(!hanzi.getRadical().isEmpty()){
+                
+                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Radical) "
+                        + "values (?,?)");
+
+                agregar.setString(1, hanzi.getIdiograma());
+                agregar.setString(2, hanzi.getRadical());
+                
+                agregar.executeUpdate();
+                
+            }
+            
+            if(!hanzi.getFonetica().isEmpty()){
+                
+                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Pinyin) "
+                        + "values (?,?)");
+
+                agregar.setString(1, hanzi.getIdiograma());
+                agregar.setString(2, hanzi.getFonetica());
+                
+                agregar.executeUpdate();
+            
+            }
+            
+            /*
                 PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Radical, Pinyin) "
                         + "values (?,?,?)");
 
@@ -439,6 +464,7 @@ public class Implementacion_metodos implements Metodos {
                 
                 agregar.executeUpdate();
 
+            */
                 conexion.desconectar();
                 
             }catch(Exception e){
