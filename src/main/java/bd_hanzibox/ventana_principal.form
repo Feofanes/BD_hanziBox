@@ -264,7 +264,6 @@
                 <Column editable="true" title="Ejemplo" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="autoResizeMode" type="int" value="4"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>

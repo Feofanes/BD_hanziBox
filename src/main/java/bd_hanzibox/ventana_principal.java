@@ -202,7 +202,6 @@ public class ventana_principal extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        busqueda_resultados.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane1.setViewportView(busqueda_resultados);
 
         jLabel_contador_entradas.setText("Palabras/expresiones:");
