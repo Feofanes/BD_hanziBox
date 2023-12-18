@@ -430,18 +430,50 @@ public class Implementacion_metodos implements Metodos {
             
             Connection conectar = conexion.conectar();
             
-            if(!hanzi.getRadical().isEmpty()){
+            if(!hanzi.getRadical().isEmpty() && hanzi.getFonetica().isEmpty()){
                 
                 PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Radical) "
                         + "values (?,?)");
 
                 agregar.setString(1, hanzi.getIdiograma());
-                agregar.setString(2, hanzi.getRadical());
+                agregar.setString(2, hanzi.getRadical().toString());
+                
+                System.out.println("entro en 1");
+                System.out.println("el idiograma llego como " + hanzi.getIdiograma());
+                System.out.println("el radical llego al primer condicional como " + hanzi.getRadical().toString());
                 
                 agregar.executeUpdate();
                 
+            }else if(hanzi.getRadical().isEmpty() && hanzi.getFonetica().isEmpty()){
+                
+                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi) "
+                        + "values (?)");
+
+                agregar.setString(1, hanzi.getIdiograma());
+            
+                agregar.executeUpdate();
+                
+                System.out.println("entro en 2");
+            
+            }else{
+                
+                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Pinyin, Radical) "
+                        + "values (?,?,?)");
+
+                agregar.setString(1, hanzi.getIdiograma());
+                agregar.setString(2, hanzi.getFonetica().toString());
+                agregar.setString(3, hanzi.getRadical().toString());
+                
+                 System.out.println("el radical llego al tercer como " + hanzi.getRadical().toString());
+                  System.out.println("el pinyin llego al tercer como " + hanzi.getFonetica().toString());
+                
+                agregar.executeUpdate();
+                
+                System.out.println("entro en 3");
+                
             }
             
+            /*
             if(!hanzi.getFonetica().isEmpty()){
                 
                 PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Pinyin) "
@@ -451,20 +483,10 @@ public class Implementacion_metodos implements Metodos {
                 agregar.setString(2, hanzi.getFonetica());
                 
                 agregar.executeUpdate();
-            
-            }
-            
-            /*
-                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Radical, Pinyin) "
-                        + "values (?,?,?)");
-
-                agregar.setString(1, hanzi.getIdiograma());
-                agregar.setString(2, hanzi.getRadical());
-                agregar.setString(3, hanzi.getFonetica());
-                
-                agregar.executeUpdate();
-
             */
+            
+            
+            
                 conexion.desconectar();
                 
             }catch(Exception e){

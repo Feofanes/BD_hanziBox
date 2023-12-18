@@ -448,7 +448,7 @@ public class ventana_principal extends javax.swing.JFrame {
         ArrayList <String> lista_pinyin = new ArrayList();
         ArrayList <String> lista_radical = new ArrayList();
         
-        ArrayList <String> lista_hanzi_deglosados = new ArrayList();
+        //ArrayList <String> lista_hanzi_deglosados = new ArrayList();
         
         //  HANZI
         for(int i=0; i<entradaHanzi.length(); i++){ // degloso la entrada en string de hanzi
