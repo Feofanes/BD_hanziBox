@@ -3,7 +3,9 @@ package Interfaces;
 
 import Entradas.Hanzi;
 import Entradas.Hanzi_molde;
+import Entradas.Unidad_final;
 import bd_hanzibox.ventana_principal;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,7 +19,7 @@ public interface Metodos {
     
     public void buscar(Hanzi hanzi, ventana_principal acceso);
     
-    public boolean buscarExistencia(String hanzi_ingresado);    // funcionalizado
+    public boolean buscarExistencia(Unidad_final hanzi_aCorroborar, ventana_principal acceso);    // funcionalizado
     
     public void mostrarTabla(String columna_busqueda, ventana_principal acceso);  // funcionalizado
     

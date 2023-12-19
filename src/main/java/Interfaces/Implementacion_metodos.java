@@ -3,6 +3,8 @@ package Interfaces;
 
 import Entradas.Hanzi;
 import Entradas.Hanzi_molde;
+import Entradas.Unidad_final;
+import Entradas.Unidad_min;
 import java.sql.Connection;
 import bd_hanzibox.*;
 import bd_hanzibox.ventana_principal;
@@ -180,11 +182,73 @@ public class Implementacion_metodos implements Metodos {
 
     //  CONSTATA QUE NO EXISTA PREVIAMENTE LO QUE SE QUIERE AGREGAR
     @Override
-    public boolean buscarExistencia(String hanzi_ingresado) {
+    public boolean buscarExistencia(Unidad_final hanzi_aCorroborar, ventana_principal acceso) {
         
         Connection conectar = conexion.conectar();  // conectamos
         
         boolean registroExistente = false;  //  variable que retornaremos
+        
+        try{
+            
+            
+            String recuperandoEntrada = "";
+            String simbolo = "";
+            Unidad_min aux = new Unidad_min();
+            
+            System.out.println("el tamano es " + hanzi_aCorroborar.getObj().size());
+            
+            for(int i = 0; i<hanzi_aCorroborar.getObj().size(); i++){
+                
+                aux = (Unidad_min) hanzi_aCorroborar.getObj().get(i);
+       
+                // Acceder a los atributos de Unidad_min
+                simbolo = aux.getSimbolo();
+                
+               recuperandoEntrada = recuperandoEntrada + simbolo;
+                
+                System.out.println("simbolo recuperado es " + recuperandoEntrada);
+                
+            }
+            
+            
+             //  buscamos en el campo
+            PreparedStatement chequeandoExistencia = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi = ?");
+            
+            
+            //System.out.println(prueba);
+            
+            
+             //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
+            chequeandoExistencia.setString(1, hanzi_aCorroborar.toString());
+            
+            //  la consulta en si
+            ResultSet consulta = chequeandoExistencia.executeQuery();
+            
+            //  cambiamos el valor de la instancia de retorno segun corresponda a la busqueda
+            if(consulta.next()){
+                
+                registroExistente = true;
+                
+                System.out.println("Encontro que ya esta");
+                
+            }else{
+                
+                registroExistente = false;
+                
+                System.out.println("No lo encontro");
+                
+            }
+            
+            conexion.desconectar();
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+        
+        /*
         
         try{
             
@@ -215,6 +279,7 @@ public class Implementacion_metodos implements Metodos {
             System.out.println("entra aca");
         
         }
+        */
         
         return registroExistente;
         
