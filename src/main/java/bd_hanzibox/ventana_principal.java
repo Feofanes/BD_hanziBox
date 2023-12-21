@@ -371,10 +371,9 @@ public class ventana_principal extends javax.swing.JFrame {
     //  AGREGAR ENTRADAS A LA BD ---- FUNCIONANDO
     private void jButton_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_agregarActionPerformed
     
-        
         //  ENFOQUE DE PRUEBA BASADO EN ARRAYS
         
-        // CAPTURA DE ENTRADAS
+        // CAPTURA DE ENTRADAS  ------------------------------------------------
         
         entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
         entradaPinyin = jTextField_pinyin.getText();
@@ -386,15 +385,33 @@ public class ventana_principal extends javax.swing.JFrame {
         entradaRadical_3 = jComboBox_radical_3.getSelectedItem().toString();
         entradaRadical_4 = jComboBox_radical_4.getSelectedItem().toString();
         
+        //  --------------------------------------------------------------------
         
-        if(entradaHanzi.length() >= 1){
+        
+            
+            int n_hanzi_entrada = entradaHanzi.length();    // num de hanzi introducidos
             
             ArrayList <Unidad_min> conjunto_semantico = new ArrayList <>(); //  creamos un array con obj hanzi
             
-            String [] h_coleccion = entradaHanzi.split(""); // se individualiza los hanzi
+            String [] piny_coleccion = new String[n_hanzi_entrada];    //  el tamano esta dado por el n de hanzi
+        
+            if(!entradaPinyin.isBlank()){       //  con y sin entrada de pinyin
+                
+               piny_coleccion = entradaPinyin.split(" ");    //  individualizamos segun los espacios 
+                
+            }else{
+                
+                for(int i=0; i<n_hanzi_entrada; i++ ){
+                    
+                    piny_coleccion[i] = "...";
+                    System.out.println("la extension del array fue " + n_hanzi_entrada);
+                    
+                }
+                
+            }
             
-            //         EL PROBLEMA ES EL PINYIN Y EL RADICAL EN BLANCO, PERO VA POR BUEN CAMINO
-            String [] piny_coleccion = entradaPinyin.split(" ");    //  individualizamos segun los espacios
+            String [] h_coleccion = entradaHanzi.split("");
+           
             ArrayList <String> rad_coleccion = new ArrayList<>();
             rad_coleccion.add(entradaRadical);
             rad_coleccion.add(entradaRadical_2);
@@ -402,6 +419,8 @@ public class ventana_principal extends javax.swing.JFrame {
             rad_coleccion.add(entradaRadical_4);
             
             String hanzi_iterado ="";
+            
+            //  set del obj  "Unidad_min" --------------------------------------
             
             for(int i=0; i<h_coleccion.length; i++){    //  iteramos tantas veces como hanzi tenga la entrada
                 
@@ -413,40 +432,29 @@ public class ventana_principal extends javax.swing.JFrame {
                 
                 unidad_semantica.setSimbolo(hanzi_iterado); //  el nuevo obj seteado para hanzi
                 
-                /*
-                if(piny_coleccion[i].isBlank()){
-                    
-                    piny_coleccion[i] = "tuki";
-                    
-                    System.out.println("el condicional de piny da " + piny_coleccion[i]);
-                    
-                }else{
-                    
-                    unidad_semantica.setPinyin(piny_coleccion[i]);  //  el nuevo obj seteado para pinyin
-                    
-                }
+                unidad_semantica.setRadical(rad_coleccion.get(i));
                 
-                if(rad_coleccion.get(i).isBlank()){
-                    
-                    unidad_semantica.setRadical("NaN");
-                    
-                    System.out.println("el condicional del radical da " + unidad_semantica.getRadical());
-                    
-                }else{
-                    
-                    unidad_semantica.setRadical(rad_coleccion.get(i));  //  el nuevo obj seteado para radical
-                    
-                }
-                */
+                unidad_semantica.setPinyin(piny_coleccion[i]);
+                
+                unidad_semantica.setTraduccion(entradaTraduccion);
+                unidad_semantica.setEjemplo(entradaEjemplo);
+                
+                System.out.println("el radical ingresado fue " + rad_coleccion.get(i));
                 System.out.println("unidad_semnatica es " + unidad_semantica.getSimbolo());
+                System.out.println("el pinyin ingresado es " + piny_coleccion[i]);
                 
                 conjunto_semantico.add(unidad_semantica);   //  almacenamos los obj seteados en un arraylist, que sera parametro para setear el obj final
                 
             }
             
+            //  ----------------------------------------------------------------
+            
+            //  usamos "Unidad_min" para setear "Unidad_final"  ----------------
+            
             Unidad_final entrada_final = new Unidad_final();    //  instanciamos el obj final, la sintesis de la expresion 
             
             entrada_final.setObj(conjunto_semantico);   // esta seria la entrada en su total, con cada hanzi, pinyin y radical
+            
             entrada_final.setTraduccion(entradaTraduccion);
             entrada_final.setEjemplo(entradaEjemplo);
             
@@ -458,27 +466,37 @@ public class ventana_principal extends javax.swing.JFrame {
             
             boolean hanziComprobado = aplicar_metodo.buscarExistencia(entrada_final, this);  //  seteado el objeto le aplicamos el metodo para buscar el atributo en la BD. Devolvera true o false
 
-
+        //}
+        
+        //  AGREGAR A LA BD HANZI_ENTRADA SI SE COMPROBO QUE NO EXISTE YA 
+        
+        if(hanziComprobado == false){
+            
+            // recuperamos la entrada original en su totalidad (entrada_final)
+            
+            aplicar_metodo.agregar(entrada_final, this);    //  agregamos la entrada
+            
+            for(int i=0; i<entrada_final.getObj().size(); i++){
+                
+                Unidad_min probando;
+                
+                probando = (Unidad_min) entrada_final.getObj().get(i);
+                
+                System.out.println("entro en el condicional de false y manda al metodo agregar: " + probando.getSimbolo());
+            
+            }
+            
+            
             
         }
         
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         //  PRIMERO CORROBORAR LA EXISTENCIA O NO DE LA ENTRADA ACTUAL EN HANZI_ENTRADAS
         
-        Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
+        //Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
+        /*
         Hanzi miHanzi = new Hanzi();    // creamos objeto
         
         entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
