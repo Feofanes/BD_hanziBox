@@ -161,9 +161,9 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="135" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="jLabel_tareaEjecutada" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel_tareaEjecutada" min="-2" pref="65" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel_contador_entradas_unicas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel_contador_entradas" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -341,7 +341,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel_tareaEjecutada">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tareas ejecutada:"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;Tareas ejecutada:&lt;br&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
   </SubComponents>

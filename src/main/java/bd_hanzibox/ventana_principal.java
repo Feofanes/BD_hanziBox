@@ -241,7 +241,7 @@ public class ventana_principal extends javax.swing.JFrame {
 
         jLabel_contador_entradas_unicas.setText("Hanzis:");
 
-        jLabel_tareaEjecutada.setText("Tareas ejecutada:");
+        jLabel_tareaEjecutada.setText("<html>Tareas ejecutada:<br></html>");
 
         jMenu1.setText("BD");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -301,7 +301,7 @@ public class ventana_principal extends javax.swing.JFrame {
                         .addGap(71, 71, 71))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_tareaEjecutada)
+                            .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel_contador_entradas)
                                 .addGap(91, 91, 91)
@@ -343,9 +343,9 @@ public class ventana_principal extends javax.swing.JFrame {
                     .addComponent(jTextField_ejemplo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel_tareaEjecutada)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_contador_entradas_unicas)
                     .addComponent(jLabel_contador_entradas))

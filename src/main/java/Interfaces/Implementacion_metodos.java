@@ -769,6 +769,8 @@ public class Implementacion_metodos implements Metodos {
             
             Connection conectar = conexion.conectar();  // conectamos
             
+            mensaje = "La entrada ya existe. ";
+            
             
             //  variables aux para el for --------------------------------------
             
@@ -804,9 +806,10 @@ public class Implementacion_metodos implements Metodos {
 
                 simbolo_entrada = simbolo_entrada + simbolo;
                 pinyin_entrada = pinyin_entrada + " " + pinyin;
-                radical_entrada += radical + (i < hanzi_aCorroborar.getObj().size() - 1 ? " ," : "");   // separa los radicales por "," excepto el ultimo
+                radical_entrada = radical_entrada + radical;
+                //radical_entrada += radical + (i < hanzi_aCorroborar.getObj().size() - 1 ? " ," : "");   // separa los radicales por "," excepto el ultimo
     
-                System.out.println("el radical en el metodo de comparar fue "+radical_entrada);
+                //System.out.println("el radical en el metodo de comparar fue "+ radical_entrada);
             }
             
             //  buscamos en BD y seteamos un nuevo obj con lo preexistente------
@@ -845,100 +848,123 @@ public class Implementacion_metodos implements Metodos {
             entrada_antigua.setTraduccion(valorCampo3);
             entrada_antigua.setEjemplo(valorCampo4);
             
-            
             //System.out.println("la entrada antigua tiene un pinyin de " + entrada_antigua.getPinyin());
             //System.out.println("la entrada nueva tiene un pinyin de " + pinyin_entrada);
             
                 
             //  comparamos la info de la entrada nueva con la preexistente------
             
-            //  PINYIN  --------------------------------------------------------
+            //  RADICAL --------------------------------------------------------
+            //  ----------------------------------------------------------------
             
-            if(entrada_antigua.getPinyin().contains("...") && !aux.getPinyin().isBlank()){  // PINYIN
+            String radicalAntiguo = entrada_antigua.getRadical();
+            String radical_final = "";
+            String auxiliar_radical = "";
+            String radicales_conservados = "";
+            
+            //System.out.println("radicalAntiguo es " + radicalAntiguo);
+            
+            //System.out.println("radical_entrada es " + radical_entrada);
+            
+            for(int i=0; i<radicalAntiguo.length(); i++){
                 
-                PreparedStatement actualizar = conectar.prepareStatement(
-                        "update hanzi_entrada set Fonetica = ? where Hanzi = ?");
+                char radical_test = radicalAntiguo.charAt(i);
                 
-                actualizar.setString(1, pinyin_entrada);
-                actualizar.setString(2, simbolo_entrada);
+                System.out.println("radical_test fue " + radical_test);
                 
-                actualizar.executeUpdate();
+                if(radical_test == '○'){
+                    
+                    radical_final += radical_entrada.charAt(i);
+                    
+                }else{
+                    
+                    radical_final += radical_test;
+                    radicales_conservados += radical_test;
+                    
+                }
                 
-                mensaje = "No se agregó " + simbolo_entrada + 
-                        " porque ya existe, pero se modificó su pinyin a " + pinyin_entrada;
-                
-            }else if(!entrada_antigua.getPinyin().isBlank() && !aux.getPinyin().contains("...")){
-                
-                //  se prioriza la entrada mas reciente por sobre la preexistente
-                
-                String pinyin_viejo = entrada_antigua.getPinyin();
-                
-                PreparedStatement actualizar = conectar.prepareStatement(
-                        "update hanzi_entrada set Fonetica = ? where Hanzi = ?");
-                
-                actualizar.setString(1, pinyin_entrada);
-                actualizar.setString(2, simbolo_entrada);
-                
-                actualizar.executeUpdate();
-                
-                mensaje = "No se agregó " + simbolo_entrada + 
-                        " porque ya existe, pero se agregó su pinyin a " + pinyin_entrada;
+                System.out.println("el radical final va siendo " + radical_final);
                 
             }
             
-            //  RADICAL --------------------------------------------------------
-            
-            StringBuilder resultado = new StringBuilder();
-            
-            for(int i=0; i<entrada_antigua.getRadical().length(); i++){
-                
-                //  ------------------------------------------------------------
-                aux = (Unidad_min) hanzi_aCorroborar.getObj().get(i);
-
-                // Acceder a los atributos de Unidad_min
-                simbolo = aux.getSimbolo();
-                pinyin = aux.getPinyin();
-                radical = aux.getRadical();
-                traduccion = aux.getTraduccion();
-                ejemplo = aux.getEjemplo();
-                //  ------------------------------------------------------------
-                
-                System.out.println("en el for de radical este fue " + radical);
-                
-                char rad_antiguo = entrada_antigua.getRadical().charAt(i);
-                char rad_nuevo = aux.getRadical().charAt(i);
-                
-                System.out.println("el char a comprobar fue " + rad_antiguo);
-               
-                if (rad_antiguo == '○') {
-                    resultado.append(rad_nuevo);
-                } else {
-                    resultado.append(rad_antiguo);
-                }
-                
-                
-                }
-            
-            entrada_antigua.setRadical(resultado.toString());
-                
-                //radical_entrada += radical + (i < hanzi_aCorroborar.getObj().size() - 1 ? " ," : "");   // separa los radicales por "," excepto el ultimo
-    
-            System.out.println("el radical entero fue "+ entrada_antigua.getRadical());
-            
-            //if(entrada_antigua.getRadical().contains("...") && !aux.getRadical().isBlank()){  //  RADICAL
-                
+            //System.out.println("el radical entero fue "+ entrada_antigua.getRadical());
+             
                 PreparedStatement actualizar = conectar.prepareStatement(
                         "update hanzi_entrada set Radical = ? where Hanzi = ?");
                 
-                actualizar.setString(1, resultado.toString());
+                actualizar.setString(1, radical_final);
                 actualizar.setString(2, simbolo_entrada);
-                
-                mensaje = "Se agregó " + "【" +  radical_entrada + "】";
                 
                 actualizar.executeUpdate();
                 
-                System.out.println("entro en el primer condicional de radicales");
+                //  reporte de accion ------------------------------------------
                 
+                if (radical_entrada.equalsIgnoreCase("○")) {
+
+                //mensaje += "La entrada ya existe";
+
+            } else if (radical_entrada.equalsIgnoreCase("○○")) {
+
+                //mensaje = "La entrada ya existe";
+
+            } else if (radical_entrada.equalsIgnoreCase("○○○")) {
+
+                //mensaje = "La entrada ya existe";
+
+            } else if (radical_entrada.equalsIgnoreCase("○○○○")) {
+
+                //mensaje = "La entrada ya existe";
+
+            } else {
+
+                mensaje += "Se agregaron los radicales " + "【" + radical_entrada + "】, conservándose " + "【" + radicalAntiguo + "】. ";
+
+            }
+            //  ----------------------------------------------------------------
+            
+            //  PINYIN  --------------------------------------------------------
+            
+            if(entrada_antigua.getPinyin().contains("...") && !aux.getPinyin().isBlank() && !aux.getPinyin().contains("...")){  // PINYIN
+                
+                //  
+                
+                PreparedStatement actualizar_2 = conectar.prepareStatement(
+                        "update hanzi_entrada set Fonetica = ? where Hanzi = ?");
+                
+                actualizar_2.setString(1, pinyin_entrada);
+                actualizar_2.setString(2, simbolo_entrada);
+                
+                actualizar_2.executeUpdate();
+                
+                System.out.println("entro en el if de pinyin");
+                
+                mensaje += "\n" + "Se agregó su pinyin " + pinyin_entrada;
+                
+            }else if(!entrada_antigua.getPinyin().isBlank() && !entrada_antigua.getPinyin().contains("...") && !aux.getPinyin().contains("...")){
+                
+                //  queda lo viejo, ya que esto no MODIFICA, solo agrega info sobre vacios
+                
+                String pinyin_viejo = entrada_antigua.getPinyin();
+                
+                PreparedStatement actualizar_2 = conectar.prepareStatement(
+                        "update hanzi_entrada set Fonetica = ? where Hanzi = ?");
+                
+                actualizar_2.setString(1, pinyin_viejo);
+                actualizar_2.setString(2, simbolo_entrada);
+                
+                actualizar.executeUpdate();
+                
+                //  reporte de accion ------------------------------------------
+                
+                mensaje += "\n" +"Se conservó el pinyin original " + pinyin_viejo + ". ";
+                
+                //  ----------------------------------------------------------------
+                
+                System.out.println("entro en el if else de pinyin");
+                
+            }
+            
+            
                 
             //}else if(!entrada_antigua.getRadical().isBlank() && !aux.getRadical().isBlank()){
                 
@@ -1013,7 +1039,7 @@ public class Implementacion_metodos implements Metodos {
                 System.out.println("la traduccion de nueva entrada es: " + ejemplo);
                 
             }
-            
+            */
             conexion.desconectar();
         
         }catch(SQLException e){
@@ -1026,10 +1052,10 @@ public class Implementacion_metodos implements Metodos {
         
         
     }
-*/
+
 }
-    }
-}
+    
+
 
             
             
