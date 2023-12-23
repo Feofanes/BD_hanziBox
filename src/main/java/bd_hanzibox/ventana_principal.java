@@ -83,7 +83,7 @@ public class ventana_principal extends javax.swing.JFrame {
         
         jLabel_contador_entradas_unicas.setText("Hanzis: " + n_hanzi_unicos);
         
-        limpiar_campos();
+        //limpiar_campos();
         
     }
     
@@ -100,6 +100,8 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_2.setSelectedItem("");
         jComboBox_radical_3.setSelectedItem("");
         jComboBox_radical_4.setSelectedItem("");
+        //jLabel_tareaEjecutada.setText("");
+        //jLabel_tareaEjecutada_2.setText("");
         
         //  queda pendiente limpiar el comboBox
         
@@ -136,6 +138,7 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_4 = new javax.swing.JComboBox<>();
         jLabel_contador_entradas_unicas = new javax.swing.JLabel();
         jLabel_tareaEjecutada = new javax.swing.JLabel();
+        jLabel_tareaEjecutada_2 = new javax.swing.JLabel();
         jMenuBar_barraSup = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -263,42 +266,40 @@ public class ventana_principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                            .addComponent(jLab_traduccion)
+                            .addComponent(jLab_pinyin)
+                            .addComponent(jLab_entrada)
+                            .addComponent(jLab_ejemplo)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextField_traduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                .addComponent(jTextField_ejemplo)
+                                .addComponent(jTextField_pinyin)
+                                .addComponent(jTextField_entrada))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jComboBox_radical, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox_radical_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox_radical_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(jComboBox_radical_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLab_traduccion)
-                                    .addComponent(jLab_pinyin)
-                                    .addComponent(jLab_entrada)
-                                    .addComponent(jLab_ejemplo)
-                                    .addComponent(jLabel2))
+                                .addComponent(jButton_modificar)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField_traduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                                        .addComponent(jTextField_ejemplo)
-                                        .addComponent(jTextField_pinyin)
-                                        .addComponent(jTextField_entrada))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jComboBox_radical, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox_radical_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jComboBox_radical_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12)
-                                        .addComponent(jComboBox_radical_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton_buscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton_modificar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton_buscar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton_borrar)))))
-                        .addGap(71, 71, 71))
+                                .addComponent(jButton_borrar))))
+                    .addComponent(jLabel_tareaEjecutada_2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,7 +307,8 @@ public class ventana_principal extends javax.swing.JFrame {
                                 .addComponent(jLabel_contador_entradas)
                                 .addGap(91, 91, 91)
                                 .addComponent(jLabel_contador_entradas_unicas)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,12 +346,14 @@ public class ventana_principal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_tareaEjecutada_2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_contador_entradas_unicas)
                     .addComponent(jLabel_contador_entradas))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -515,6 +519,8 @@ public class ventana_principal extends javax.swing.JFrame {
             Implementacion_metodos acceso_metodos = new Implementacion_metodos();
             
             jLabel_tareaEjecutada.setText(acceso_metodos.getMensaje());
+            
+            jLabel_tareaEjecutada_2.setText(acceso_metodos.getMensaje_2());
             
         }
         
@@ -1243,6 +1249,16 @@ public class ventana_principal extends javax.swing.JFrame {
     public static void setTotal_radicales(StringBuilder total_radicales) {
         ventana_principal.total_radicales = total_radicales;
     }
+
+    public JLabel getjLabel_tareaEjecutada_2() {
+        return jLabel_tareaEjecutada_2;
+    }
+
+    public void setjLabel_tareaEjecutada_2(JLabel jLabel_tareaEjecutada_2) {
+        this.jLabel_tareaEjecutada_2 = jLabel_tareaEjecutada_2;
+    }
+    
+    
     
     
     //  GETTERS AND SETTERS ----------------------------------------------------
@@ -1298,6 +1314,7 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_contador_entradas;
     private javax.swing.JLabel jLabel_contador_entradas_unicas;
     private javax.swing.JLabel jLabel_tareaEjecutada;
+    private javax.swing.JLabel jLabel_tareaEjecutada_2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar_barraSup;

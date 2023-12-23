@@ -28,7 +28,8 @@ public class Implementacion_metodos implements Metodos {
     static String auxiliar_campo;
     
     private static String mensaje;
-
+    private static String mensaje_2;
+    
     public static String getMensaje() {
         return mensaje;
     }
@@ -36,6 +37,16 @@ public class Implementacion_metodos implements Metodos {
     public static void setMensaje(String mensaje) {
         Implementacion_metodos.mensaje = mensaje;
     }
+
+    public static String getMensaje_2() {
+        return mensaje_2;
+    }
+
+    public static void setMensaje_2(String mensaje_2) {
+        Implementacion_metodos.mensaje_2 = mensaje_2;
+    }
+    
+    
     
     
     
@@ -770,6 +781,7 @@ public class Implementacion_metodos implements Metodos {
             Connection conectar = conexion.conectar();  // conectamos
             
             mensaje = "La entrada ya existe. ";
+            mensaje_2 = "";
             
             
             //  variables aux para el for --------------------------------------
@@ -917,7 +929,7 @@ public class Implementacion_metodos implements Metodos {
 
             } else {
 
-                mensaje += "Se agregaron los radicales " + "【" + radical_entrada + "】, conservándose " + "【" + radicalAntiguo + "】. ";
+                mensaje_2 += "Se agregaron los radicales " + "【" + radical_entrada + "】, conservándose " + "【" + radicalAntiguo + "】. ";
 
             }
             //  ----------------------------------------------------------------
@@ -938,7 +950,7 @@ public class Implementacion_metodos implements Metodos {
                 
                 System.out.println("entro en el if de pinyin");
                 
-                mensaje += "\n" + "Se agregó su pinyin " + pinyin_entrada;
+                mensaje_2 += "Se agregó su pinyin " + pinyin_entrada;
                 
             }else if(!entrada_antigua.getPinyin().isBlank() && !entrada_antigua.getPinyin().contains("...") && !aux.getPinyin().contains("...")){
                 
@@ -956,7 +968,7 @@ public class Implementacion_metodos implements Metodos {
                 
                 //  reporte de accion ------------------------------------------
                 
-                mensaje += "\n" +"Se conservó el pinyin original " + pinyin_viejo + ". ";
+                mensaje_2 += "Se conservó el pinyin original " + pinyin_viejo + ". ";
                 
                 //  ----------------------------------------------------------------
                 
@@ -1040,6 +1052,10 @@ public class Implementacion_metodos implements Metodos {
                 
             }
             */
+            
+            mensaje = "";
+            mensaje_2 = "";
+            
             conexion.desconectar();
         
         }catch(SQLException e){
