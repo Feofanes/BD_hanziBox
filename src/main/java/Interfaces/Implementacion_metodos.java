@@ -27,6 +27,18 @@ public class Implementacion_metodos implements Metodos {
     static String auxiliar_elemento ;  
     static String auxiliar_campo;
     
+    private static String mensaje;
+
+    public static String getMensaje() {
+        return mensaje;
+    }
+
+    public static void setMensaje(String mensaje) {
+        Implementacion_metodos.mensaje = mensaje;
+    }
+    
+    
+    
     // instanciamos la conxion para acceder a esta desde los metodos
     Conexion conexion = Conexion.getInstance();
     Connection conectar = conexion.conectar();
@@ -36,9 +48,66 @@ public class Implementacion_metodos implements Metodos {
     
     //  AGREGAR ENTRADAS
     @Override
-    public void agregar(Hanzi hanzi) {
+    public void agregar(Unidad_final hanzi_agregar, ventana_principal acceso) {
+        
+                Connection conectar = conexion.conectar();
         
         try{
+            
+            String nombre_entrada = "";         //  hanzi
+            String simbolo = "";                //  hanzi
+            String radical = "";                //  radical
+            String radical_entrada = "";        //  radical
+            String pinyin = "";                 //  pinyin
+            String pinyin_entrada = "";         //  pinyin
+            String traduccion = "";
+            String ejemplo = "";
+            
+            Unidad_min aux;
+            
+            PreparedStatement agregar = conectar.prepareStatement("insert into hanzi_entrada (Radical, Hanzi, Fonetica, Traduccion, Ejemplo) "
+                        + "values (?,?,?,?,?)");
+            
+            for(int i=0; i<hanzi_agregar.getObj().size(); i++){
+                
+                 // hacemos un cast instanciando un obj tipo unidad_min tomando uno igual de la posicion i de los almacenados en unidad_final
+                aux = (Unidad_min) hanzi_agregar.getObj().get(i);  
+                
+                simbolo = aux.getSimbolo(); // tomamos el nombre del hanzi
+                radical = aux.getRadical();
+                pinyin  = aux.getPinyin();
+                traduccion = aux.getTraduccion();
+                ejemplo = aux.getEjemplo();
+
+                nombre_entrada = nombre_entrada + simbolo;
+                radical_entrada = radical_entrada + radical;
+                pinyin_entrada = pinyin_entrada + " " +pinyin;
+                
+                System.out.println("en metodo AGREGAR nombre_entrada es " + nombre_entrada);
+                System.out.println("y su radical es " + aux.getRadical());
+                System.out.println("su pinyin es " + aux.getPinyin());
+
+                agregar.setString(1, radical_entrada);
+                agregar.setString(2, nombre_entrada);
+                agregar.setString(3, pinyin_entrada);
+                agregar.setString(4, traduccion);
+                agregar.setString(5, ejemplo);
+              
+            }
+            
+            agregar.executeUpdate();  // va fuera del for o insertara en cada iteracion
+            
+            conexion.desconectar();
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        }
+            
+            
+            /*
             
             Connection conectar = conexion.conectar();
             
@@ -60,9 +129,12 @@ public class Implementacion_metodos implements Metodos {
                     System.out.println("Error en metodo agregar");
         
         }
+            
                 
             }   //  FUNCIONANDO
 
+            */
+            
     //  BORRAMOS ENTRADAS CON EL HANZI COMO UNICO PARAMETRO
     @Override
     public void borrar(Hanzi hanzi_eliminar, ventana_principal acceso) {
@@ -190,6 +262,7 @@ public class Implementacion_metodos implements Metodos {
         
         try{
             
+            //  variables aux para el for --------------------------------------
             
             String recuperandoEntrada = "";
             String simbolo = "";
@@ -204,22 +277,19 @@ public class Implementacion_metodos implements Metodos {
                 // Acceder a los atributos de Unidad_min
                 simbolo = aux.getSimbolo();
                 
-               recuperandoEntrada = recuperandoEntrada + simbolo;
+                recuperandoEntrada = recuperandoEntrada + simbolo;
                 
                 System.out.println("simbolo recuperado es " + recuperandoEntrada);
                 
             }
             
+            //  ----------------------------------------------------------------
             
              //  buscamos en el campo
             PreparedStatement chequeandoExistencia = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi = ?");
             
-            
-            //System.out.println(prueba);
-            
-            
              //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
-            chequeandoExistencia.setString(1, hanzi_aCorroborar.toString());
+            chequeandoExistencia.setString(1, recuperandoEntrada);
             
             //  la consulta en si
             ResultSet consulta = chequeandoExistencia.executeQuery();
@@ -246,6 +316,9 @@ public class Implementacion_metodos implements Metodos {
             e.printStackTrace();
             
         }
+        
+        
+        //
         
         
         /*
@@ -687,6 +760,274 @@ public class Implementacion_metodos implements Metodos {
         
         
         
+    }
+
+    @Override
+    public void compararDuplicados(Unidad_final hanzi_aCorroborar, ventana_principal acceso) {
+        
+        try{
+            
+            Connection conectar = conexion.conectar();  // conectamos
+            
+            
+            //  variables aux para el for --------------------------------------
+            
+            String simbolo_entrada = "";
+            String pinyin_entrada = "";
+            String radical_entrada = "";
+            String traduccion_entrada = "";
+            String ejemplo_entrada = "";
+            
+            String simbolo = "";
+            String pinyin = "";
+            String radical = "";
+            String traduccion = "";
+            String ejemplo = "";
+            
+            //  instanciamos nuevo obj para setearlo con las entradas ----------
+            Unidad_min aux = new Unidad_min();
+            
+            //  recuperamos los atributos ingresados ---------------------------
+            
+            for(int i = 0; i<hanzi_aCorroborar.getObj().size(); i++){
+                
+                aux = (Unidad_min) hanzi_aCorroborar.getObj().get(i);
+
+                // Acceder a los atributos de Unidad_min
+                simbolo = aux.getSimbolo();
+                pinyin = aux.getPinyin();
+                radical = aux.getRadical();
+                traduccion = aux.getTraduccion();
+                ejemplo = aux.getEjemplo();
+                
+                System.out.println("el radical recuperado es " + radical);
+
+                simbolo_entrada = simbolo_entrada + simbolo;
+                pinyin_entrada = pinyin_entrada + " " + pinyin;
+                radical_entrada += radical + (i < hanzi_aCorroborar.getObj().size() - 1 ? " ," : "");   // separa los radicales por "," excepto el ultimo
+    
+                System.out.println("el radical en el metodo de comparar fue "+radical_entrada);
+            }
+            
+            //  buscamos en BD y seteamos un nuevo obj con lo preexistente------
+            Unidad_min entrada_antigua = new Unidad_min();
+            
+            //  variables aux para recuperar de la bd --------------------------
+            
+            String valorCampo1 = "";
+            String valorCampo2 = "";
+            String valorCampo3 = "";
+            String valorCampo4 = "";
+            
+            //  buscamos la entrada en la bd -----------------------------------
+            
+            PreparedStatement recuperando_bd = conectar.prepareStatement("SELECT Radical, Fonetica, Traduccion, Ejemplo FROM hanzi_entrada WHERE Hanzi = ?");
+            
+            //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
+            recuperando_bd.setString(1, simbolo_entrada);
+            
+            //  la consulta en si
+            ResultSet consulta = recuperando_bd.executeQuery();
+            
+            // Recuperar información de distintos campos
+            while (consulta.next()) {
+                
+                valorCampo1 = consulta.getString("Radical");
+                valorCampo2 = consulta.getString("Fonetica");
+                valorCampo3 = consulta.getString("Traduccion");
+                valorCampo4 = consulta.getString("Ejemplo");
+            }
+            
+            // seteamos con lo preexistente ------------------------------------
+            
+            entrada_antigua.setRadical(valorCampo1);    // seteamos un obj con valores preexistentes
+            entrada_antigua.setPinyin(valorCampo2);
+            entrada_antigua.setTraduccion(valorCampo3);
+            entrada_antigua.setEjemplo(valorCampo4);
+            
+            
+            //System.out.println("la entrada antigua tiene un pinyin de " + entrada_antigua.getPinyin());
+            //System.out.println("la entrada nueva tiene un pinyin de " + pinyin_entrada);
+            
+                
+            //  comparamos la info de la entrada nueva con la preexistente------
+            
+            //  PINYIN  --------------------------------------------------------
+            
+            if(entrada_antigua.getPinyin().contains("...") && !aux.getPinyin().isBlank()){  // PINYIN
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Fonetica = ? where Hanzi = ?");
+                
+                actualizar.setString(1, pinyin_entrada);
+                actualizar.setString(2, simbolo_entrada);
+                
+                actualizar.executeUpdate();
+                
+                mensaje = "No se agregó " + simbolo_entrada + 
+                        " porque ya existe, pero se modificó su pinyin a " + pinyin_entrada;
+                
+            }else if(!entrada_antigua.getPinyin().isBlank() && !aux.getPinyin().contains("...")){
+                
+                //  se prioriza la entrada mas reciente por sobre la preexistente
+                
+                String pinyin_viejo = entrada_antigua.getPinyin();
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Fonetica = ? where Hanzi = ?");
+                
+                actualizar.setString(1, pinyin_entrada);
+                actualizar.setString(2, simbolo_entrada);
+                
+                actualizar.executeUpdate();
+                
+                mensaje = "No se agregó " + simbolo_entrada + 
+                        " porque ya existe, pero se agregó su pinyin a " + pinyin_entrada;
+                
+            }
+            
+            //  RADICAL --------------------------------------------------------
+            
+            StringBuilder resultado = new StringBuilder();
+            
+            for(int i=0; i<entrada_antigua.getRadical().length(); i++){
+                
+                //  ------------------------------------------------------------
+                aux = (Unidad_min) hanzi_aCorroborar.getObj().get(i);
+
+                // Acceder a los atributos de Unidad_min
+                simbolo = aux.getSimbolo();
+                pinyin = aux.getPinyin();
+                radical = aux.getRadical();
+                traduccion = aux.getTraduccion();
+                ejemplo = aux.getEjemplo();
+                //  ------------------------------------------------------------
+                
+                System.out.println("en el for de radical este fue " + radical);
+                
+                char rad_antiguo = entrada_antigua.getRadical().charAt(i);
+                char rad_nuevo = aux.getRadical().charAt(i);
+                
+                System.out.println("el char a comprobar fue " + rad_antiguo);
+               
+                if (rad_antiguo == '○') {
+                    resultado.append(rad_nuevo);
+                } else {
+                    resultado.append(rad_antiguo);
+                }
+                
+                
+                }
+            
+            entrada_antigua.setRadical(resultado.toString());
+                
+                //radical_entrada += radical + (i < hanzi_aCorroborar.getObj().size() - 1 ? " ," : "");   // separa los radicales por "," excepto el ultimo
+    
+            System.out.println("el radical entero fue "+ entrada_antigua.getRadical());
+            
+            //if(entrada_antigua.getRadical().contains("...") && !aux.getRadical().isBlank()){  //  RADICAL
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Radical = ? where Hanzi = ?");
+                
+                actualizar.setString(1, resultado.toString());
+                actualizar.setString(2, simbolo_entrada);
+                
+                mensaje = "Se agregó " + "【" +  radical_entrada + "】";
+                
+                actualizar.executeUpdate();
+                
+                System.out.println("entro en el primer condicional de radicales");
+                
+                
+            //}else if(!entrada_antigua.getRadical().isBlank() && !aux.getRadical().isBlank()){
+                
+                //  se prioriza la entrada mas reciente por sobre la preexistente
+                /*
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Radical = ? where Hanzi = ?");
+                
+                actualizar.setString(1, radical_entrada);
+                actualizar.setString(2, simbolo_entrada);
+                
+                mensaje = "Se modificó " + "【" + entrada_antigua.getRadical() + "】" + " a " + "【" + radical_entrada + "】";
+                
+                actualizar.executeUpdate();
+                
+                System.out.println("entro en el segundo condicional de radicales");
+                */
+            //}
+            
+            //  TRADUCCION -----------------------------------------------------
+            /*
+            if(entrada_antigua.getTraduccion().isBlank() && !aux.getTraduccion().isBlank()){        //  TRADUCCION
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Traduccion = ? where Hanzi = ?");
+                
+                actualizar.setString(1, traduccion);
+                actualizar.setString(2, simbolo_entrada);
+                
+                System.out.println("la traduccion de nueva entrada es: " + traduccion);
+                
+                actualizar.executeUpdate();
+                
+                
+            }else if(!entrada_antigua.getTraduccion().isBlank() && !aux.getTraduccion().isBlank()){
+                
+                //  se prioriza la entrada mas reciente por sobre la preexistente
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Traduccion = ? where Hanzi = ?");
+                
+                actualizar.setString(1, traduccion);
+                actualizar.setString(2, simbolo_entrada);
+                
+                System.out.println("la traduccion de nueva entrada es: " + traduccion);
+                
+                actualizar.executeUpdate();
+                
+            }
+            
+            //  EJEMPLO --------------------------------------------------------
+            
+            if(entrada_antigua.getEjemplo().isBlank() && !aux.getEjemplo().isBlank()){        //  TRADUCCION
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Ejemplo = ? where Hanzi = ?");
+                
+                actualizar.setString(1, ejemplo);
+                actualizar.setString(2, simbolo_entrada);
+                
+                System.out.println("la traduccion de nueva entrada es: " + ejemplo);
+                
+                actualizar.executeUpdate();
+            }else if(!entrada_antigua.getEjemplo().isBlank() && !aux.getEjemplo().isBlank()){
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi_entrada set Ejemplo = ? where Hanzi = ?");
+                
+                actualizar.setString(1, ejemplo);
+                actualizar.setString(2, simbolo_entrada);
+                
+                System.out.println("la traduccion de nueva entrada es: " + ejemplo);
+                
+            }
+            
+            conexion.desconectar();
+        
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+        
+        
+        
+    }
+*/
+}
     }
 }
 

@@ -128,7 +128,6 @@ public class ventana_principal extends javax.swing.JFrame {
         jButton_borrar = new javax.swing.JButton();
         jButton_modificar = new javax.swing.JButton();
         jButton_buscar = new javax.swing.JButton();
-        jLabel_advertencia = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         busqueda_resultados = new javax.swing.JTable();
         jLabel_contador_entradas = new javax.swing.JLabel();
@@ -136,6 +135,7 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_3 = new javax.swing.JComboBox<>();
         jComboBox_radical_4 = new javax.swing.JComboBox<>();
         jLabel_contador_entradas_unicas = new javax.swing.JLabel();
+        jLabel_tareaEjecutada = new javax.swing.JLabel();
         jMenuBar_barraSup = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -241,6 +241,8 @@ public class ventana_principal extends javax.swing.JFrame {
 
         jLabel_contador_entradas_unicas.setText("Hanzis:");
 
+        jLabel_tareaEjecutada.setText("Tareas ejecutada:");
+
         jMenu1.setText("BD");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,29 +268,26 @@ public class ventana_principal extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel_advertencia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLab_traduccion)
-                                            .addComponent(jLab_pinyin)
-                                            .addComponent(jLab_entrada)
-                                            .addComponent(jLab_ejemplo)
-                                            .addComponent(jLabel2))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jTextField_traduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                                                .addComponent(jTextField_ejemplo)
-                                                .addComponent(jTextField_pinyin)
-                                                .addComponent(jTextField_entrada))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jComboBox_radical, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jComboBox_radical_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jComboBox_radical_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(12, 12, 12)
-                                                .addComponent(jComboBox_radical_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jLab_traduccion)
+                                    .addComponent(jLab_pinyin)
+                                    .addComponent(jLab_entrada)
+                                    .addComponent(jLab_ejemplo)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField_traduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                        .addComponent(jTextField_ejemplo)
+                                        .addComponent(jTextField_pinyin)
+                                        .addComponent(jTextField_entrada))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jComboBox_radical, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jComboBox_radical_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jComboBox_radical_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jComboBox_radical_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -301,10 +300,13 @@ public class ventana_principal extends javax.swing.JFrame {
                                         .addComponent(jButton_borrar)))))
                         .addGap(71, 71, 71))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel_contador_entradas_unicas)
-                            .addComponent(jLabel_contador_entradas))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_tareaEjecutada)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel_contador_entradas)
+                                .addGap(91, 91, 91)
+                                .addComponent(jLabel_contador_entradas_unicas)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,14 +341,14 @@ public class ventana_principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLab_ejemplo)
                     .addComponent(jTextField_ejemplo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(jLabel_advertencia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel_contador_entradas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel_contador_entradas_unicas)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel_tareaEjecutada)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_contador_entradas_unicas)
+                    .addComponent(jLabel_contador_entradas))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -387,18 +389,36 @@ public class ventana_principal extends javax.swing.JFrame {
         
         //  --------------------------------------------------------------------
         
+        //  evitamos valores en blanco  ----------------------------------------
         
-            
-            int n_hanzi_entrada = entradaHanzi.length();    // num de hanzi introducidos
-            
-            ArrayList <Unidad_min> conjunto_semantico = new ArrayList <>(); //  creamos un array con obj hanzi
-            
-            String [] piny_coleccion = new String[n_hanzi_entrada];    //  el tamano esta dado por el n de hanzi
+        if (entradaRadical.isBlank()) {
+            entradaRadical = "○";
+        }
         
-            if(!entradaPinyin.isBlank()){       //  con y sin entrada de pinyin
-                
-               piny_coleccion = entradaPinyin.split(" ");    //  individualizamos segun los espacios 
-                
+        if(entradaRadical_2.isBlank()){
+            entradaRadical_2 = "○";
+        }
+        
+        if(entradaRadical_3.isBlank()){
+            entradaRadical_3 = "○";
+        }
+        
+        if(entradaRadical_4.isBlank()){
+            entradaRadical_4 = "○";
+        }
+        
+        //  --------------------------------------------------------------------
+            
+          int n_hanzi_entrada = entradaHanzi.length();    // num de hanzi introducidos
+
+        ArrayList<Unidad_min> conjunto_semantico = new ArrayList<>(); //  creamos un array con obj hanzi
+
+        String[] piny_coleccion = new String[n_hanzi_entrada];    //  el tamano esta dado por el n de hanzi
+
+        if (!entradaPinyin.isBlank()) {       //  con y sin entrada de pinyin
+
+            piny_coleccion = entradaPinyin.split(" ");    //  individualizamos segun los espacios 
+
             }else{
                 
                 for(int i=0; i<n_hanzi_entrada; i++ ){
@@ -439,9 +459,9 @@ public class ventana_principal extends javax.swing.JFrame {
                 unidad_semantica.setTraduccion(entradaTraduccion);
                 unidad_semantica.setEjemplo(entradaEjemplo);
                 
-                System.out.println("el radical ingresado fue " + rad_coleccion.get(i));
-                System.out.println("unidad_semnatica es " + unidad_semantica.getSimbolo());
-                System.out.println("el pinyin ingresado es " + piny_coleccion[i]);
+                //System.out.println("el radical ingresado fue " + rad_coleccion.get(i));
+                //System.out.println("unidad_semnatica es " + unidad_semantica.getSimbolo());
+                //System.out.println("el pinyin ingresado es " + piny_coleccion[i]);
                 
                 conjunto_semantico.add(unidad_semantica);   //  almacenamos los obj seteados en un arraylist, que sera parametro para setear el obj final
                 
@@ -466,9 +486,17 @@ public class ventana_principal extends javax.swing.JFrame {
             
             boolean hanziComprobado = aplicar_metodo.buscarExistencia(entrada_final, this);  //  seteado el objeto le aplicamos el metodo para buscar el atributo en la BD. Devolvera true o false
 
-        //}
-        
         //  AGREGAR A LA BD HANZI_ENTRADA SI SE COMPROBO QUE NO EXISTE YA 
+        
+        //  informamos la entrada agregada -------------------------------------
+        String reporteHanzi = "";
+        
+        for(int i = 0; i<h_coleccion.length; i++){
+                
+                reporteHanzi += h_coleccion[i];
+                
+            }
+        //  --------------------------------------------------------------------
         
         if(hanziComprobado == false){
             
@@ -476,17 +504,17 @@ public class ventana_principal extends javax.swing.JFrame {
             
             aplicar_metodo.agregar(entrada_final, this);    //  agregamos la entrada
             
-            for(int i=0; i<entrada_final.getObj().size(); i++){
-                
-                Unidad_min probando;
-                
-                probando = (Unidad_min) entrada_final.getObj().get(i);
-                
-                System.out.println("entro en el condicional de false y manda al metodo agregar: " + probando.getSimbolo());
+            jLabel_tareaEjecutada.setText("Se agregó " + reporteHanzi + " a la base de datos");
             
-            }
+            //  ----------------------------------------------------------------
+           
+        }else{
             
+            aplicar_metodo.compararDuplicados(entrada_final, this);   // si ya existe, debe determinar cual entrada conservar
+
+            Implementacion_metodos acceso_metodos = new Implementacion_metodos();
             
+            jLabel_tareaEjecutada.setText(acceso_metodos.getMensaje());
             
         }
         
@@ -726,7 +754,7 @@ public class ventana_principal extends javax.swing.JFrame {
         
         aplicar_metodo.modificar(miHanzi, this);  // aplicamos el metodo
         
-        jLabel_advertencia.setText("Entrada " + miHanzi.getIdiograma() + " fue modificada");
+        jLabel_tareaEjecutada.setText("Entrada " + miHanzi.getIdiograma() + " fue modificada");
         
         
         //  MODIFICACIONES EN LA TABLA HANZI
@@ -758,6 +786,8 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_entrada.getText();
             
+            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
+            
             //System.out.println("columna_busqueda equivale a " + "Hanzi");
             //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
             
@@ -768,9 +798,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_pinyin.getText();
             
-            //System.out.println("columna_busqueda equivale a " + "Fonetica");
-            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
-            
+            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && jTextField_pinyin.getText().isBlank() && !jTextField_traduccion.getText().isBlank()){
@@ -779,8 +807,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_traduccion.getText();
             
-            //System.out.println("columna_busqueda equivale a " + "Traduccion");
-            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() != 0 
                 && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
@@ -789,16 +816,14 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jComboBox_radical.getSelectedItem().toString();
             
-            //System.out.println("columna_busqueda equivale a " + "Radical");
-            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
             
             parametro_busqueda = "";
             
-            //System.out.println("columna_busqueda equivale a " + "Radical" + "deberia mostrar todo");
-            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
+            jLabel_tareaEjecutada.setText("Buscando todas las entradas guardadas");
             
         } else{
             
@@ -835,8 +860,8 @@ public class ventana_principal extends javax.swing.JFrame {
             
         }else{
             
-            jLabel_advertencia.setText("Introduzca solo el hanzi a eliminar");
-            
+            jLabel_tareaEjecutada.setText("Introduzca solo el hanzi a eliminar");
+          
         } 
         
         limpiar_campos();
@@ -1036,14 +1061,20 @@ public class ventana_principal extends javax.swing.JFrame {
         this.jLabel2 = jLabel2;
     }
 
-    public JLabel getjLabel_advertencia() {
-        return jLabel_advertencia;
+    public JLabel getjLabel_tareaEjecutada() {
+        return jLabel_tareaEjecutada;
     }
 
-    public void setjLabel_advertencia(JLabel jLabel_advertencia) {
-        this.jLabel_advertencia = jLabel_advertencia;
+    public void setjLabel_tareaEjecutada(JLabel jLabel_tareaEjecutada) {
+        this.jLabel_tareaEjecutada = jLabel_tareaEjecutada;
+    }
+    
+    public String setjLabel_tareaEjecutada(String jLabel_tareaEjecutada) {
+        return jLabel_tareaEjecutada;
     }
 
+    
+    
     public JProgressBar getjProgressBar1() {
         return jProgressBar1;
     }
@@ -1264,9 +1295,9 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLab_pinyin;
     private javax.swing.JLabel jLab_traduccion;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel_advertencia;
     private javax.swing.JLabel jLabel_contador_entradas;
     private javax.swing.JLabel jLabel_contador_entradas_unicas;
+    private javax.swing.JLabel jLabel_tareaEjecutada;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar_barraSup;

@@ -10,14 +10,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public interface Metodos {
+        
+    //  CRUD BASICO ------------------------------------------------------------
     
-    public void agregar(Hanzi hanzi);   // funcionalizado
+    public void agregar(Unidad_final hanzi_agregar, ventana_principal acceso);   // funcionalizado
     
     public void borrar(Hanzi hanzi_eliminar, ventana_principal acceso); //  funcionalizado
     
     public void modificar(Hanzi hanzi, ventana_principal acceso); // funcionalizado
     
     public void buscar(Hanzi hanzi, ventana_principal acceso);
+    
+    //  OPCIONES AVANZADAS  ----------------------------------------------------
     
     public boolean buscarExistencia(Unidad_final hanzi_aCorroborar, ventana_principal acceso);    // funcionalizado
     
@@ -32,5 +36,7 @@ public interface Metodos {
     public int contarInput();   //  funcionalizado
     
     public int contarHanziUnicos();
+    
+    public void compararDuplicados(Unidad_final hanzi_aCorroborar, ventana_principal acceso);
     
 }
