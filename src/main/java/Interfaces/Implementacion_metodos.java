@@ -471,13 +471,11 @@ public class Implementacion_metodos implements Metodos {
 
     //  CONSTATA QUE EL HANZI INGRESADO NO EXISTA PREVIAMENTE EN LA TABLA "HANZI"
     @Override
-    public boolean corroborarSingularidad(Hanzi hanzi_ingresado) {
+    public boolean corroborarSingularidad(Unidad_min hanzi_ingresado) {
         
         Connection conectar = conexion.conectar();  // conectamos
         
         boolean hanzi_singular = false;  //  variable que retornaremos
-        
-        //String aux = hanzi_ingresado.getIdiograma_conjunto().toString();
         
         try{
             
@@ -485,7 +483,7 @@ public class Implementacion_metodos implements Metodos {
             PreparedStatement corroborando_singularidad = conectar.prepareStatement("SELECT * FROM hanzi WHERE Hanzi = ?");
             
             //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
-            corroborando_singularidad.setString(1, hanzi_ingresado.getIdiograma());
+            corroborando_singularidad.setString(1, hanzi_ingresado.getSimbolo());
             
             //  la consulta en si
             ResultSet consulta = corroborando_singularidad.executeQuery();
@@ -515,81 +513,28 @@ public class Implementacion_metodos implements Metodos {
 
     //  AGREGA A "HANZI" DE MANERA INDIVIDUALIZADA CADA HANZI CON SU RADICAL Y PINYIN
     @Override
-    public void agregarSingularidades(Hanzi hanzi) {
+    public void agregarSingularidades(Unidad_min hanzi) {
         
         try{
             
             Connection conectar = conexion.conectar();
             
-            if(!hanzi.getRadical().isEmpty() && hanzi.getFonetica().isEmpty()){
-                
-                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Radical) "
-                        + "values (?,?)");
-
-                agregar.setString(1, hanzi.getIdiograma());
-                agregar.setString(2, hanzi.getRadical().toString());
-                
-                System.out.println("entro en 1");
-                System.out.println("el idiograma llego como " + hanzi.getIdiograma());
-                System.out.println("el radical llego al primer condicional como " + hanzi.getRadical().toString());
-                
-                agregar.executeUpdate();
-                
-            }else if(hanzi.getRadical().isEmpty() && hanzi.getFonetica().isEmpty()){
-                
-                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi) "
-                        + "values (?)");
-
-                agregar.setString(1, hanzi.getIdiograma());
-            
-                agregar.executeUpdate();
-                
-                System.out.println("entro en 2");
-            
-            }else{
-                
-                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Pinyin, Radical) "
+            PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Pinyin, Radical) "
                         + "values (?,?,?)");
 
-                agregar.setString(1, hanzi.getIdiograma());
-                agregar.setString(2, hanzi.getFonetica().toString());
-                agregar.setString(3, hanzi.getRadical().toString());
-                
-                 System.out.println("el radical llego al tercer como " + hanzi.getRadical().toString());
-                  System.out.println("el pinyin llego al tercer como " + hanzi.getFonetica().toString());
+                agregar.setString(1, hanzi.getSimbolo());
+                agregar.setString(2, hanzi.getPinyin());
+                agregar.setString(3, hanzi.getRadical());
                 
                 agregar.executeUpdate();
                 
-                System.out.println("entro en 3");
-                
-            }
-            
-            /*
-            if(!hanzi.getFonetica().isEmpty()){
-                
-                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Pinyin) "
-                        + "values (?,?)");
-
-                agregar.setString(1, hanzi.getIdiograma());
-                agregar.setString(2, hanzi.getFonetica());
-                
-                agregar.executeUpdate();
-            */
-            
-            
-            
                 conexion.desconectar();
                 
             }catch(Exception e){
                 
                     e.printStackTrace();
-                    
-                    //System.out.println("Error en metodo agregar singularidad");
-        
+                   
         }
-        
-        
-        
         
     }   //  FUNCIONANDO
 
@@ -965,13 +910,102 @@ public class Implementacion_metodos implements Metodos {
         
     }   //  FUNCIONANDO
 
+    //  SOBRE LA TABLA SECUNDARIA COMPARA ENTRADAS NUEVAS Y PREEXISTENTES, EVITANDO DUPLICADOS Y COMPLETANDO LA INFORMACION FALTANTE A PARTIR DE A NUEVA
+    @Override
+    public void compararDuplicados_singular(Unidad_min hanzi_aCorroborar, ventana_principal acceso) {
+        
+        try{
+            
+            Connection conectar = conexion.conectar();  // conectamos
+            
+            //  ENTRADA NUEVA --------------------------------------------------
+            
+            hanzi_aCorroborar.getSimbolo();
+            hanzi_aCorroborar.getPinyin();
+            hanzi_aCorroborar.getRadical();
+            
+            
+            //  RECUPERACION DE ENTRADA PREEXISTENTE ---------------------------
+            
+            //  buscamos en BD y seteamos un nuevo obj con lo preexistente------
+            Unidad_min entrada_antigua = new Unidad_min();  //  ENTRADA ANTIGUA
+            
+            //  variables aux para recuperar de la bd --------------------------
+            
+            String valorCampo1 = "";
+            String valorCampo2 = "";
+            
+            //  buscamos la entrada en la bd -----------------------------------
+            PreparedStatement recuperando_bd = conectar.prepareStatement("SELECT Radical, Pinyin FROM hanzi WHERE Hanzi = ?");
+            
+            //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
+            recuperando_bd.setString(1, hanzi_aCorroborar.getSimbolo());
+            
+            //  la consulta en si
+            ResultSet consulta = recuperando_bd.executeQuery();
+            
+            // Recuperar información de distintos campos
+            while (consulta.next()) {
+                
+                valorCampo1 = consulta.getString("Radical");
+                valorCampo2 = consulta.getString("Pinyin");
+                
+            }
+            
+            // seteamos con lo preexistente ------------------------------------
+            
+            entrada_antigua.setRadical(valorCampo1);    // seteamos un obj con valores preexistentes
+            entrada_antigua.setPinyin(valorCampo2);
+            
+            
+            //  ----------------------------------------------------------------
+            //  COMPARACION, ELEMENTO A ELEMENTO ENTRE ENTRADAS ----------------
+            //  ----------------------------------------------------------------
+            
+            //          --------------------------------------------------------
+            //  RADICAL --------------------------------------------------------
+            //          --------------------------------------------------------
+            
+            if(entrada_antigua.getRadical().equalsIgnoreCase("○")){
+                
+                PreparedStatement actualizar = conectar.prepareStatement(
+                        "update hanzi set Radical = ? where Hanzi = ?");
+                
+                actualizar.setString(1, hanzi_aCorroborar.getRadical());
+                actualizar.setString(2, hanzi_aCorroborar.getSimbolo());
+                
+                actualizar.executeUpdate();
+                
+            }
+            
+            //          --------------------------------------------------------
+            //  PINYIN  --------------------------------------------------------
+            //          --------------------------------------------------------
+            
+            if(entrada_antigua.getPinyin().contains("...")){  // PINYIN
+                
+                PreparedStatement actualizar_2 = conectar.prepareStatement(
+                        "update hanzi set Pinyin = ? where Hanzi = ?");
+                
+                actualizar_2.setString(1, hanzi_aCorroborar.getPinyin());
+                actualizar_2.setString(2, hanzi_aCorroborar.getSimbolo());
+                
+                actualizar_2.executeUpdate();
+                
+                System.out.println("entro en el if de pinyin");
+                
+            }
+                
+            conexion.desconectar();
+        
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+    }   //  FUNCIONANDO
+
 }
-    
-
-
-            
-            
-            
-            
         
      

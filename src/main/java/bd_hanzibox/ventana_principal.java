@@ -384,6 +384,10 @@ public class ventana_principal extends javax.swing.JFrame {
     
         //  ENFOQUE DE PRUEBA BASADO EN ARRAYS
         
+        //  --------------------------------------------------------------------
+        //  ---------------------- TABLA PRINCIPAL -----------------------------
+        //  --------------------------------------------------------------------
+        
         // CAPTURA DE ENTRADAS  ------------------------------------------------
         
         entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
@@ -396,7 +400,7 @@ public class ventana_principal extends javax.swing.JFrame {
         entradaRadical_3 = jComboBox_radical_3.getSelectedItem().toString();
         entradaRadical_4 = jComboBox_radical_4.getSelectedItem().toString();
         
-        //  --------------------------------------------------------------------
+        //  ComboBox -----------------------------------------------------------
         
         //  evitamos valores en blanco  ----------------------------------------
         
@@ -467,34 +471,29 @@ public class ventana_principal extends javax.swing.JFrame {
                 unidad_semantica.setTraduccion(entradaTraduccion);
                 unidad_semantica.setEjemplo(entradaEjemplo);
                 
-                //System.out.println("el radical ingresado fue " + rad_coleccion.get(i));
-                //System.out.println("unidad_semnatica es " + unidad_semantica.getSimbolo());
-                //System.out.println("el pinyin ingresado es " + piny_coleccion[i]);
-                
                 conjunto_semantico.add(unidad_semantica);   //  almacenamos los obj seteados en un arraylist, que sera parametro para setear el obj final
                 
             }
             
-            //  ----------------------------------------------------------------
-            
-            //  usamos "Unidad_min" para setear "Unidad_final"  ----------------
-            
-            Unidad_final entrada_final = new Unidad_final();    //  instanciamos el obj final, la sintesis de la expresion 
-            
-            entrada_final.setObj(conjunto_semantico);   // esta seria la entrada en su total, con cada hanzi, pinyin y radical
-            
-            entrada_final.setTraduccion(entradaTraduccion);
-            entrada_final.setEjemplo(entradaEjemplo);
-            
-            //  ----------------------------------------------------------------
-            
-            //  CORROBORAR QUE NO EXISTA PREVIAMENTE EN LA BASE DE DATOS LA ENTRADA ACTUAL
-            
-            Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
-            
-            boolean hanziComprobado = aplicar_metodo.buscarExistencia(entrada_final, this);  //  seteado el objeto le aplicamos el metodo para buscar el atributo en la BD. Devolvera true o false
+        //  --------------------------------------------------------------------
+        //  usamos "Unidad_min" para setear "Unidad_final"  --------------------
+        Unidad_final entrada_final = new Unidad_final();    //  instanciamos el obj final, la sintesis de la expresion 
 
+        entrada_final.setObj(conjunto_semantico);   // esta seria la entrada en su total, con cada hanzi, pinyin y radical
+
+        entrada_final.setTraduccion(entradaTraduccion);
+        entrada_final.setEjemplo(entradaEjemplo);
+
+        //  --------------------------------------------------------------------
+        //  CORROBORAR QUE LA ENTRADA ACTUAL NO EXISTA PREVIAMENTE EN LA BD
+        //  --------------------------------------------------------------------
+        Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
+
+        boolean hanziComprobado = aplicar_metodo.buscarExistencia(entrada_final, this);  //  seteado el objeto le aplicamos el metodo para buscar el atributo en la BD. Devolvera true o false
+
+        //  --------------------------------------------------------------------
         //  AGREGAR A LA BD HANZI_ENTRADA SI SE COMPROBO QUE NO EXISTE YA 
+        //  --------------------------------------------------------------------
         
         //  informamos la entrada agregada -------------------------------------
         String reporteHanzi = "";
@@ -535,10 +534,63 @@ public class ventana_principal extends javax.swing.JFrame {
                 jLabel_tareaEjecutada_3.setText(acceso_metodos.getMensaje_3());
                 
             }
+        }
+        
+        //  --------------------------------------------------------------------
+        //  ---------------------- TABLA SECUNDARIA ----------------------------
+        //  --------------------------------------------------------------------
+        
+        /*
+        debemos recorrer el obj "entrada_final" constituido por otros obj de tipo
+        Unidad_min y recuperar el atributo Simbolo de cada uno para agregarlo a 
+        la tabla secundaria, junto con el pinyin y el radical correspondientes
+        */
+        
+        String recuperando_hanzi_ind;
+        
+        //  iteracion recuperando cada elemento de entrada y analizandolo ------
+        
+        for(int i=0; i < entrada_final.getObj().size(); i++){
             
+            Unidad_min auxiliar = new Unidad_min(); // aux para recuperar c/u de los obj constituyentes de entrada_final
+        
+            auxiliar = (Unidad_min)entrada_final.getObj().get(i);   // cast en cada iteracion
             
+            auxiliar.getSimbolo();  // recuperacion de los atributos
+            auxiliar.getRadical();
+            auxiliar.getPinyin();
+            
+            //  COMPROBACION DE EXISTENCIA PREVIA EN BD ------------------------
+            
+            boolean comprobacion = aplicar_metodo.corroborarSingularidad(auxiliar);    // devolvera true (ya existe) o false (no existe)
+            
+            //  AGREGACION A BD ------------------------------------------------
+            
+            if(!comprobacion){
+                
+                aplicar_metodo.agregarSingularidades(auxiliar);
+                
+            }
+            
+            //  DE EXISTIR COMPLETA LA INFO PREEXISTENTE CON LA ENTRADA NUEVA --
+            
+            if(comprobacion){
+                
+                aplicar_metodo.compararDuplicados_singular(auxiliar, this);
+                
+            }
             
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         //------------------- actualizacion de contadores ----------------------

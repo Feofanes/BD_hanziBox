@@ -4,6 +4,7 @@ package Interfaces;
 import Entradas.Hanzi;
 import Entradas.Hanzi_molde;
 import Entradas.Unidad_final;
+import Entradas.Unidad_min;
 import bd_hanzibox.ventana_principal;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -27,16 +28,20 @@ public interface Metodos {
     
     public void mostrarTabla(String columna_busqueda, ventana_principal acceso);  // funcionalizado
     
-    public boolean corroborarSingularidad(Hanzi hanzi_ingresado);
-    
-    public void agregarSingularidades(Hanzi hanzi);
-    
-    public void modificarSingularidad(Hanzi hanzi, ventana_principal acceso);
-    
+    public void compararDuplicados(Unidad_final hanzi_aCorroborar, ventana_principal acceso);
+        
     public int contarInput();   //  funcionalizado
     
     public int contarHanziUnicos();
     
-    public void compararDuplicados(Unidad_final hanzi_aCorroborar, ventana_principal acceso);
+    //  TABLA SECUNDARIA
+    
+    public boolean corroborarSingularidad(Unidad_min hanzi_ingresado);
+    
+    public void agregarSingularidades(Unidad_min hanzi);
+    
+    public void compararDuplicados_singular(Unidad_min hanzi_aCorroborar, ventana_principal acceso);
+    
+    public void modificarSingularidad(Hanzi hanzi, ventana_principal acceso);
     
 }
