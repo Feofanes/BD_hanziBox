@@ -139,6 +139,7 @@ public class ventana_principal extends javax.swing.JFrame {
         jLabel_contador_entradas_unicas = new javax.swing.JLabel();
         jLabel_tareaEjecutada = new javax.swing.JLabel();
         jLabel_tareaEjecutada_2 = new javax.swing.JLabel();
+        jLabel_tareaEjecutada_3 = new javax.swing.JLabel();
         jMenuBar_barraSup = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -289,44 +290,50 @@ public class ventana_principal extends javax.swing.JFrame {
                                 .addComponent(jComboBox_radical_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addComponent(jComboBox_radical_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton_modificar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton_buscar))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton_modificar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton_buscar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton_borrar))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton_borrar))))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel_contador_entradas_unicas)
+                                    .addComponent(jLabel_contador_entradas)))))
                     .addComponent(jLabel_tareaEjecutada_2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel_contador_entradas)
-                                .addGap(91, 91, 91)
-                                .addComponent(jLabel_contador_entradas_unicas)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 491, Short.MAX_VALUE))
+                    .addComponent(jLabel_tareaEjecutada_3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jTextField_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLab_entrada)))
+                        .addComponent(jLab_entrada))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_contador_entradas)
+                            .addComponent(jTextField_entrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox_radical, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox_radical_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox_radical_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox_radical_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox_radical_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_contador_entradas_unicas))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLab_pinyin)
@@ -348,12 +355,10 @@ public class ventana_principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_tareaEjecutada_2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_contador_entradas_unicas)
-                    .addComponent(jLabel_contador_entradas))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jLabel_tareaEjecutada_2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_tareaEjecutada_3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -413,7 +418,7 @@ public class ventana_principal extends javax.swing.JFrame {
         
         //  --------------------------------------------------------------------
             
-          int n_hanzi_entrada = entradaHanzi.length();    // num de hanzi introducidos
+        int n_hanzi_entrada = entradaHanzi.length();    // num de hanzi introducidos
 
         ArrayList<Unidad_min> conjunto_semantico = new ArrayList<>(); //  creamos un array con obj hanzi
 
@@ -430,8 +435,7 @@ public class ventana_principal extends javax.swing.JFrame {
                     piny_coleccion[i] = "...";
                     System.out.println("la extension del array fue " + n_hanzi_entrada);
                     
-                }
-                
+                } 
             }
             
             String [] h_coleccion = entradaHanzi.split("");
@@ -520,9 +524,31 @@ public class ventana_principal extends javax.swing.JFrame {
             
             jLabel_tareaEjecutada.setText(acceso_metodos.getMensaje());
             
-            jLabel_tareaEjecutada_2.setText(acceso_metodos.getMensaje_2());
+            if(acceso_metodos.getMensaje_2() != null){
+                
+                jLabel_tareaEjecutada_2.setText(acceso_metodos.getMensaje_2());
+                
+            }
+            
+            if(acceso_metodos.getMensaje_3() != null){
+                
+                jLabel_tareaEjecutada_3.setText(acceso_metodos.getMensaje_3());
+                
+            }
+            
+            
             
         }
+        
+        
+        //------------------- actualizacion de contadores ----------------------
+            
+            n_input = aplicar_metodo.contarInput();
+            n_hanzi_unicos = aplicar_metodo.contarHanziUnicos();
+            jLabel_contador_entradas.setText("Palabras/expresiones: " + n_input);
+            jLabel_contador_entradas_unicas.setText("Hanzis: " + n_hanzi_unicos);
+
+        //----------------------------------------------------------------------
         
         
         
@@ -794,9 +820,6 @@ public class ventana_principal extends javax.swing.JFrame {
             
             jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
             
-            //System.out.println("columna_busqueda equivale a " + "Hanzi");
-            //System.out.println("el obj a buscar equivale a " + parametro_busqueda);
-            
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && !jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
             
@@ -831,6 +854,20 @@ public class ventana_principal extends javax.swing.JFrame {
             
             jLabel_tareaEjecutada.setText("Buscando todas las entradas guardadas");
             
+            jLabel_tareaEjecutada_2.setText("");    //  limpieza de reportes de accion
+            
+            jLabel_tareaEjecutada_3.setText("");
+            
+            
+            //------------------- actualizacion de contadores ------------------
+            
+            n_input = aplicar_metodo.contarInput();
+            n_hanzi_unicos = aplicar_metodo.contarHanziUnicos();
+            jLabel_contador_entradas.setText("Palabras/expresiones: " + n_input);
+            jLabel_contador_entradas_unicas.setText("Hanzis: " + n_hanzi_unicos);
+
+            //------------------------------------------------------------------
+            
         } else{
             
             columna_busqueda = null;
@@ -864,11 +901,22 @@ public class ventana_principal extends javax.swing.JFrame {
             
             aplicar_metodo.borrar(miHanzi, this);   //  eliminamos con el Hanzi como unico parametro
             
+            jLabel_tareaEjecutada.setText("La entrada " + miHanzi.getIdiograma() + " fue eliminada.");
+            
         }else{
             
             jLabel_tareaEjecutada.setText("Introduzca solo el hanzi a eliminar");
           
         } 
+        
+        //------------------- actualizacion de contadores ----------------------
+            
+            n_input = aplicar_metodo.contarInput();
+            n_hanzi_unicos = aplicar_metodo.contarHanziUnicos();
+            jLabel_contador_entradas.setText("Palabras/expresiones: " + n_input);
+            jLabel_contador_entradas_unicas.setText("Hanzis: " + n_hanzi_unicos);
+
+        //----------------------------------------------------------------------
         
         limpiar_campos();
         
@@ -1315,6 +1363,7 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_contador_entradas_unicas;
     private javax.swing.JLabel jLabel_tareaEjecutada;
     private javax.swing.JLabel jLabel_tareaEjecutada_2;
+    private javax.swing.JLabel jLabel_tareaEjecutada_3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar_barraSup;
