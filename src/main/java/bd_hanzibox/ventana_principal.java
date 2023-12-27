@@ -84,12 +84,13 @@ public class ventana_principal extends javax.swing.JFrame {
         
         jLabel_contador_entradas_unicas.setText("Hanzis: " + n_hanzi_unicos);
         
-        //limpiar_campos();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     }
     
     
-    //  METODOS ----------------------------------------------------------------
+    // --------------------------- METODOS -------------------------------------
+    // -------------------------------------------------------------------------
     
     public void limpiar_campos(){
         
@@ -142,6 +143,18 @@ public class ventana_principal extends javax.swing.JFrame {
 
     }
     
+    public void abrirProcesadorTexto(){
+        
+        procesador_texto nueva_ventana = new procesador_texto();
+        
+        //ventana_principal ventana_inicial = new ventana_principal();
+        
+        nueva_ventana.setVisible(true);
+        
+        //this.dispose();
+        
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -176,6 +189,7 @@ public class ventana_principal extends javax.swing.JFrame {
         jLabel_tareaEjecutada_3 = new javax.swing.JLabel();
         jMenuBar_barraSup = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         jTextField3.setText("jTextField1");
@@ -310,6 +324,15 @@ public class ventana_principal extends javax.swing.JFrame {
                 jMenu1ActionPerformed(evt);
             }
         });
+
+        jMenuItem1.setText("Procesador de texto");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar_barraSup.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -1135,8 +1158,7 @@ public class ventana_principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextField_entradaKeyReleased
 
-    
-    //  PRIMER COMBO
+    //  SIN USO
     private void jComboBox_radicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_radicalActionPerformed
         
         
@@ -1144,24 +1166,13 @@ public class ventana_principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jComboBox_radicalActionPerformed
 
-    //  AL HACER CLICK SE DEBE VISUALIZAR LA BD TOTAL EN TODA LA VENTANA
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        
-        
-        
-        
-        
-        
-        
+
         
     }//GEN-LAST:event_jMenu1ActionPerformed
 
-    
-    //  SEGUNDO COMBO
+    //  SIN USO
     private void jComboBox_radical_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_radical_2ActionPerformed
-        
-        //  EJECUTA METODO SI ESTA DISPONIBLE EL COMBO  ------------------------
-        
         
     }//GEN-LAST:event_jComboBox_radical_2ActionPerformed
 
@@ -1187,9 +1198,19 @@ public class ventana_principal extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_jComboBox_radical_2KeyReleased
+
+    //  ABRE LA VENTANA DE PROCESADOR DE TEXTO
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        abrirProcesadorTexto();
+
+        dispose();
+
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     
     
-    //  GETTERS AND SETTERS ----------------------------------------------------
+    //  ------------------- GETTERS AND SETTERS --------------------------------
     //--------------------------------------------------------------------------
     
     public JButton getjButton4() {
@@ -1292,8 +1313,6 @@ public class ventana_principal extends javax.swing.JFrame {
         return jLabel_tareaEjecutada;
     }
 
-    
-    
     public JProgressBar getjProgressBar1() {
         return jProgressBar1;
     }
@@ -1532,6 +1551,7 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar_barraSup;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField3;

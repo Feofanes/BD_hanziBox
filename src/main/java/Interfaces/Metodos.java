@@ -50,4 +50,9 @@ public interface Metodos {
     
     public void modificarSingularidad(Unidad_final hanzi, ventana_principal acceso);
     
+    
+    //  PROCESADOR DE TEXTO
+    
+    public void buscarSeleccion(String texto_seleccionado);
+    
 }

@@ -1059,6 +1059,53 @@ public class Implementacion_metodos implements Metodos {
         
     }   //  FUNCIONANDO
     
+
+    //  PROCESASOR DE TEXTO ----------------------------------------------------
+    //  ------------------------------------------------------------------------
+    
+    
+    //  BUSCA EN TABLA PRINCIPAL EL TEXTO SELECCIONADO
+    @Override
+    public void buscarSeleccion(String texto_seleccionado) {
+        
+        try{
+            
+            Connection conectar = conexion.conectar();  // conectamos
+            
+             //  buscamos en el campo
+            PreparedStatement buscando = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi = ?");
+            
+            buscando.setString(1, texto_seleccionado);
+            
+            //  la consulta en si
+            ResultSet consulta = buscando.executeQuery();
+            
+            //  cambiamos el valor de la instancia de retorno segun corresponda a la busqueda
+            if(consulta.next()){
+                
+                
+                
+                System.out.println("el texto seleccionado SI esta en BD");
+                
+            }else{
+                
+                System.out.println("el texto no esta");
+                
+            }
+                
+            conexion.desconectar();
+        
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+        
+        
+        
+    }
+    
     
 
 }
