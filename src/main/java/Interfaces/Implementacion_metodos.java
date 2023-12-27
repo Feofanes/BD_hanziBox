@@ -7,6 +7,7 @@ import Entradas.Unidad_final;
 import Entradas.Unidad_min;
 import java.sql.Connection;
 import bd_hanzibox.*;
+import static bd_hanzibox.procesador_texto.resultados_seleccion;
 import bd_hanzibox.ventana_principal;
 import static bd_hanzibox.ventana_principal.busqueda_resultados;
 import java.awt.Font;
@@ -595,8 +596,6 @@ public class Implementacion_metodos implements Metodos {
             
             if(columna_busqueda == null){
                 
-                //System.out.println("error");
-                
                 acceso.setMsj_advertencia("Introduzca un solo parametro de busqueda");
                 
             }else if(columna_busqueda.isBlank()){
@@ -607,11 +606,8 @@ public class Implementacion_metodos implements Metodos {
             
                 ResultSet consulta = seleccion.executeQuery();
                 
-                    //System.out.println("Entro en el condicional de TODO");
-                
-                
                 ResultSetMetaData datos = consulta.getMetaData();
-            int cantidadColumnas = datos.getColumnCount();
+                int cantidadColumnas = datos.getColumnCount();
             
             //modelo.addColumn("Codigo");
             modelo.addColumn("Radical");
@@ -619,8 +615,6 @@ public class Implementacion_metodos implements Metodos {
             modelo.addColumn("Fonetica");
             modelo.addColumn("Traduccion");
             modelo.addColumn("Ejemplo");
-            
-            //int anchos [] = {40, 40, 40, 40, 40};
             
             for(int i = 0; i < cantidadColumnas; i++){
                 
@@ -655,12 +649,7 @@ public class Implementacion_metodos implements Metodos {
             
             seleccion.setString(1, "%" + elemento_busqueda + "%");
             
-            System.out.println("en el metodo la columna donde busca es " + columna_busqueda);
-            System.out.println("en el metodo la columna la palabra buscada es " + elemento_busqueda);
-            
             ResultSet consulta = seleccion.executeQuery();
-            
-                System.out.println("entro en el condicional de else");
             
             ResultSetMetaData datos = consulta.getMetaData();
             int cantidadColumnas = datos.getColumnCount();
@@ -671,8 +660,6 @@ public class Implementacion_metodos implements Metodos {
             modelo.addColumn("Fonetica");
             modelo.addColumn("Traduccion");
             modelo.addColumn("Ejemplo");
-            
-            //int anchos [] = {40, 40, 40, 40, 40};
             
             for(int i = 0; i < cantidadColumnas; i++){
                 
@@ -1066,16 +1053,18 @@ public class Implementacion_metodos implements Metodos {
     
     //  BUSCA EN TABLA PRINCIPAL EL TEXTO SELECCIONADO
     @Override
-    public void buscarSeleccion(String texto_seleccionado) {
+    public boolean buscarSeleccion(String texto_seleccionado) {
+        
+        boolean registro_existente = false;
         
         try{
             
             Connection conectar = conexion.conectar();  // conectamos
             
              //  buscamos en el campo
-            PreparedStatement buscando = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi = ?");
+            PreparedStatement buscando = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi LIKE ?");
             
-            buscando.setString(1, texto_seleccionado);
+            buscando.setString(1, "%" + texto_seleccionado + "%");
             
             //  la consulta en si
             ResultSet consulta = buscando.executeQuery();
@@ -1083,16 +1072,16 @@ public class Implementacion_metodos implements Metodos {
             //  cambiamos el valor de la instancia de retorno segun corresponda a la busqueda
             if(consulta.next()){
                 
+                mostrarTablaProcesador(texto_seleccionado);
                 
-                
-                System.out.println("el texto seleccionado SI esta en BD");
+                registro_existente = true;
                 
             }else{
                 
-                System.out.println("el texto no esta");
+                registro_existente = false;
                 
             }
-                
+             
             conexion.desconectar();
         
         }catch(SQLException e){
@@ -1101,13 +1090,63 @@ public class Implementacion_metodos implements Metodos {
             
         }
         
+        return registro_existente;
         
-        
-        
-    }
-    
-    
+    }   //  FUNCIONANDO
 
-}
+    //  MUESTRA LA TABLA PRINCIPAL CON COINCIDENCIAS DE LA BUSQUEDA DEL TEXTO SELECCIONADO
+    @Override
+    public void mostrarTablaProcesador(String mostrar_texto_seleccionado) {
         
+         try{
+             
+            Connection conectar = conexion.conectar();
+    
+            DefaultTableModel modelo = new DefaultTableModel(); //  modelamos la tabla
+
+            resultados_seleccion.setModel(modelo);
+            
+            resultados_seleccion.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            
+             PreparedStatement seleccion = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi LIKE ?");
+             
+             seleccion.setString(1, "%" + mostrar_texto_seleccionado + "%");
+                     
+             ResultSet consulta = seleccion.executeQuery();
+            
+             ResultSetMetaData datos = consulta.getMetaData();
+             int cantidadColumnas = datos.getColumnCount();
+             
+             modelo.addColumn("Radical");
+             modelo.addColumn("Hanzi");
+             modelo.addColumn("Fonetica");
+             modelo.addColumn("Traduccion");
+             modelo.addColumn("Ejemplo");
+             
+             for(int i = 0; i < cantidadColumnas; i++){
+                
+                resultados_seleccion.getColumnModel().getColumn(i);
+                
+            }
+             
+             while(consulta.next()){
+                
+                Object arreglo[] = new Object[cantidadColumnas];
+                
+                for(int i = 0; i < cantidadColumnas; i++){
+                    
+                    arreglo[i] = consulta.getObject(i + 1);
+                }
+                modelo.addRow(arreglo);
+            }
+            
+            conexion.desconectar();
+                
+                }catch(SQLException e){
+                    
+                    e.printStackTrace();
+                    
+                }
+        }   //FUNCIONANDO
+}       
      

@@ -5,6 +5,7 @@ import Entradas.Hanzi;
 import Entradas.Hanzi_molde;
 import Entradas.Unidad_final;
 import Entradas.Unidad_min;
+import bd_hanzibox.procesador_texto;
 import bd_hanzibox.ventana_principal;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -53,6 +54,8 @@ public interface Metodos {
     
     //  PROCESADOR DE TEXTO
     
-    public void buscarSeleccion(String texto_seleccionado);
+    public boolean buscarSeleccion(String texto_seleccionado);
+    
+    public void mostrarTablaProcesador(String mostrar_texto_seleccionado);
     
 }
