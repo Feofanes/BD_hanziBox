@@ -15,7 +15,7 @@ public interface Metodos {
         
     //  CRUD BASICO ------------------------------------------------------------
     
-    public void agregar(Unidad_final hanzi_agregar, ventana_principal acceso);   // funcionalizado
+    public void agregar(Unidad_final hanzi_agregar);   // funcionalizado
     
     public void borrar(Hanzi hanzi_eliminar, ventana_principal acceso); //  funcionalizado
     
@@ -31,7 +31,7 @@ public interface Metodos {
     
     public void mostrarTabla(String columna_busqueda, ventana_principal acceso);  // funcionalizado
     
-    public void compararDuplicados(Unidad_final hanzi_aCorroborar, ventana_principal acceso);
+    public void compararDuplicados(Unidad_final hanzi_aCorroborar);
         
     public int contarInput();   //  funcionalizado
     
@@ -41,21 +41,24 @@ public interface Metodos {
     
     
     
-    //  TABLA SECUNDARIA
+    //  TABLA SECUNDARIA -------------------------------------------------------
     
     public boolean corroborarSingularidad(Unidad_min hanzi_ingresado);
     
     public void agregarSingularidades(Unidad_min hanzi);
     
-    public void compararDuplicados_singular(Unidad_min hanzi_aCorroborar, ventana_principal acceso);
+    public void compararDuplicados_singular(Unidad_min hanzi_aCorroborar);
     
     public void modificarSingularidad(Unidad_final hanzi, ventana_principal acceso);
     
     
-    //  PROCESADOR DE TEXTO
+    
+    //  PROCESADOR DE TEXTO ----------------------------------------------------
     
     public boolean buscarSeleccion(String texto_seleccionado);
     
     public void mostrarTablaProcesador(String mostrar_texto_seleccionado);
+    
+    public boolean buscarExistenciaProcesador(Unidad_final hanzi_aCorroborar, procesador_texto acceso); 
     
 }

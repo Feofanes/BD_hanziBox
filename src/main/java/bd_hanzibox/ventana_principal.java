@@ -589,7 +589,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             // recuperamos la entrada original en su totalidad (entrada_final)
             
-            aplicar_metodo.agregar(entrada_final, this);    //  agregamos la entrada
+            aplicar_metodo.agregar(entrada_final);    //  agregamos la entrada     BORRE EL THIS
             
             jLabel_tareaEjecutada.setText("Se agregó " + reporteHanzi + " a la base de datos");
             
@@ -597,7 +597,7 @@ public class ventana_principal extends javax.swing.JFrame {
            
         }else{
             
-            aplicar_metodo.compararDuplicados(entrada_final, this);   // si ya existe, debe determinar cual entrada conservar
+            aplicar_metodo.compararDuplicados(entrada_final);   // si ya existe, debe determinar cual entrada conservar
 
             Implementacion_metodos acceso_metodos = new Implementacion_metodos();
             
@@ -656,7 +656,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             if(comprobacion){
                 
-                aplicar_metodo.compararDuplicados_singular(auxiliar, this);
+                aplicar_metodo.compararDuplicados_singular(auxiliar);   // le elimine el this
                 
             }
             

@@ -68,9 +68,9 @@ public class Implementacion_metodos implements Metodos {
     //  CRUD BASICO (tabla principal) ------------------------------------------
     //  ------------------------------------------------------------------------
     
-    //  AGREGAR ENTRADAS
+    //  AGREGAR ENTRADAS    -- le borre el acceso a ver que onda
     @Override
-    public void agregar(Unidad_final hanzi_agregar, ventana_principal acceso) {
+    public void agregar(Unidad_final hanzi_agregar) {
         
                 Connection conectar = conexion.conectar();
         
@@ -410,9 +410,9 @@ public class Implementacion_metodos implements Metodos {
         
     }
     
-    //  SOBRE LA TABLA SECUNDARIA COMPARA ENTRADAS NUEVAS Y PREEXISTENTES, EVITANDO DUPLICADOS Y COMPLETANDO LA INFORMACION FALTANTE A PARTIR DE A NUEVA
+    //  SOBRE LA TABLA SECUNDARIA COMPARA ENTRADAS NUEVAS Y PREEXISTENTES, EVITANDO DUPLICADOS Y COMPLETANDO LA INFORMACION FALTANTE A PARTIR DE A NUEVA    -- BORRE EL ACCESO
     @Override
-    public void compararDuplicados_singular(Unidad_min hanzi_aCorroborar, ventana_principal acceso) {
+    public void compararDuplicados_singular(Unidad_min hanzi_aCorroborar) {
         
         try{
             
@@ -504,7 +504,7 @@ public class Implementacion_metodos implements Metodos {
             
         }
         
-    }   //  FUNCIONANDO
+    }   //  FUNCIONANDO     -- le elimine el acceso
 
 
     //  FUNCIONES AVANZADAS ----------------------------------------------------
@@ -756,9 +756,9 @@ public class Implementacion_metodos implements Metodos {
         
     }   //  FUNCIONANDO
 
-    //  COMPARA ENTRADA NUEVA Y PREEXISTENTE, EVITANDO DUPLICADOS Y COMPLETANDO LA INFORMACION FALTANTE A PARTIR DE A NUEVA
+    //  COMPARA ENTRADA NUEVA Y PREEXISTENTE, EVITANDO DUPLICADOS Y COMPLETANDO LA INFORMACION FALTANTE A PARTIR DE A NUEVA     -- LE BORRE EL ACCESO
     @Override
-    public void compararDuplicados(Unidad_final hanzi_aCorroborar, ventana_principal acceso) {
+    public void compararDuplicados(Unidad_final hanzi_aCorroborar) {
         
         try{
             
@@ -1148,5 +1148,72 @@ public class Implementacion_metodos implements Metodos {
                     
                 }
         }   //FUNCIONANDO
+
+    @Override
+    public boolean buscarExistenciaProcesador(Unidad_final hanzi_aCorroborar, procesador_texto acceso) {
+        
+        
+        Connection conectar = conexion.conectar();  // conectamos
+        
+        boolean registroExistente = false;  //  variable que retornaremos
+        
+        try{
+            
+            //  variables aux para el for --------------------------------------
+            
+            String recuperandoEntrada = "";
+            String simbolo = "";
+            Unidad_min aux = new Unidad_min();
+            
+            //System.out.println("el tamano es " + hanzi_aCorroborar.getObj().size());
+            
+            for(int i = 0; i<hanzi_aCorroborar.getObj().size(); i++){
+                
+                aux = (Unidad_min) hanzi_aCorroborar.getObj().get(i);
+       
+                // Acceder a los atributos de Unidad_min
+                simbolo = aux.getSimbolo();
+                
+                recuperandoEntrada = recuperandoEntrada + simbolo;
+                
+            }
+            
+            //  ----------------------------------------------------------------
+            
+             //  buscamos en el campo
+            PreparedStatement chequeandoExistencia = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi = ?");
+            
+             //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
+            chequeandoExistencia.setString(1, recuperandoEntrada);
+            
+            //  la consulta en si
+            ResultSet consulta = chequeandoExistencia.executeQuery();
+            
+            //  cambiamos el valor de la instancia de retorno segun corresponda a la busqueda
+            if(consulta.next()){
+                
+                registroExistente = true;
+                
+                System.out.println("Encontro que ya esta");
+                
+            }else{
+                
+                registroExistente = false;
+                
+                System.out.println("No lo encontro");
+                
+            }
+            
+            conexion.desconectar();
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+        return registroExistente;
+        
+    }
 }       
      
