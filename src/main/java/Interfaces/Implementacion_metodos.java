@@ -1004,8 +1004,9 @@ public class Implementacion_metodos implements Metodos {
         
     }   //  FUNCIONANDO
 
+    //  AUTOCOMPLETA EL RADICAL EN TIEMPO REAL, SI ES QUE ESE HANZI YA EXISTE EN LA BD
     @Override
-    public String autocompletarRadicales(Unidad_min hanzi_autocompletar, ventana_principal acceso) {
+    public String autocompletarRadicales(Unidad_min hanzi_autocompletar) {
         
         String radical_seleccionado= "";
         
@@ -1027,7 +1028,7 @@ public class Implementacion_metodos implements Metodos {
             // Verificamos si hay algún resultado antes de intentar acceder a él
             if (consulta.next()) {
                 
-                radical_seleccionado = consulta.getString("Radical");
+                radical_seleccionado = consulta.getString("Radical");   // recuperamos el string del campo "Radical"
                 
             } 
             
@@ -1037,9 +1038,9 @@ public class Implementacion_metodos implements Metodos {
             
         }
         
-        return radical_seleccionado;
+        return radical_seleccionado;    // retornamos el string del campo radical
         
-    }
+    }   //  FUNCIONANDO
     
     
 

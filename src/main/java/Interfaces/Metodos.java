@@ -36,7 +36,7 @@ public interface Metodos {
     
     public int contarHanziUnicos();
     
-    public String autocompletarRadicales(Unidad_min hanzi_autocompletar, ventana_principal acceso);
+    public String autocompletarRadicales(Unidad_min hanzi_autocompletar);
     
     
     

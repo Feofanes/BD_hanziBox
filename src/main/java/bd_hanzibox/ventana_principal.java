@@ -89,7 +89,7 @@ public class ventana_principal extends javax.swing.JFrame {
     }
     
     
-    //  METODOS
+    //  METODOS ----------------------------------------------------------------
     
     public void limpiar_campos(){
         
@@ -107,7 +107,42 @@ public class ventana_principal extends javax.swing.JFrame {
         //  queda pendiente limpiar el comboBox
         
         
-    }   
+    }  
+    
+    public void autocompletarCombo(JComboBox combo, int posicion_array){
+        
+        //  AUTOCOMPLETAR ------------------------------------------
+        
+        if (combo.isEnabled()) {
+
+            Implementacion_metodos aplicar_metodo = new Implementacion_metodos();
+
+            Unidad_min entrada = new Unidad_min();    //  instanciamos el obj final, la sintesis de la expresion 
+
+            int n_hanzi = entradaHanzi.length();
+
+            String[] deglosando_hanzi = new String[n_hanzi];    // almacenamos los hanzi individuales
+
+            // CAPTURA DE ENTRADAS  --------------------------------------------
+            entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
+
+            // RECUPERAMOS EL HANZI ESPECIFICO SEGUN POSICION ------------------
+            deglosando_hanzi = entradaHanzi.split("");  // individualizamos los hanzi ingresados
+
+            String captura_hanzi_ind = deglosando_hanzi[posicion_array]; // es 1 y no dos porque arranca en 0 el array
+
+            entrada.setSimbolo(captura_hanzi_ind);
+
+            String autocompletado = aplicar_metodo.autocompletarRadicales(entrada);
+
+            System.out.println("en ventana pri el string enviado por el metodo fue " + autocompletado);
+
+            combo.setSelectedItem(autocompletado);
+
+        }
+
+
+    }
     
     
     @SuppressWarnings("unchecked")
@@ -235,9 +270,27 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"", "一", "口", "人" }));
         jComboBox_radical_2.setSelectedItem("");
         jComboBox_radical_2.setEnabled(false);
+        jComboBox_radical_2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_radical_2ItemStateChanged(evt);
+            }
+        });
+        jComboBox_radical_2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jComboBox_radical_2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jComboBox_radical_2FocusLost(evt);
+            }
+        });
         jComboBox_radical_2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_radical_2ActionPerformed(evt);
+            }
+        });
+        jComboBox_radical_2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jComboBox_radical_2KeyReleased(evt);
             }
         });
 
@@ -826,7 +879,8 @@ public class ventana_principal extends javax.swing.JFrame {
                 //System.out.println("El número de hanzi escritos es de " + n_hanzi_introducidos);
 
                 if (n_hanzi_introducidos == 1) {
-                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracter");
+                    
+                    autocompletarCombo(jComboBox_radical, 0);   // el n del combo -1, porque el array empieza en 0
                     
                     jComboBox_radical_2.setEnabled(false);
                     jComboBox_radical_3.setEnabled(false);
@@ -835,22 +889,29 @@ public class ventana_principal extends javax.swing.JFrame {
                 } else if (n_hanzi_introducidos == 2) {
                     
                     jComboBox_radical_2.setEnabled(true);
+                    
+                    autocompletarCombo(jComboBox_radical_2, 1); // el n del combo -1, porque el array empieza en 0
+                    
                     jComboBox_radical_3.setEnabled(false);
                     jComboBox_radical_4.setEnabled(false);
 
-                    
-                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
                 } else if (n_hanzi_introducidos == 3) {
                     
                     jComboBox_radical_3.setEnabled(true);
+                    
+                    autocompletarCombo(jComboBox_radical_3, 2); // el n del combo -1, porque el array empieza en 0
+                    
                     jComboBox_radical_4.setEnabled(false);
                     
-                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
                 } else if (n_hanzi_introducidos == 4) {
                     
-                    jComboBox_radical_4.setEnabled(true);
                     jComboBox_radical_2.setEnabled(true);
                     jComboBox_radical_3.setEnabled(true);
+                    jComboBox_radical_4.setEnabled(true);
+                 
+                    autocompletarCombo(jComboBox_radical_2, 1);
+                    autocompletarCombo(jComboBox_radical_3, 2);
+                    autocompletarCombo(jComboBox_radical_4, 3);
                     
                 }
         
@@ -896,37 +957,35 @@ public class ventana_principal extends javax.swing.JFrame {
         
         //  EJECUTA METODO SI ESTA DISPONIBLE EL COMBO  ------------------------
         
-        if(jComboBox_radical_2.isEnabled()){
-            
-            Implementacion_metodos aplicar_metodo = new Implementacion_metodos();
-
-            Unidad_min entrada = new Unidad_min();    //  instanciamos el obj final, la sintesis de la expresion 
-
-            int n_hanzi = entradaHanzi.length();
-
-            String[] deglosando_hanzi = new String[n_hanzi];
-
-            // CAPTURA DE ENTRADAS  ------------------------------------------------
-            entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
-
-            // RECUPERAMOS EL HANZI ESPECIFICO SEGUN POSICION ----------------------
-            deglosando_hanzi = entradaHanzi.split("");  // individualizamos los hanzi ingresados
-
-            String captura_hanzi_ind = deglosando_hanzi[1]; // es 1 y no dos porque arranca en 0 el array
-
-            entrada.setSimbolo(captura_hanzi_ind);
-            
-            String autocompletado = aplicar_metodo.autocompletarRadicales(entrada, this);
-            
-            System.out.println("en ventana pri el string enviado por el metodo fue " + autocompletado);
-            
-            //jComboBox_radical_2.setSelectedItem(autocompletado);
-           
-
-
-        }
         
     }//GEN-LAST:event_jComboBox_radical_2ActionPerformed
+
+    
+    
+    
+    
+    //  SIN USO
+    private void jComboBox_radical_2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_radical_2ItemStateChanged
+       
+        
+    }//GEN-LAST:event_jComboBox_radical_2ItemStateChanged
+
+    //  SIN USO
+    private void jComboBox_radical_2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox_radical_2FocusGained
+        
+    }//GEN-LAST:event_jComboBox_radical_2FocusGained
+    
+    //  SIN USO
+    private void jComboBox_radical_2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBox_radical_2FocusLost
+        
+         
+    }//GEN-LAST:event_jComboBox_radical_2FocusLost
+
+    //  SIN USO
+    private void jComboBox_radical_2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox_radical_2KeyReleased
+       
+        
+    }//GEN-LAST:event_jComboBox_radical_2KeyReleased
     
     
     //  GETTERS AND SETTERS ----------------------------------------------------
