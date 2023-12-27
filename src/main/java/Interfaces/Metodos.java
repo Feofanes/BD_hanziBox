@@ -18,7 +18,7 @@ public interface Metodos {
     
     public void borrar(Hanzi hanzi_eliminar, ventana_principal acceso); //  funcionalizado
     
-    public void modificar(Hanzi hanzi, ventana_principal acceso); // funcionalizado
+    public void modificar(Unidad_final hanzi, ventana_principal acceso); // funcionalizado
     
     public void buscar(Hanzi hanzi, ventana_principal acceso);
     
@@ -48,6 +48,6 @@ public interface Metodos {
     
     public void compararDuplicados_singular(Unidad_min hanzi_aCorroborar, ventana_principal acceso);
     
-    public void modificarSingularidad(Hanzi hanzi, ventana_principal acceso);
+    public void modificarSingularidad(Unidad_final hanzi, ventana_principal acceso);
     
 }

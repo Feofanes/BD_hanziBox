@@ -135,8 +135,6 @@ public class ventana_principal extends javax.swing.JFrame {
 
             String autocompletado = aplicar_metodo.autocompletarRadicales(entrada);
 
-            System.out.println("en ventana pri el string enviado por el metodo fue " + autocompletado);
-
             combo.setSelectedItem(autocompletado);
 
         }
@@ -436,7 +434,7 @@ public class ventana_principal extends javax.swing.JFrame {
 
     
     // --------------------------- BOTONES -------------------------------------
-    
+    // -------------------------------------------------------------------------
     
     //  AGREGAR ENTRADAS A LA BD ---- FUNCIONANDO
     private void jButton_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_agregarActionPerformed
@@ -658,7 +656,129 @@ public class ventana_principal extends javax.swing.JFrame {
     //  MODIFICAR ---- FUNCIONANDO
     private void jButton_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarActionPerformed
         
-        //  MODIFICACIONES EN LA TABLA HANZI_ENTRADA
+        //  MODIFICACIONES EN LA TABLA HANZI_ENTRADA    ------------------------
+        //----------------------------------------------------------------------
+        
+        // CAPTURA DE ENTRADAS  -----------------------------------------------
+         
+        Implementacion_metodos aplicar_metodo = new Implementacion_metodos();
+         
+        entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
+        entradaPinyin = jTextField_pinyin.getText();
+        entradaTraduccion = jTextField_traduccion.getText();
+        entradaEjemplo = jTextField_ejemplo.getText();
+
+        entradaRadical = jComboBox_radical.getSelectedItem().toString();
+        entradaRadical_2 = jComboBox_radical_2.getSelectedItem().toString();
+        entradaRadical_3 = jComboBox_radical_3.getSelectedItem().toString();
+        entradaRadical_4 = jComboBox_radical_4.getSelectedItem().toString();
+
+        //  ComboBox -----------------------------------------------------------
+        //  evitamos valores en blanco  ----------------------------------------
+        if (entradaRadical.isBlank()) {
+            entradaRadical = "○";
+        }
+
+        if (entradaRadical_2.isBlank()) {
+            entradaRadical_2 = "○";
+        }
+
+        if (entradaRadical_3.isBlank()) {
+            entradaRadical_3 = "○";
+        }
+
+        if (entradaRadical_4.isBlank()) {
+            entradaRadical_4 = "○";
+        }
+
+        //  --------------------------------------------------------------------
+        int n_hanzi_entrada = entradaHanzi.length();    // num de hanzi introducidos
+
+        ArrayList<Unidad_min> conjunto_semantico = new ArrayList<>(); //  creamos un array con obj hanzi
+
+        String[] piny_coleccion = new String[n_hanzi_entrada];    //  el tamano esta dado por el n de hanzi
+
+        if (!entradaPinyin.isBlank()) {       //  con y sin entrada de pinyin
+
+            piny_coleccion = entradaPinyin.split(" ");    //  individualizamos segun los espacios 
+
+        } else {
+
+            for (int i = 0; i < n_hanzi_entrada; i++) {
+
+                piny_coleccion[i] = "...";
+                System.out.println("la extension del array fue " + n_hanzi_entrada);
+
+            }
+        }
+
+        String[] h_coleccion = entradaHanzi.split("");
+
+        ArrayList<String> rad_coleccion = new ArrayList<>();
+        rad_coleccion.add(entradaRadical);
+        rad_coleccion.add(entradaRadical_2);
+        rad_coleccion.add(entradaRadical_3);
+        rad_coleccion.add(entradaRadical_4);
+
+        String hanzi_iterado = "";
+
+        //  set del obj  "Unidad_min" --------------------------------------
+        for (int i = 0; i < h_coleccion.length; i++) {    //  iteramos tantas veces como hanzi tenga la entrada
+
+            Unidad_min unidad_semantica = new Unidad_min(); //  instanciamos nuevo obj
+
+            hanzi_iterado = h_coleccion[i];  // aux para rescatar el hanzi en la posicion actual
+
+            System.out.println("h_colecc[i]" + h_coleccion[i]);
+
+            unidad_semantica.setSimbolo(hanzi_iterado); //  el nuevo obj seteado para hanzi
+
+            unidad_semantica.setRadical(rad_coleccion.get(i));
+
+            unidad_semantica.setPinyin(piny_coleccion[i]);
+
+            unidad_semantica.setTraduccion(entradaTraduccion);
+            unidad_semantica.setEjemplo(entradaEjemplo);
+
+            conjunto_semantico.add(unidad_semantica);   //  almacenamos los obj seteados en un arraylist, que sera parametro para setear el obj final
+
+        }
+
+        //  --------------------------------------------------------------------
+        //  usamos "Unidad_min" para setear "Unidad_final"  --------------------
+        Unidad_final entrada_final = new Unidad_final();    //  instanciamos el obj final, la sintesis de la expresion 
+
+        entrada_final.setObj(conjunto_semantico);   // esta seria la entrada en su total, con cada hanzi, pinyin y radical
+
+        entrada_final.setTraduccion(entradaTraduccion);
+        entrada_final.setEjemplo(entradaEjemplo);
+        
+        //  --------------------------------------------------------------------
+        
+        aplicar_metodo.modificar(entrada_final, this);  // aplicamos el metodo
+        
+        
+        //  reportar accion ----------------------------------------------------
+        
+        String reporte = "";
+        
+        for(int i =0; i<entrada_final.getObj().size(); i++){
+            
+            Unidad_min captura_nueva = new Unidad_min();
+            
+            captura_nueva = (Unidad_min) entrada_final.getObj().get(i);
+            
+            reporte += captura_nueva.getSimbolo();
+            
+        }
+            
+        jLabel_tareaEjecutada.setText("Entrada " + reporte + " fue modificada");
+
+        
+        
+        
+        
+        /*
         
         Hanzi miHanzi = new Hanzi();    // creamos objeto
         
@@ -710,14 +830,102 @@ public class ventana_principal extends javax.swing.JFrame {
         jLabel_tareaEjecutada.setText("Entrada " + miHanzi.getIdiograma() + " fue modificada");
         
         
-        //  MODIFICACIONES EN LA TABLA HANZI
-        
-        
-        aplicar_metodo.modificarSingularidad(miHanzi, this);
+        */
         
         
         
         
+        
+        //  MODIFICACIONES EN LA TABLA HANZI    --------------------------------
+                
+        // CAPTURA DE ENTRADAS  ------------------------------------------------
+        /*
+        entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
+        entradaPinyin = jTextField_pinyin.getText();
+        
+        entradaRadical = jComboBox_radical.getSelectedItem().toString();
+        entradaRadical_2 = jComboBox_radical_2.getSelectedItem().toString();
+        entradaRadical_3 = jComboBox_radical_3.getSelectedItem().toString();
+        entradaRadical_4 = jComboBox_radical_4.getSelectedItem().toString();
+
+        //  ComboBox -----------------------------------------------------------
+        //  evitamos valores en blanco  ----------------------------------------
+        if (entradaRadical.isBlank()) {
+            entradaRadical = "○";
+        }
+
+        if (entradaRadical_2.isBlank()) {
+            entradaRadical_2 = "○";
+        }
+
+        if (entradaRadical_3.isBlank()) {
+            entradaRadical_3 = "○";
+        }
+
+        if (entradaRadical_4.isBlank()) {
+            entradaRadical_4 = "○";
+        }
+
+        //  --------------------------------------------------------------------
+        int n_hanzi_entrada = entradaHanzi.length();    // num de hanzi introducidos
+
+        ArrayList<Unidad_min> conjunto_semantico = new ArrayList<>(); //  creamos un array con obj hanzi
+
+        String[] piny_coleccion = new String[n_hanzi_entrada];    //  el tamano esta dado por el n de hanzi
+
+        if (!entradaPinyin.isBlank()) {       //  con y sin entrada de pinyin
+
+            piny_coleccion = entradaPinyin.split(" ");    //  individualizamos segun los espacios 
+
+        } else {
+
+            for (int i = 0; i < n_hanzi_entrada; i++) {
+
+                piny_coleccion[i] = "...";
+                System.out.println("la extension del array fue " + n_hanzi_entrada);
+
+            }
+        }
+
+        String[] h_coleccion = entradaHanzi.split("");
+
+        ArrayList<String> rad_coleccion = new ArrayList<>();
+        rad_coleccion.add(entradaRadical);
+        rad_coleccion.add(entradaRadical_2);
+        rad_coleccion.add(entradaRadical_3);
+        rad_coleccion.add(entradaRadical_4);
+
+        String hanzi_iterado = "";
+
+        //  set del obj  "Unidad_min" --------------------------------------
+        for (int i = 0; i < h_coleccion.length; i++) {    //  iteramos tantas veces como hanzi tenga la entrada
+
+            Unidad_min unidad_semantica = new Unidad_min(); //  instanciamos nuevo obj
+
+            hanzi_iterado = h_coleccion[i];  // aux para rescatar el hanzi en la posicion actual
+
+            System.out.println("h_colecc[i]" + h_coleccion[i]);
+
+            unidad_semantica.setSimbolo(hanzi_iterado); //  el nuevo obj seteado para hanzi
+
+            unidad_semantica.setRadical(rad_coleccion.get(i));
+
+            unidad_semantica.setPinyin(piny_coleccion[i]);
+
+            conjunto_semantico.add(unidad_semantica);   //  almacenamos los obj seteados en un arraylist, que sera parametro para setear el obj final
+
+        }
+
+        //  --------------------------------------------------------------------
+        //  usamos "Unidad_min" para setear "Unidad_final"  --------------------
+        
+        
+        Unidad_final entrada_final = new Unidad_final();    //  instanciamos el obj final, la sintesis de la expresion 
+
+        entrada_final.setObj(conjunto_semantico);   // esta seria la entrada en su total, con cada hanzi, pinyin y radical
+
+        */
+        aplicar_metodo.modificarSingularidad(entrada_final, this);
         
         limpiar_campos();
         
@@ -732,14 +940,14 @@ public class ventana_principal extends javax.swing.JFrame {
         
         String columna_busqueda = "";
         
-        if(!jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
-                && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
+        if(!jTextField_entrada.getText().isBlank() && jTextField_pinyin.getText().isBlank()  
+                && jTextField_traduccion.getText().isBlank()){
             
-            columna_busqueda = "Hanzi";
+            columna_busqueda = "Hanzi";     // jComboBox_radical.getSelectedIndex() == 0
             
             parametro_busqueda = jTextField_entrada.getText();
             
-            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
+            jLabel_tareaEjecutada.setText("Buscando " + "[" + parametro_busqueda + "]");
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && !jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
@@ -748,7 +956,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_pinyin.getText();
             
-            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
+            jLabel_tareaEjecutada.setText("Buscando " + "[" + parametro_busqueda + "]");
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && jTextField_pinyin.getText().isBlank() && !jTextField_traduccion.getText().isBlank()){
@@ -757,7 +965,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jTextField_traduccion.getText();
             
-            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
+            jLabel_tareaEjecutada.setText("Buscando " + "[" + parametro_busqueda + "]");
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() != 0 
                 && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
@@ -766,7 +974,7 @@ public class ventana_principal extends javax.swing.JFrame {
             
             parametro_busqueda = jComboBox_radical.getSelectedItem().toString();
             
-            jLabel_tareaEjecutada.setText("Buscando " + parametro_busqueda);
+            jLabel_tareaEjecutada.setText("Buscando " + "[" + parametro_busqueda  + "]");
             
         }else if(jTextField_entrada.getText().isBlank() && jComboBox_radical.getSelectedIndex() == 0 
                 && jTextField_pinyin.getText().isBlank() && jTextField_traduccion.getText().isBlank()){
@@ -792,7 +1000,6 @@ public class ventana_principal extends javax.swing.JFrame {
         } else{
             
             columna_busqueda = null;
-            
             
         }
         
@@ -914,9 +1121,7 @@ public class ventana_principal extends javax.swing.JFrame {
                     autocompletarCombo(jComboBox_radical_4, 3);
                     
                 }
-        
-        }
-            
+        }     
     });
         
         /*
@@ -960,10 +1165,6 @@ public class ventana_principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jComboBox_radical_2ActionPerformed
 
-    
-    
-    
-    
     //  SIN USO
     private void jComboBox_radical_2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_radical_2ItemStateChanged
        
