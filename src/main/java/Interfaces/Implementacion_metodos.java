@@ -269,8 +269,6 @@ public class Implementacion_metodos implements Metodos {
                 
                 recuperandoEntrada = recuperandoEntrada + simbolo;
                 
-                //System.out.println("simbolo recuperado es " + recuperandoEntrada);
-                
             }
             
             //  ----------------------------------------------------------------
@@ -1005,6 +1003,45 @@ public class Implementacion_metodos implements Metodos {
         }
         
     }   //  FUNCIONANDO
+
+    @Override
+    public String autocompletarRadicales(Unidad_min hanzi_autocompletar, ventana_principal acceso) {
+        
+        String radical_seleccionado= "";
+        
+        Unidad_min auxiliar = new Unidad_min();
+        
+        try{
+            
+            Connection conectar = conexion.conectar();  // conectamos
+            
+            //  buscamos la entrada en la bd -----------------------------------
+            PreparedStatement recuperando = conectar.prepareStatement("SELECT Radical FROM hanzi WHERE Hanzi = ?");
+            
+            //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
+            recuperando.setString(1, hanzi_autocompletar.getSimbolo());
+            
+            //  la consulta en si
+            ResultSet consulta = recuperando.executeQuery();
+            
+            // Verificamos si hay algún resultado antes de intentar acceder a él
+            if (consulta.next()) {
+                
+                radical_seleccionado = consulta.getString("Radical");
+                
+            } 
+            
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+        return radical_seleccionado;
+        
+    }
+    
+    
 
 }
         

@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -234,6 +235,11 @@ public class ventana_principal extends javax.swing.JFrame {
         jComboBox_radical_2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"", "一", "口", "人" }));
         jComboBox_radical_2.setSelectedItem("");
         jComboBox_radical_2.setEnabled(false);
+        jComboBox_radical_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_radical_2ActionPerformed(evt);
+            }
+        });
 
         jComboBox_radical_3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"", "一", "口", "人" }));
         jComboBox_radical_3.setSelectedItem("");
@@ -582,17 +588,6 @@ public class ventana_principal extends javax.swing.JFrame {
             
         }
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         //------------------- actualizacion de contadores ----------------------
             
             n_input = aplicar_metodo.contarInput();
@@ -603,185 +598,6 @@ public class ventana_principal extends javax.swing.JFrame {
         //----------------------------------------------------------------------
         
         
-        
-        
-        //  PRIMERO CORROBORAR LA EXISTENCIA O NO DE LA ENTRADA ACTUAL EN HANZI_ENTRADAS
-        
-        //Implementacion_metodos aplicar_metodo = new Implementacion_metodos();   // para usar los metodos
-        /*
-        Hanzi miHanzi = new Hanzi();    // creamos objeto
-        
-        entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
-        
-        miHanzi.setIdiograma(entradaHanzi); //  usamos la captura para setear el objeto
-        
-        //  seteado el objeto le aplicamos el metodo para buscar el atributo en la BD. Devolvera true o false
-        /*
-        boolean hanziComprobado = aplicar_metodo.buscarExistencia(miHanzi.getIdiograma());  
-        
-        if(hanziComprobado == true){
-            
-            jLabel_advertencia.setText("La entrada ya existen en la Base de Datos");
-            
-        }else if(entradaHanzi.isBlank()){
-            
-            jLabel_advertencia.setText("Entrada invalida. Ingrese un Hanzi");
-            
-        } else {
-
-            //  capturamos las entradas
-            entradaPinyin = jTextField_pinyin.getText();
-            entradaTraduccion = jTextField_traduccion.getText();
-            entradaEjemplo = jTextField_ejemplo.getText();
-            entradaRadical = jComboBox_radical.getSelectedItem().toString();
-            entradaRadical_2 = jComboBox_radical_2.getSelectedItem().toString();
-            entradaRadical_3 = jComboBox_radical_3.getSelectedItem().toString();
-            entradaRadical_4 = jComboBox_radical_4.getSelectedItem().toString();
-
-            //  seteamos el objeto con las entradas
-            miHanzi.setFonetica(entradaPinyin);
-            miHanzi.setTraduccion(entradaTraduccion);
-            miHanzi.setEjemplo(entradaEjemplo);
-            
-            //  este condicional es necesario de lo contrario los radicales quedan pegados sin saberse a que hanzi corresponden
-            
-            if(entradaRadical.isBlank()){ 
-                
-                entradaRadical.trim();      // estoy teniendo problemas con los espacios, por eso el trim
-                entradaRadical = "     ";
-                
-            }
-            
-            if(entradaRadical_2.isBlank()){ 
-                
-                entradaRadical_2.trim();
-                entradaRadical_2 = "     ";
-                
-            }
-            
-            if(entradaRadical_3.isBlank()){
-                
-                entradaRadical_3.trim();
-                entradaRadical_3 = "     ";
-                
-            }
-            
-            if(entradaRadical_4.isBlank()){
-                
-                entradaRadical_4.trim();
-                entradaRadical_4 = "     ";
-                
-            }
-            
-            miHanzi.setRadical(entradaRadical + entradaRadical_2 + entradaRadical_3 + entradaRadical_4);
-
-            aplicar_metodo.agregar(miHanzi);    //  agregamos la entrada
-
-            jLabel_advertencia.setText("Entrada agregada a la Base de Datos");
-
-        }
-        
-        //  AGREGAR HANZI INDIVIDUALES A LA TABLA "HANZI"   --------------------
-        
-        //  recuperar cada info y setearla al obj
-        
-        Hanzi_molde miHanzi_molde = new Hanzi_molde();  //  instancio
-        
-        ArrayList <String> lista_hanzi = new ArrayList();   // array donde se guarda cada hanzi de la entrada
-        ArrayList <String> lista_pinyin = new ArrayList();
-        ArrayList <String> lista_radical = new ArrayList();
-        
-        //ArrayList <String> lista_hanzi_deglosados = new ArrayList();
-        
-        //  HANZI
-        for(int i=0; i<entradaHanzi.length(); i++){ // degloso la entrada en string de hanzi
-            
-            char simbolo = entradaHanzi.charAt(i);
-            
-            String hanzi_individual = String.valueOf(simbolo);
-            
-            lista_hanzi.add(hanzi_individual);
-            
-        }
-        
-        miHanzi_molde.setIdiograma_conjunto(lista_hanzi);   //  seteo el atributo
-        
-        //  PINYIN
-        
-        if(!entradaPinyin.isBlank()){
-        
-        String[] acumulador = entradaPinyin.split(" ");
-        
-        for(String e : acumulador){
-            
-            lista_pinyin.add(e);
-            
-        }
-        
-        miHanzi_molde.setPinyin_conjunto(lista_pinyin);
-        
-        }
-        
-        //  RADICALES
-        
-        String acumulador_radical = miHanzi.getRadical().replace("     ", "x");   // esto reemplaza espacios por una X para que sea mas identificable ante un error
-        
-        for(int i=0; i<acumulador_radical.length(); i++){ // degloso la entrada en string de hanzi
-            
-            char simbolo_rad = acumulador_radical.charAt(i);
-            
-            if(acumulador_radical.charAt(i) == 'x'){
-                
-                simbolo_rad = ' ';
-                
-            }
-            
-            String radical_individual = String.valueOf(simbolo_rad);
-            
-            lista_radical.add(radical_individual);
-            
-        }
-        
-        miHanzi_molde.setRadical_conjunto(lista_radical);
-        
-        System.out.println(miHanzi_molde.getIdiograma_conjunto());
-        System.out.println(miHanzi_molde.getPinyin_conjunto());
-        System.out.println(miHanzi_molde.getRadical_conjunto());
-        
-        //  CORROBORAR EXISTENCIA PREVIO A AGREGAR
-        
-        //  iteramos creando un obj por cada hanzi ingresado en la misma entrada
-        for(int i=0; i < miHanzi_molde.getIdiograma_conjunto().size(); i++){
-            
-            Hanzi_molde x = new Hanzi_molde();
-            
-            x.setIdiograma_conjunto(miHanzi_molde.getIdiograma_conjunto());
-            x.setPinyin_conjunto(miHanzi_molde.getPinyin_conjunto());
-            x.setRadical_conjunto(miHanzi_molde.getRadical_conjunto());
-            
-            Hanzi singularidad = new Hanzi();   
-            
-            singularidad.setIdiograma(miHanzi_molde.getIdiograma_conjunto().get(i).toString()); // seteamos un obj con el getter en posicion i.toString() del obj obj 
-            singularidad.setFonetica(miHanzi_molde.getPinyin_conjunto().get(i).toString()); //  esto lo hacemos para pasarle al metodo corroborarSingularidad 
-            singularidad.setRadical(miHanzi_molde.getRadical_conjunto().get(i).toString()); // un obj Hanzi
-            
-            System.out.println("sigularidad es " + singularidad.getIdiograma() + singularidad.getFonetica() + singularidad.getRadical());
-            
-            boolean corroboracion_sing = aplicar_metodo.corroborarSingularidad(singularidad);
-            
-            if(corroboracion_sing == false){
-                
-                aplicar_metodo.agregarSingularidades(singularidad);
-            
-            }else{
-                
-                System.out.println(singularidad.getIdiograma() + " no se agrego porque ya esta");
-                
-            }
-            
-        }
-        */
-         
         limpiar_campos();
         
     }//GEN-LAST:event_jButton_agregarActionPerformed
@@ -1036,10 +852,6 @@ public class ventana_principal extends javax.swing.JFrame {
                     jComboBox_radical_2.setEnabled(true);
                     jComboBox_radical_3.setEnabled(true);
                     
-                    
-                    
-                    
-                    //System.out.println("entradaHanzi tiene " + n_hanzi_introducidos + " caracteres");
                 }
         
         }
@@ -1058,9 +870,12 @@ public class ventana_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField_entradaKeyReleased
 
     
-
+    //  PRIMER COMBO
     private void jComboBox_radicalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_radicalActionPerformed
-        // TODO add your handling code here:
+        
+        
+        
+        
     }//GEN-LAST:event_jComboBox_radicalActionPerformed
 
     //  AL HACER CLICK SE DEBE VISUALIZAR LA BD TOTAL EN TODA LA VENTANA
@@ -1074,6 +889,44 @@ public class ventana_principal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jMenu1ActionPerformed
+
+    
+    //  SEGUNDO COMBO
+    private void jComboBox_radical_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_radical_2ActionPerformed
+        
+        //  EJECUTA METODO SI ESTA DISPONIBLE EL COMBO  ------------------------
+        
+        if(jComboBox_radical_2.isEnabled()){
+            
+            Implementacion_metodos aplicar_metodo = new Implementacion_metodos();
+
+            Unidad_min entrada = new Unidad_min();    //  instanciamos el obj final, la sintesis de la expresion 
+
+            int n_hanzi = entradaHanzi.length();
+
+            String[] deglosando_hanzi = new String[n_hanzi];
+
+            // CAPTURA DE ENTRADAS  ------------------------------------------------
+            entradaHanzi = jTextField_entrada.getText(); // capturamos la entrada en un string
+
+            // RECUPERAMOS EL HANZI ESPECIFICO SEGUN POSICION ----------------------
+            deglosando_hanzi = entradaHanzi.split("");  // individualizamos los hanzi ingresados
+
+            String captura_hanzi_ind = deglosando_hanzi[1]; // es 1 y no dos porque arranca en 0 el array
+
+            entrada.setSimbolo(captura_hanzi_ind);
+            
+            String autocompletado = aplicar_metodo.autocompletarRadicales(entrada, this);
+            
+            System.out.println("en ventana pri el string enviado por el metodo fue " + autocompletado);
+            
+            //jComboBox_radical_2.setSelectedItem(autocompletado);
+           
+
+
+        }
+        
+    }//GEN-LAST:event_jComboBox_radical_2ActionPerformed
     
     
     //  GETTERS AND SETTERS ----------------------------------------------------

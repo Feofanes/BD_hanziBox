@@ -22,6 +22,8 @@ public interface Metodos {
     
     public void buscar(Hanzi hanzi, ventana_principal acceso);
     
+    
+    
     //  OPCIONES AVANZADAS  ----------------------------------------------------
     
     public boolean buscarExistencia(Unidad_final hanzi_aCorroborar, ventana_principal acceso);    // funcionalizado
@@ -33,6 +35,10 @@ public interface Metodos {
     public int contarInput();   //  funcionalizado
     
     public int contarHanziUnicos();
+    
+    public String autocompletarRadicales(Unidad_min hanzi_autocompletar, ventana_principal acceso);
+    
+    
     
     //  TABLA SECUNDARIA
     
