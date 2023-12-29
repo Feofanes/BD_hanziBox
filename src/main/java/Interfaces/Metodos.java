@@ -8,9 +8,11 @@ import Entradas.Unidad_min;
 import bd_hanzibox.procesador_texto;
 import bd_hanzibox.ventana_principal;
 import java.awt.Color;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
@@ -70,5 +72,11 @@ public interface Metodos {
     public void aplicarEstiloColor(JTextPane textPane, int start, int length, Color color);
     
     public boolean existeEnBaseDeDatos(Connection conexion, String caracter) throws SQLException;
+    
+    public void guardarTexto(String ruta, JTextPane textPane, String titulo, JComboBox<String> biblioteca) throws IOException;
+    
+    public void completarBiblioteca(JComboBox<String> biblioteca);
+    
+    public void leyendoBiblioteca(JTextPane textPane, JComboBox<String> biblioteca);
     
 }

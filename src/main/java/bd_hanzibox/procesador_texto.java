@@ -4,12 +4,20 @@ package bd_hanzibox;
 import Entradas.Unidad_final;
 import Entradas.Unidad_min;
 import Interfaces.Implementacion_metodos;
+import static Interfaces.Implementacion_metodos.getRutaCompleta;
+import static Interfaces.Implementacion_metodos.getRuta_archivo;
+import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.DefaultEditorKit;
@@ -21,6 +29,7 @@ import javax.swing.text.StyledDocument;
 public class procesador_texto extends javax.swing.JFrame {
     
     static private String entradaSeleccionada;
+    static private String titulo_texto;
 
     //  CONSTRUCTOR
     public procesador_texto() {
@@ -31,6 +40,10 @@ public class procesador_texto extends javax.swing.JFrame {
         this.setTitle("Procesador de Texto");
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        Implementacion_metodos acceso = new Implementacion_metodos();
+        
+        acceso.completarBiblioteca(this.jComboBox_biblioteca);
         
     }
 
@@ -55,9 +68,15 @@ public class procesador_texto extends javax.swing.JFrame {
         jButton_agrandar_texto = new javax.swing.JButton();
         jButton_achicar_texto = new javax.swing.JButton();
         jButton_justificar = new javax.swing.JButton();
+        jButton_guardar = new javax.swing.JButton();
+        jButton_leer = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         resultados_seleccion = new javax.swing.JTable();
         mensaje_1 = new javax.swing.JLabel();
+        jLabel_titulo = new javax.swing.JLabel();
+        jTextField_tituloTexto = new javax.swing.JTextField();
+        jLabel_titulo_biblioteca = new javax.swing.JLabel();
+        jComboBox_biblioteca = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -198,6 +217,28 @@ public class procesador_texto extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_justificar);
 
+        jButton_guardar.setText("Guardar");
+        jButton_guardar.setFocusable(false);
+        jButton_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_guardarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton_guardar);
+
+        jButton_leer.setText("Leer");
+        jButton_leer.setFocusable(false);
+        jButton_leer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_leer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_leer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_leerActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton_leer);
+
         resultados_seleccion.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         resultados_seleccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -220,6 +261,29 @@ public class procesador_texto extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(resultados_seleccion);
 
+        jLabel_titulo.setText("Ingrese un título:");
+
+        jTextField_tituloTexto.setFont(new java.awt.Font("Helvetica Neue", 2, 13)); // NOI18N
+        jTextField_tituloTexto.setText("Título del texto");
+        jTextField_tituloTexto.setToolTipText("Escriba un título si desea guardar el texto");
+        jTextField_tituloTexto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_tituloTextoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_tituloTextoFocusLost(evt);
+            }
+        });
+
+        jLabel_titulo_biblioteca.setText("Biblioteca:");
+
+        jComboBox_biblioteca.setToolTipText("Biblioteca de textos guardados");
+        jComboBox_biblioteca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_bibliotecaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -229,6 +293,15 @@ public class procesador_texto extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel_titulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_tituloTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel_titulo_biblioteca)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox_biblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(mensaje_1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -243,13 +316,21 @@ public class procesador_texto extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_titulo)
+                    .addComponent(jTextField_tituloTexto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_titulo_biblioteca)
+                    .addComponent(jComboBox_biblioteca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -300,6 +381,7 @@ public class procesador_texto extends javax.swing.JFrame {
         mensaje_1.setText("");
         
         
+        
     }   //  LIMPIAR
     
     public void agrandar_texto(JTextPane texto){
@@ -342,10 +424,10 @@ public class procesador_texto extends javax.swing.JFrame {
         doc.setParagraphAttributes(0, doc.getLength(), attrs, false);
     }   //  JUSTIFICAR
         
-        
+    //  ------------------------------------------------------------------------    
     
     
-    
+    //  ------------------------------ BOTON -----------------------------------
     
     //  BOTON PARA VOLVER A MENU PRINCIPAL
     private void jButton_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_volverActionPerformed
@@ -554,6 +636,82 @@ public class procesador_texto extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton_analisisActionPerformed
 
+    //  GUARDAR EL CONTENIDO DEL JTextPane EN UN TXT
+    private void jButton_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarActionPerformed
+        
+        Implementacion_metodos acceso = new Implementacion_metodos(); // para acceder a métodos
+
+        String accediendo = getRutaCompleta(); // declarada en el método
+        titulo_texto = jTextField_tituloTexto.getText(); // título ingresado por usuario
+
+        boolean tituloExistente = false;
+
+        // Buscar si el título ya existe en el JComboBox
+        for (int i = 0; i < jComboBox_biblioteca.getItemCount(); i++) {
+            if (titulo_texto.equalsIgnoreCase(jComboBox_biblioteca.getItemAt(i).toString())) {
+                tituloExistente = true;
+                break; // Terminar el bucle si el título ya existe
+            }
+        }
+
+        if (tituloExistente) {
+            mensaje_1.setText("El título ingresado ya existe. Ingrese otro");
+        } else {
+            try {
+                acceso.guardarTexto(accediendo, pane_texto, titulo_texto, this.jComboBox_biblioteca);
+                mensaje_1.setText("El texto fue guardado en la biblioteca");
+                jTextField_tituloTexto.setText("");
+                pane_texto.setText("");
+            } catch (IOException ex) {
+                Logger.getLogger(procesador_texto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton_guardarActionPerformed
+
+    //  FOCO DEL JTextField TITULO  --------------------------------------------
+    private void jTextField_tituloTextoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_tituloTextoFocusGained
+       
+        jTextField_tituloTexto.setText("");
+        jTextField_tituloTexto.setForeground(Color.BLACK);  // Cambia el color del texto a negro
+    
+    }//GEN-LAST:event_jTextField_tituloTextoFocusGained
+
+    //  CAPTURA DEL TITULO DE TEXTO
+    private void jTextField_tituloTextoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_tituloTextoFocusLost
+        
+        if(jTextField_tituloTexto.getText().equalsIgnoreCase("")){
+        
+            jTextField_tituloTexto.setText("Escriba un título");
+            jTextField_tituloTexto.setForeground(Color.gray);  // Cambia el color del texto a negro
+
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_jTextField_tituloTextoFocusLost
+
+    //  COMBO BIBLIOTECA
+    private void jComboBox_bibliotecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_bibliotecaActionPerformed
+        
+        
+        
+        
+    }//GEN-LAST:event_jComboBox_bibliotecaActionPerformed
+
+    //  BOTON PARA LEER TEXTO SELECCIONADO DEL COMBO
+    private void jButton_leerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_leerActionPerformed
+       
+        Implementacion_metodos acceso = new Implementacion_metodos(); // para acceder a métodos
+
+        acceso.leyendoBiblioteca(pane_texto, this.jComboBox_biblioteca);
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton_leerActionPerformed
+    //  ------------------------------------------------------------------------
+    
     //  ------------------------ GETTERS and SETTERS ---------------------------
     
     public JLabel getMensaje_1() {
@@ -571,12 +729,22 @@ public class procesador_texto extends javax.swing.JFrame {
     public void setPane_texto(JTextPane pane_texto) {
         this.pane_texto = pane_texto;
     }
-    
-    
 
-    
-    
-    
+    public JTextField getjTextField_tituloTexto() {
+        return jTextField_tituloTexto;
+    }
+
+    public void setjTextField_tituloTexto(JTextField jTextField_tituloTexto) {
+        this.jTextField_tituloTexto = jTextField_tituloTexto;
+    }
+
+    public JComboBox<String> getjComboBox_biblioteca() {
+        return jComboBox_biblioteca;
+    }
+
+    public void setjComboBox_biblioteca(JComboBox<String> jComboBox_biblioteca) {
+        this.jComboBox_biblioteca = jComboBox_biblioteca;
+    }
     
     
     
@@ -624,8 +792,13 @@ public class procesador_texto extends javax.swing.JFrame {
     private javax.swing.JButton jButton_agrandar_texto;
     private javax.swing.JButton jButton_agregar;
     private javax.swing.JButton jButton_analisis;
+    private javax.swing.JButton jButton_guardar;
     private javax.swing.JButton jButton_justificar;
+    private javax.swing.JButton jButton_leer;
     private javax.swing.JButton jButton_volver;
+    private javax.swing.JComboBox<String> jComboBox_biblioteca;
+    private javax.swing.JLabel jLabel_titulo;
+    private javax.swing.JLabel jLabel_titulo_biblioteca;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -637,6 +810,7 @@ public class procesador_texto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JTextField jTextField_tituloTexto;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel mensaje_1;
     private javax.swing.JTextPane pane_texto;
