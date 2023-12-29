@@ -249,6 +249,7 @@ public class ventana_principal extends javax.swing.JFrame {
         });
 
         jButton_buscar.setText("Buscar");
+        jButton_buscar.setToolTipText("Si no hay parámetro de búsqueda se mostrará toda la base de datos");
         jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_buscarActionPerformed(evt);

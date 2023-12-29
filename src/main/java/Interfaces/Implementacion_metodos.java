@@ -10,6 +10,7 @@ import bd_hanzibox.*;
 import static bd_hanzibox.procesador_texto.resultados_seleccion;
 import bd_hanzibox.ventana_principal;
 import static bd_hanzibox.ventana_principal.busqueda_resultados;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.List;
 import java.sql.PreparedStatement;
@@ -19,8 +20,17 @@ import java.sql.SQLException;
 import java.sql.*;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Element;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 
 public class Implementacion_metodos implements Metodos {
@@ -1149,6 +1159,8 @@ public class Implementacion_metodos implements Metodos {
                 }
         }   //FUNCIONANDO
 
+    
+    //  METODOS PROPUESTOS POR CHAT PARA LA BUSQUEDA AUTOMATIZADA EN EL JTEXTPANE
     @Override
     public boolean buscarExistenciaProcesador(Unidad_final hanzi_aCorroborar, procesador_texto acceso) {
         
@@ -1215,5 +1227,50 @@ public class Implementacion_metodos implements Metodos {
         return registroExistente;
         
     }
-}       
+
+    @Override
+    public void analizadorTexto(JTextPane texto, procesador_texto acceso) {
+        try {
+            Connection conectar = conexion.conectar(); // Conectar a la base de datos
+            StyledDocument doc = texto.getStyledDocument();
+            int tamano = doc.getLength();
+
+            for (int i = 0; i < tamano; i++) {
+                char caracter = doc.getText(i, 1).charAt(0);
+
+                // Puedes agregar la lógica para evaluar el carácter en la base de datos
+                if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter))) {
+                    aplicarEstiloColor(texto, i, 1, Color.RED);
+                }
+            }
+
+            conexion.desconectar();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+
+        } catch (BadLocationException ex) {
+            Logger.getLogger(Implementacion_metodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Override
+    public void aplicarEstiloColor(JTextPane textPane, int start, int length, Color color) {
+        StyledDocument doc = textPane.getStyledDocument();
+        Style estilo = textPane.addStyle("miEstilo", null);
+        StyleConstants.setForeground(estilo, color);
+        doc.setCharacterAttributes(start, length, estilo, false);
+    }
+    
+    @Override
+    public boolean existeEnBaseDeDatos(Connection conexion, String caracter) throws SQLException {
+        PreparedStatement analizando = conexion.prepareStatement("SELECT * FROM hanzi WHERE Hanzi = ?");
+        analizando.setString(1, caracter);
+        ResultSet consulta = analizando.executeQuery();
+        return consulta.next();
+    }
+    
+    
+}
      

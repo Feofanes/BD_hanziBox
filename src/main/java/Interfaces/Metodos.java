@@ -7,8 +7,12 @@ import Entradas.Unidad_final;
 import Entradas.Unidad_min;
 import bd_hanzibox.procesador_texto;
 import bd_hanzibox.ventana_principal;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
 public interface Metodos {
@@ -60,5 +64,11 @@ public interface Metodos {
     public void mostrarTablaProcesador(String mostrar_texto_seleccionado);
     
     public boolean buscarExistenciaProcesador(Unidad_final hanzi_aCorroborar, procesador_texto acceso); 
+    
+    public void analizadorTexto(JTextPane texto, procesador_texto acceso);
+    
+    public void aplicarEstiloColor(JTextPane textPane, int start, int length, Color color);
+    
+    public boolean existeEnBaseDeDatos(Connection conexion, String caracter) throws SQLException;
     
 }

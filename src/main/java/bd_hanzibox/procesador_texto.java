@@ -5,11 +5,18 @@ import Entradas.Unidad_final;
 import Entradas.Unidad_min;
 import Interfaces.Implementacion_metodos;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JTextPane;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class procesador_texto extends javax.swing.JFrame {
     
@@ -43,6 +50,11 @@ public class procesador_texto extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         Buscar = new javax.swing.JButton();
         jButton_agregar = new javax.swing.JButton();
+        jButton_analisis = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jButton_agrandar_texto = new javax.swing.JButton();
+        jButton_achicar_texto = new javax.swing.JButton();
+        jButton_justificar = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         resultados_seleccion = new javax.swing.JTable();
         mensaje_1 = new javax.swing.JLabel();
@@ -82,6 +94,7 @@ public class procesador_texto extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton_volver.setText("Volver");
+        jButton_volver.setToolTipText("Volver al inicio");
         jButton_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_volverActionPerformed(evt);
@@ -108,9 +121,13 @@ public class procesador_texto extends javax.swing.JFrame {
         jToolBar1.setFloatable(true);
         jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
+        jToolBar1.setToolTipText("");
 
-        Buscar.setText("Buscar");
+        Buscar.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png")); // NOI18N
+        //Buscar.setIcon(new ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png"));
+        Buscar.setToolTipText("Buscar palabra seleccionada en base de datos");
         Buscar.setFocusable(false);
+        Buscar.setVisible(true);
         Buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         Buscar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,7 +137,8 @@ public class procesador_texto extends javax.swing.JFrame {
         });
         jToolBar1.add(Buscar);
 
-        jButton_agregar.setText("Agregar");
+        jButton_agregar.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/agregar.png")); // NOI18N
+        jButton_agregar.setToolTipText("Agregar texto seleccionado a base de datos");
         jButton_agregar.setFocusable(false);
         jButton_agregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_agregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -130,6 +148,55 @@ public class procesador_texto extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton_agregar);
+
+        jButton_analisis.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/analizador.png")); // NOI18N
+        jButton_analisis.setToolTipText("Resalta en rojo los hanzis nuevos");
+        jButton_analisis.setFocusable(false);
+        jButton_analisis.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_analisis.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_analisis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_analisisActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton_analisis);
+        jToolBar1.add(jSeparator1);
+
+        jButton_agrandar_texto.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/agrandar.png")); // NOI18N
+        jButton_agrandar_texto.setToolTipText("Agrandar texto");
+        jButton_agrandar_texto.setFocusable(false);
+        jButton_agrandar_texto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_agrandar_texto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_agrandar_texto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_agrandar_textoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton_agrandar_texto);
+
+        jButton_achicar_texto.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/achicar.png")); // NOI18N
+        jButton_achicar_texto.setToolTipText("Achicar texto");
+        jButton_achicar_texto.setFocusable(false);
+        jButton_achicar_texto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_achicar_texto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_achicar_texto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_achicar_textoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton_achicar_texto);
+
+        jButton_justificar.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/justificar.png")); // NOI18N
+        jButton_justificar.setToolTipText("Justificar texto");
+        jButton_justificar.setFocusable(false);
+        jButton_justificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_justificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_justificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_justificarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton_justificar);
 
         resultados_seleccion.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         resultados_seleccion.setModel(new javax.swing.table.DefaultTableModel(
@@ -169,7 +236,7 @@ public class procesador_texto extends javax.swing.JFrame {
                         .addGap(14, 14, 14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
                             .addComponent(jScrollPane1))
                         .addGap(36, 36, 36))))
         );
@@ -233,7 +300,50 @@ public class procesador_texto extends javax.swing.JFrame {
         mensaje_1.setText("");
         
         
-    }
+    }   //  LIMPIAR
+    
+    public void agrandar_texto(JTextPane texto){
+        
+        StyledDocument doc = texto.getStyledDocument();
+        MutableAttributeSet attrs = texto.getInputAttributes();
+
+        // Obtiene el tamaño actual de la fuente
+        int tamanioActual = StyleConstants.getFontSize(attrs);
+
+        // Aumenta el tamaño de la fuente
+        int nuevoTamanio = tamanioActual + 2; // Puedes ajustar el valor según tus preferencias
+        StyleConstants.setFontSize(attrs, nuevoTamanio);
+
+        // Aplica el nuevo AttributeSet al documento
+        doc.setCharacterAttributes(0, doc.getLength(), attrs, false);
+    }   // AGRANDAR TEXTO
+    
+    public void achicar_texto(JTextPane texto){
+        
+        StyledDocument doc = texto.getStyledDocument();
+        MutableAttributeSet attrs = texto.getInputAttributes();
+
+        // Obtiene el tamaño actual de la fuente
+        int tamanioActual = StyleConstants.getFontSize(attrs);
+
+        // Reduce el tamaño de la fuente
+        int nuevoTamanio = Math.max(tamanioActual - 2, 1); // Evita tamaños negativos y 0
+        StyleConstants.setFontSize(attrs, nuevoTamanio);
+
+        // Aplica el nuevo AttributeSet al documento
+        doc.setCharacterAttributes(0, doc.getLength(), attrs, false);
+    
+    }   //  ACHICAR TEXTO
+    
+    private static void justificarTexto(JTextPane texto) {
+        StyledDocument doc = texto.getStyledDocument();
+        SimpleAttributeSet attrs = new SimpleAttributeSet();
+        StyleConstants.setAlignment(attrs, StyleConstants.ALIGN_JUSTIFIED);
+        doc.setParagraphAttributes(0, doc.getLength(), attrs, false);
+    }   //  JUSTIFICAR
+        
+        
+    
     
     
     
@@ -407,6 +517,43 @@ public class procesador_texto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu1AncestorAdded
 
+    //  AGRANDAR TEXTO
+    private void jButton_agrandar_textoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_agrandar_textoActionPerformed
+        
+        agrandar_texto(pane_texto);
+        
+        
+        
+    }//GEN-LAST:event_jButton_agrandar_textoActionPerformed
+
+    //  ACHICAR TEXTO
+    private void jButton_achicar_textoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_achicar_textoActionPerformed
+        
+        achicar_texto(pane_texto);
+        
+        
+    }//GEN-LAST:event_jButton_achicar_textoActionPerformed
+
+    //  JUSTIFICAR TEXTO
+    private void jButton_justificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_justificarActionPerformed
+        
+        justificarTexto(pane_texto);
+        
+    }//GEN-LAST:event_jButton_justificarActionPerformed
+
+    //  ANALIZADOR DE CADA HANZI DEL TEXTO
+    private void jButton_analisisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_analisisActionPerformed
+        
+        Implementacion_metodos aplicar = new Implementacion_metodos();
+        
+        
+        aplicar.analizadorTexto(pane_texto, this);
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton_analisisActionPerformed
+
     //  ------------------------ GETTERS and SETTERS ---------------------------
     
     public JLabel getMensaje_1() {
@@ -416,6 +563,16 @@ public class procesador_texto extends javax.swing.JFrame {
     public void setMensaje_1(JLabel mensaje_1) {
         this.mensaje_1 = mensaje_1;
     }
+
+    public JTextPane getPane_texto() {
+        return pane_texto;
+    }
+
+    public void setPane_texto(JTextPane pane_texto) {
+        this.pane_texto = pane_texto;
+    }
+    
+    
 
     
     
@@ -463,7 +620,11 @@ public class procesador_texto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
     public static javax.swing.JTable busqueda_resultados;
+    private javax.swing.JButton jButton_achicar_texto;
+    private javax.swing.JButton jButton_agrandar_texto;
     private javax.swing.JButton jButton_agregar;
+    private javax.swing.JButton jButton_analisis;
+    private javax.swing.JButton jButton_justificar;
     private javax.swing.JButton jButton_volver;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -475,6 +636,7 @@ public class procesador_texto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel mensaje_1;
     private javax.swing.JTextPane pane_texto;

@@ -269,6 +269,7 @@
     <Component class="javax.swing.JButton" name="jButton_buscar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Si no hay par&#xe1;metro de b&#xfa;squeda se mostrar&#xe1; toda la base de datos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_buscarActionPerformed"/>
