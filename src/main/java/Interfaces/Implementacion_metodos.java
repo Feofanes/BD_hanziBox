@@ -12,12 +12,16 @@ import static bd_hanzibox.ventana_principal.busqueda_resultados;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.List;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import static java.nio.file.Files.lines;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +30,7 @@ import java.sql.SQLException;
 import java.sql.*;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -39,6 +44,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import jdk.dynalink.StandardOperation;
+
 
 public class Implementacion_metodos implements Metodos {
 
@@ -1027,6 +1033,7 @@ public class Implementacion_metodos implements Metodos {
 
     //  PROCESASOR DE TEXTO ----------------------------------------------------
     //  ------------------------------------------------------------------------
+    
     //  BUSCA EN TABLA PRINCIPAL EL TEXTO SELECCIONADO
     @Override
     public boolean buscarSeleccion(String texto_seleccionado) {
@@ -1238,29 +1245,56 @@ public class Implementacion_metodos implements Metodos {
     @Override
     public void guardarTexto(String ruta, JTextPane textPane, String titulo, JComboBox<String> biblioteca) throws IOException {
         
-        // Combinar la ruta del directorio con el nombre del archivo
-        String nombreArchivo = titulo + ".txt";  // Reemplaza con el nombre que desees
-        
-        lista_biblio = titulo + System.lineSeparator(); // escribimos la lista de titulos para setear la biblio
-        
-        rutaCompleta = Paths.get(ruta_archivo, nombreArchivo).toString();   // construye la ruta
-
-        String capturaTexto = textPane.getText();   // hay que pasarlo a String para luego a bytes
-        
-        biblioteca.addItem(titulo); // agregamos el texto guardado a la biblioteca
-        
         try{
             
-        Files.write(Paths.get(rutaCompleta), capturaTexto.getBytes(), StandardOpenOption.CREATE);   // crea un txt en la ruta
-        
-        Files.write(Paths.get(ruta_archivo + "/Lista.txt"), lista_biblio.getBytes(), StandardOpenOption.APPEND);   // lista de titulos, archivo unico que se va agregando texto
+            //  generacion y escritura del txt ---------------------------------
+            
+            String nombre_archivo = titulo + ".txt";    // titulo del txt  
+
+            rutaCompleta = Paths.get(ruta_archivo, nombre_archivo).toString();   // construye la ruta
+
+            System.out.println("la ruta es " + rutaCompleta);
+
+            FileWriter escribir = new FileWriter(rutaCompleta); // crea el txt 
+
+            String texto_guardar = textPane.getText();  // pasamos a string el texto
+
+            for (int i = 0; i < texto_guardar.length(); i++) {
+
+                escribir.write(texto_guardar.charAt(i));    // escribimos char a char
+
+            }
+            
+            //  biblioteca -----------------------------------------------------
+            
+            biblioteca.addItem(titulo);     //  agrega el titulo sin el .txt
+            
+            //  edicion Lista.txt ----------------------------------------------
+            
+            String lista_titulos = "/Lista.txt";
+            
+            String ruta_lista = Paths.get(ruta_archivo, lista_titulos).toString();
+            
+            FileWriter escribir_2 = new FileWriter(ruta_lista, true); // crea el txt 
+            
+            titulo += "\n";
+            
+            for (int i = 0; i < titulo.length(); i++) {
+
+                escribir_2.write(titulo.charAt(i));
+                
+            }
+
+            escribir.close();   // cerramos
+            escribir_2.close();
 
         }catch(IOException e){
             
             e.printStackTrace();
             
         }
-    }
+        
+    }   //  ANDA
 
     //  AGREGA LA LISTA DE TITULOS DEL TXT AL COMBO
     @Override
@@ -1280,19 +1314,158 @@ public class Implementacion_metodos implements Metodos {
             
         }
         
-    }
+    }   // ANDA
 
-    //  SETEA EL JTextPane CON EL CONTENIDO DEL TXT
+    //  SETEA EL JTextPane CON EL CONTENIDO DEL TXT -- NO ANDA BIEN
     @Override
     public void leyendoBiblioteca(JTextPane textPane, JComboBox<String> biblioteca) {
         
-        String texto_seleccionado = biblioteca.getSelectedItem().toString();
-       
         try{
             
-            for(String texto : Files.readAllLines(Paths.get(ruta_archivo + "/" + texto_seleccionado +".txt"))){
+            //  recuperamos el titulo y la ruta --------------------------------
             
-            textPane.setText(texto);  // agregamos en bucle los items de la lista
+            String titulo_lectura = biblioteca.getSelectedItem().toString();
+            
+            String ruta_lectura = ruta_archivo + "/" + titulo_lectura + ".txt";
+            
+            //  leemos el codigo de cada carcter -------------------------------
+            
+            FileReader lectura = new FileReader(ruta_lectura);
+            
+            int c = 0;  // 0 para que arranque desde antes del primer caracter
+            
+            String recuperando_texto = "";
+            
+            while (c != -1) {
+
+                c = lectura.read(); // devuelve un int que se traducira a caracter luego
+
+                if (c != -1) {
+
+                    char letra = (char) c;  // casteamos a caracter el codigo
+
+                    recuperando_texto += String.valueOf(letra); // armamos el String
+
+                }
+            }
+            
+            textPane.setText(recuperando_texto);    // mostramos el texto
+        
+            lectura.close();
+        
+        }catch(IOException e){
+            
+            e.printStackTrace();
+            
+        }
+        
+    }   //  ANDA
+
+    @Override
+    public void editarTextoBiblioteca(JTextPane textPane, JComboBox<String> biblioteca, String titulo_nuevo) {
+        
+        try {
+            
+            
+            //  captura del JTextPane ------------------------------------------
+            
+            StyledDocument doc = (StyledDocument) textPane.getDocument();
+            String capturaTexto = "";
+            try {
+                capturaTexto = doc.getText(0, doc.getLength());
+            } catch (BadLocationException e) {
+                e.printStackTrace();
+            }
+            //  ----------------------------------------------------------------
+
+            //  editamos el titulo ---------------------------------------------
+                
+            String nombre_nuevo;
+            
+            // Seleccionamos el título actual
+            String titulo = biblioteca.getSelectedItem().toString();
+  
+            if (Objects.nonNull(titulo_nuevo) && !titulo_nuevo.isEmpty()) {
+                
+                // Nuevo título proporcionado
+                nombre_nuevo = titulo_nuevo;
+                
+                lista_biblio = nombre_nuevo + System.lineSeparator();   // asi se almacena sin txt en el combo
+                
+                // Actualizamos el JComboBox
+                biblioteca.addItem(nombre_nuevo);
+                
+                nombre_nuevo += ".txt";
+
+                biblioteca.removeItem(titulo);
+                
+            } else {
+                
+                // Mantenemos el título actual
+                nombre_nuevo = titulo + ".txt";
+            }
+
+            //  armamos las rutas  ---------------------------------------------
+            
+            Path nuevaRutaCompleta = Paths.get(ruta_archivo).resolve(nombre_nuevo);
+
+            System.out.println("Nueva ruta: " + nuevaRutaCompleta);
+
+            // Escribimos y truncamos el archivo
+            Files.write(nuevaRutaCompleta, capturaTexto.getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+
+            // Renombramos el archivo
+            Files.move(nuevaRutaCompleta, nuevaRutaCompleta, StandardCopyOption.REPLACE_EXISTING);
+
+            // Editamos la biblioteca
+            Files.write(Paths.get(ruta_archivo + "/Lista.txt"), lista_biblio.getBytes(), StandardOpenOption.APPEND);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }   //  NO ANDA
+
+    @Override
+    public void eliminarTextoBiblioteca(JComboBox<String> biblioteca) {
+        
+        //  sacamos del combo --------------------------------------------------
+        
+        String texto_eliminar = biblioteca.getSelectedItem().toString();
+        
+        for(int i = 0; i < biblioteca.getItemCount(); i++){
+           
+            if(biblioteca.getItemAt(i).equalsIgnoreCase(texto_eliminar)){
+                
+                biblioteca.removeItemAt(i);
+                
+            } 
+        }
+        
+        //  sacamos el archivo -------------------------------------------------
+        
+        try{
+            
+            rutaCompleta = ruta_archivo + "/" +texto_eliminar + ".txt";
+            
+            Files.delete(Paths.get(rutaCompleta));
+
+        }catch(IOException e){
+            
+            e.printStackTrace();
+            
+            }
+        
+        //  sacamos del Lista.txt   --------------------------------------------
+        
+        try{
+            
+            for(String texto : Files.readAllLines(Paths.get(ruta_archivo + "/Lista.txt"))){
+            
+            if(texto.equalsIgnoreCase(texto_eliminar)){
+                
+                texto = "";
+                
+            }  
             
         }
             
@@ -1301,11 +1474,13 @@ public class Implementacion_metodos implements Metodos {
             e.printStackTrace();
             
         }
-        
-        
-        
-        
-        
-    }
 
+
+        
+        
+        
+        
+        
+    }   //  NO ANDA
+    
 }
