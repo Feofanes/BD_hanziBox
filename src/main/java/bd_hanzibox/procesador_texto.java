@@ -68,11 +68,6 @@ public class procesador_texto extends javax.swing.JFrame {
         jButton_agrandar_texto = new javax.swing.JButton();
         jButton_achicar_texto = new javax.swing.JButton();
         jButton_justificar = new javax.swing.JButton();
-        jButton_guardar = new javax.swing.JButton();
-        jButton_leer = new javax.swing.JButton();
-        jButton_eliminarTexto = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton_limpiar = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         resultados_seleccion = new javax.swing.JTable();
         mensaje_1 = new javax.swing.JLabel();
@@ -80,6 +75,13 @@ public class procesador_texto extends javax.swing.JFrame {
         jTextField_tituloTexto = new javax.swing.JTextField();
         jLabel_titulo_biblioteca = new javax.swing.JLabel();
         jComboBox_biblioteca = new javax.swing.JComboBox<>();
+        jToolBar2 = new javax.swing.JToolBar();
+        jButton_guardar = new javax.swing.JButton();
+        jButton_leer = new javax.swing.JButton();
+        jButton_eliminarTexto = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton_limpiar = new javax.swing.JButton();
+        jButton_agregadoAUTO = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -220,65 +222,6 @@ public class procesador_texto extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton_justificar);
 
-        jButton_guardar.setText("Guardar");
-        jButton_guardar.setToolTipText("Guardar el texto actual en la biblioteca");
-        jButton_guardar.setFocusable(false);
-        jButton_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_guardarActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton_guardar);
-
-        jButton_leer.setText("Leer");
-        jButton_leer.setToolTipText("Abrir un elemento de la biblioteca");
-        jButton_leer.setFocusable(false);
-        jButton_leer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_leer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_leer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_leerActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton_leer);
-
-        jButton_eliminarTexto.setText("Eliminar");
-        jButton_eliminarTexto.setFocusable(false);
-        jButton_eliminarTexto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_eliminarTexto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_eliminarTexto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_eliminarTextoActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton_eliminarTexto);
-
-        jButton1.setText("Editar");
-        jButton1.setToolTipText("Editar un texto de la biblioteca");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton1);
-
-        jButton_limpiar.setText("Limpiar");
-        jButton_limpiar.setToolTipText("Borrar todo el texto");
-        jButton_limpiar.setFocusable(false);
-        jButton_limpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_limpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_limpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_limpiarActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jButton_limpiar);
-
         resultados_seleccion.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         resultados_seleccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -324,14 +267,90 @@ public class procesador_texto extends javax.swing.JFrame {
             }
         });
 
+        jToolBar2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBar2.setRollover(true);
+
+        jButton_guardar.setText("Guardar");
+        jButton_guardar.setToolTipText("Guardar el texto actual en la biblioteca");
+        jButton_guardar.setFocusable(false);
+        jButton_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_guardarActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton_guardar);
+
+        jButton_leer.setText("Leer");
+        jButton_leer.setToolTipText("Abrir un elemento de la biblioteca");
+        jButton_leer.setFocusable(false);
+        jButton_leer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_leer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_leer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_leerActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton_leer);
+
+        jButton_eliminarTexto.setText("Eliminar");
+        jButton_eliminarTexto.setToolTipText("Eliminar un elemento de la biblioteca");
+        jButton_eliminarTexto.setFocusable(false);
+        jButton_eliminarTexto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_eliminarTexto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_eliminarTexto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_eliminarTextoActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton_eliminarTexto);
+
+        jButton1.setText("Editar");
+        jButton1.setToolTipText("Editar un texto de la biblioteca");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton1);
+
+        jButton_limpiar.setText("Limpiar");
+        jButton_limpiar.setToolTipText("Borrar todo el texto");
+        jButton_limpiar.setFocusable(false);
+        jButton_limpiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_limpiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_limpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_limpiarActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton_limpiar);
+
+        jButton_agregadoAUTO.setText("AUTO");
+        jButton_agregadoAUTO.setFocusable(false);
+        jButton_agregadoAUTO.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_agregadoAUTO.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_agregadoAUTO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_agregadoAUTOActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton_agregadoAUTO);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(mensaje_1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,10 +381,11 @@ public class procesador_texto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -782,17 +802,40 @@ public class procesador_texto extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
     //  BOTON PARA ELIMINAR UN TEXTO DE LA BIBLIOTECA
     private void jButton_eliminarTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarTextoActionPerformed
         
         Implementacion_metodos acceso = new Implementacion_metodos(); // para acceder a métodos
         
-        acceso.eliminarTextoBiblioteca(this.jComboBox_biblioteca);
+        String texto_eliminar = jComboBox_biblioteca.getSelectedItem().toString();
+        
+        acceso.eliminarTextoBiblioteca(this.jComboBox_biblioteca, texto_eliminar);
+        
+        pane_texto.setText("");
+        
+        jComboBox_biblioteca.setSelectedIndex(0);
         
         
     }//GEN-LAST:event_jButton_eliminarTextoActionPerformed
+
+    //  BOTON PARA AGREGAR AUTOMATICAMENTE TODOS LOS HANZIS NUEVOS A LA LISTA HANZI
+    private void jButton_agregadoAUTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_agregadoAUTOActionPerformed
+       
+        Implementacion_metodos acceso = new Implementacion_metodos(); // para acceder a métodos
+        
+        acceso.agregarAutoTodosHanzi(pane_texto);
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton_agregadoAUTOActionPerformed
     //  ------------------------------------------------------------------------
+    
+    
+    
+    
+    
+    
     
     //  ------------------------ GETTERS and SETTERS ---------------------------
     
@@ -873,6 +916,7 @@ public class procesador_texto extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_achicar_texto;
     private javax.swing.JButton jButton_agrandar_texto;
+    private javax.swing.JButton jButton_agregadoAUTO;
     private javax.swing.JButton jButton_agregar;
     private javax.swing.JButton jButton_analisis;
     private javax.swing.JButton jButton_eliminarTexto;
@@ -897,6 +941,7 @@ public class procesador_texto extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JTextField jTextField_tituloTexto;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel mensaje_1;
     private javax.swing.JTextPane pane_texto;
     public static javax.swing.JTable resultados_seleccion;

@@ -100,15 +100,16 @@ public class Implementacion_metodos implements Metodos {
     }
     
     
-
-    
     // instanciamos la conxion para acceder a esta desde los metodos
     Conexion conexion = Conexion.getInstance();
     //Connection conectar = conexion.conectar();
 
     //---------------------------- METODOS -------------------------------------
-    //  CRUD BASICO (tabla principal) ------------------------------------------
+    
+    
+    //  ------------------ CRUD BASICO (tabla principal) -----------------------
     //  ------------------------------------------------------------------------
+    
     //  AGREGAR ENTRADAS    -- le borre el acceso a ver que onda
     @Override
     public void agregar(Unidad_final hanzi_agregar) {
@@ -298,8 +299,9 @@ public class Implementacion_metodos implements Metodos {
         // Funciona a partir de la implementacion del metodo mostrarTabla();
     }   //  FUNCIONANDO
 
-    //  TABLA SECUNDARIA -------------------------------------------------------
+    //  -------------------------- TABLA SECUNDARIA ----------------------------
     //  ------------------------------------------------------------------------
+    
     //  CONSTATA QUE EL HANZI INGRESADO NO EXISTA PREVIAMENTE EN LA TABLA "HANZI"
     @Override
     public boolean corroborarSingularidad(Unidad_min hanzi_ingresado) {
@@ -527,8 +529,9 @@ public class Implementacion_metodos implements Metodos {
 
     }   //  FUNCIONANDO     -- le elimine el acceso
 
-    //  FUNCIONES AVANZADAS ----------------------------------------------------
+    //  ----------------------- FUNCIONES AVANZADAS ----------------------------
     //  ------------------------------------------------------------------------
+    
     //  CONSTATA QUE NO EXISTA PREVIAMENTE LO QUE SE QUIERE AGREGAR
     @Override
     public boolean buscarExistencia(Unidad_final hanzi_aCorroborar, ventana_principal acceso) {
@@ -1031,7 +1034,7 @@ public class Implementacion_metodos implements Metodos {
 
     }   //  FUNCIONANDO
 
-    //  PROCESASOR DE TEXTO ----------------------------------------------------
+    //  ---------------------- PROCESASOR DE TEXTO -----------------------------
     //  ------------------------------------------------------------------------
     
     //  BUSCA EN TABLA PRINCIPAL EL TEXTO SELECCIONADO
@@ -1202,6 +1205,8 @@ public class Implementacion_metodos implements Metodos {
             Connection conectar = conexion.conectar(); // Conectar a la base de datos
             StyledDocument doc = texto.getStyledDocument();
             int tamano = doc.getLength();
+            
+            
 
             for (int i = 0; i < tamano; i++) {
                 char caracter = doc.getText(i, 1).charAt(0);
@@ -1209,6 +1214,17 @@ public class Implementacion_metodos implements Metodos {
                 // Puedes agregar la lógica para evaluar el carácter en la base de datos
                 if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter))) {
                     aplicarEstiloColor(texto, i, 1, Color.RED);
+                    
+                    //  agregamos los hanzi nuevos a un array ------------------
+                    
+                    Unidad_min hanzi_capturado = new Unidad_min();
+                    
+                    hanzi_capturado.setSimbolo(String.valueOf(caracter));
+                    
+                    ArrayList <Unidad_min> hanzi_nuevos = new ArrayList<>();
+                    
+                    hanzi_nuevos.add(hanzi_capturado);
+                    
                 }
             }
 
@@ -1316,7 +1332,7 @@ public class Implementacion_metodos implements Metodos {
         
     }   // ANDA
 
-    //  SETEA EL JTextPane CON EL CONTENIDO DEL TXT -- NO ANDA BIEN
+    //  SETEA EL JTextPane CON EL CONTENIDO DEL TXT 
     @Override
     public void leyendoBiblioteca(JTextPane textPane, JComboBox<String> biblioteca) {
         
@@ -1361,29 +1377,20 @@ public class Implementacion_metodos implements Metodos {
         
     }   //  ANDA
 
+    //  EDITA ARCHIVOS YA EXISTENTES
     @Override
     public void editarTextoBiblioteca(JTextPane textPane, JComboBox<String> biblioteca, String titulo_nuevo) {
         
         try {
             
+            //  evaluamos si cambio el titulo ----------------------------------
             
-            //  captura del JTextPane ------------------------------------------
-            
-            StyledDocument doc = (StyledDocument) textPane.getDocument();
-            String capturaTexto = "";
-            try {
-                capturaTexto = doc.getText(0, doc.getLength());
-            } catch (BadLocationException e) {
-                e.printStackTrace();
-            }
-            //  ----------------------------------------------------------------
-
-            //  editamos el titulo ---------------------------------------------
-                
             String nombre_nuevo;
             
             // Seleccionamos el título actual
-            String titulo = biblioteca.getSelectedItem().toString();
+            String titulo_viejo = biblioteca.getSelectedItem().toString();
+            
+            //String texto_eliminar = titulo;
   
             if (Objects.nonNull(titulo_nuevo) && !titulo_nuevo.isEmpty()) {
                 
@@ -1396,41 +1403,54 @@ public class Implementacion_metodos implements Metodos {
                 biblioteca.addItem(nombre_nuevo);
                 
                 nombre_nuevo += ".txt";
+                
+                //  al editar se crea uno nuevo, elinamos el viejo ------------------
+                eliminarTextoBiblioteca(biblioteca, titulo_viejo);
 
-                biblioteca.removeItem(titulo);
+                System.out.println("el titulo es nuevo");
                 
             } else {
                 
                 // Mantenemos el título actual
-                nombre_nuevo = titulo + ".txt";
+                nombre_nuevo = titulo_viejo + ".txt";
+                
+                System.out.println("el titulo es el mismo");
             }
-
-            //  armamos las rutas  ---------------------------------------------
             
-            Path nuevaRutaCompleta = Paths.get(ruta_archivo).resolve(nombre_nuevo);
+            //  establecemos la ruta -------------------------------------------
+            
+             String nombre_archivo = "/" + nombre_nuevo;    // titulo del txt  
 
-            System.out.println("Nueva ruta: " + nuevaRutaCompleta);
+            rutaCompleta = Paths.get(ruta_archivo, nombre_archivo).toString();   // construye la ruta
 
-            // Escribimos y truncamos el archivo
-            Files.write(nuevaRutaCompleta, capturaTexto.getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
+            System.out.println("la ruta es " + rutaCompleta);
+            
+            //  escribimos el archivo ------------------------------------------
 
-            // Renombramos el archivo
-            Files.move(nuevaRutaCompleta, nuevaRutaCompleta, StandardCopyOption.REPLACE_EXISTING);
+            FileWriter escribir = new FileWriter(rutaCompleta); // crea el txt 
 
-            // Editamos la biblioteca
-            Files.write(Paths.get(ruta_archivo + "/Lista.txt"), lista_biblio.getBytes(), StandardOpenOption.APPEND);
+            String texto_guardar = textPane.getText();  // pasamos a string el texto
 
+            for (int i = 0; i < texto_guardar.length(); i++) {
+
+                escribir.write(texto_guardar.charAt(i));    // escribimos char a char
+
+            }
+            
+            escribir.close();   // cerramos
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }   //  NO ANDA
 
+
+    }   //  FUNCIONA !!!
+
+    //  ELIMINA ARCHIVOS SELECCIONADOS DEL COMBO
     @Override
-    public void eliminarTextoBiblioteca(JComboBox<String> biblioteca) {
+    public void eliminarTextoBiblioteca(JComboBox<String> biblioteca, String texto_eliminar) {
         
         //  sacamos del combo --------------------------------------------------
-        
-        String texto_eliminar = biblioteca.getSelectedItem().toString();
         
         for(int i = 0; i < biblioteca.getItemCount(); i++){
            
@@ -1441,11 +1461,13 @@ public class Implementacion_metodos implements Metodos {
             } 
         }
         
+        System.out.println("texto eliminado del combo fue " + texto_eliminar);
+        
         //  sacamos el archivo -------------------------------------------------
         
         try{
             
-            rutaCompleta = ruta_archivo + "/" +texto_eliminar + ".txt";
+            rutaCompleta = ruta_archivo + "/" + texto_eliminar + ".txt";
             
             Files.delete(Paths.get(rutaCompleta));
 
@@ -1455,32 +1477,59 @@ public class Implementacion_metodos implements Metodos {
             
             }
         
-        //  sacamos del Lista.txt   --------------------------------------------
+        //  sacamos del Lista.txt, reescribiendola   ---------------------------
+        
+        String ruta_lista = ruta_archivo + "/Lista.txt";
         
         try{
             
-            for(String texto : Files.readAllLines(Paths.get(ruta_archivo + "/Lista.txt"))){
+            FileWriter escribir = new FileWriter(ruta_lista, false);  // false reescribe el mismo txt
             
-            if(texto.equalsIgnoreCase(texto_eliminar)){
+            for(int i = 0; i<biblioteca.getItemCount(); i++){
                 
-                texto = "";
+                if(!biblioteca.getItemAt(i).equalsIgnoreCase(texto_eliminar)){
                 
-            }  
+                String itemCombo = biblioteca.getItemAt(i);
+                
+                escribir.write(itemCombo + System.lineSeparator());
+                
+                }
             
-        }
+            }
             
+            escribir.close();
+        
         }catch(IOException e){
             
             e.printStackTrace();
             
         }
 
+    }   //   FUNCIONA !!!!
 
+    @Override
+    public void agregarAutoTodosHanzi(JTextPane textPane) {
+        
+        try{
+            
+            
+            
+        
+        
+        }catch(SQLException e){
+            
+            e.printStackTrace();
+            
+        }
+       
         
         
         
         
         
-    }   //  NO ANDA
+        
+    }
+
+    
     
 }

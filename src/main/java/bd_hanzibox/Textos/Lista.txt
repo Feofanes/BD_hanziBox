@@ -1,6 +1,3 @@
-hola
-chau
-Prueba espacios
-
-prueba
-LARGO
+texto d
+Tuki
+al A lo editamos tambien

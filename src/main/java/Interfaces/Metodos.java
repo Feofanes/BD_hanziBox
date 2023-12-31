@@ -81,6 +81,9 @@ public interface Metodos {
     
     public void editarTextoBiblioteca(JTextPane textPane, JComboBox<String> biblioteca, String titulo_nuevo);
     
-    public void eliminarTextoBiblioteca(JComboBox<String> biblioteca);
+    public void eliminarTextoBiblioteca(JComboBox<String> biblioteca, String texto_eliminar);
+    
+    public void agregarAutoTodosHanzi(JTextPane textPane);
+    
     
 }
