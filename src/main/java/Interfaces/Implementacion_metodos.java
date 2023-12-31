@@ -34,6 +34,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
@@ -1215,16 +1216,6 @@ public class Implementacion_metodos implements Metodos {
                 if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter))) {
                     aplicarEstiloColor(texto, i, 1, Color.RED);
                     
-                    //  agregamos los hanzi nuevos a un array ------------------
-                    
-                    Unidad_min hanzi_capturado = new Unidad_min();
-                    
-                    hanzi_capturado.setSimbolo(String.valueOf(caracter));
-                    
-                    ArrayList <Unidad_min> hanzi_nuevos = new ArrayList<>();
-                    
-                    hanzi_nuevos.add(hanzi_capturado);
-                    
                 }
             }
 
@@ -1508,28 +1499,67 @@ public class Implementacion_metodos implements Metodos {
     }   //   FUNCIONA !!!!
 
     @Override
-    public void agregarAutoTodosHanzi(JTextPane textPane) {
+    public String agregarAutoTodosHanzi(JTextPane texto, procesador_texto acceso) {
         
-        try{
+        String mensajito = "";
+        
+        try {
             
+            Connection conectar = conexion.conectar(); // Conectar a la base de datos
+            StyledDocument doc = texto.getStyledDocument();
+            int tamano = doc.getLength();
             
+            ArrayList <Unidad_min> hanzi_nuevos = new ArrayList<>();
             
-        
-        
-        }catch(SQLException e){
-            
-            e.printStackTrace();
-            
-        }
-       
-        
-        
-        
-        
-        
-        
-    }
+            for (int i = 0; i < tamano; i++) {
+                char caracter = doc.getText(i, 1).charAt(0);
 
+                // Puedes agregar la lógica para evaluar el carácter en la base de datos
+                if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter))) {
+                    aplicarEstiloColor(texto, i, 1, Color.BLACK);
+                    
+                    //  agregamos los hanzi nuevos a un array ------------------
+                    
+                    Unidad_min hanzi_capturado = new Unidad_min();
+                    
+                    hanzi_capturado.setSimbolo(String.valueOf(caracter));
+                    hanzi_capturado.setPinyin("...");
+                    hanzi_capturado.setRadical("○");
+                    
+                    hanzi_nuevos.add(hanzi_capturado);
+                    
+                }
+            }
+            
+            for(Unidad_min e: hanzi_nuevos){
+               
+                PreparedStatement agregar = conectar.prepareStatement("insert into hanzi (Hanzi, Radical, Pinyin) VALUES  (?, ?, ?) ");
+                       
+                agregar.setString(1, e.getSimbolo());
+                agregar.setString(2, e.getRadical());
+                agregar.setString(3, e.getPinyin());
+
+                agregar.executeUpdate();
+                
+                System.out.println("los hanzi insertados fueron " + e.getSimbolo());
+
+            }
+            
+             mensajito= "Se agregaron " + hanzi_nuevos.size() + " nuevos hanzis";
+            
+            //acceso.setMensaje_1(mensaje);
+
+            conexion.desconectar();
+       
+    }catch(SQLException e){
+        
+        e.printStackTrace();
+        
+    }   catch (BadLocationException ex) {
+            Logger.getLogger(Implementacion_metodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    return mensajito;
     
-    
+}
 }

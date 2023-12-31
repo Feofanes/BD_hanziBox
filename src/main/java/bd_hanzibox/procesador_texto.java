@@ -331,6 +331,7 @@ public class procesador_texto extends javax.swing.JFrame {
         jToolBar2.add(jButton_limpiar);
 
         jButton_agregadoAUTO.setText("AUTO");
+        jButton_agregadoAUTO.setToolTipText("Agrega automáticamente todos los hanzis nuevo del texto");
         jButton_agregadoAUTO.setFocusable(false);
         jButton_agregadoAUTO.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_agregadoAUTO.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -823,8 +824,9 @@ public class procesador_texto extends javax.swing.JFrame {
        
         Implementacion_metodos acceso = new Implementacion_metodos(); // para acceder a métodos
         
-        acceso.agregarAutoTodosHanzi(pane_texto);
+        String mensajito = acceso.agregarAutoTodosHanzi(pane_texto, this);
         
+        mensaje_1.setText(mensajito);
         
         
         

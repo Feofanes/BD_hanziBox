@@ -430,6 +430,7 @@
             <Component class="javax.swing.JButton" name="jButton_agregadoAUTO">
               <Properties>
                 <Property name="text" type="java.lang.String" value="AUTO"/>
+                <Property name="toolTipText" type="java.lang.String" value="Agrega autom&#xe1;ticamente todos los hanzis nuevo del texto"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>

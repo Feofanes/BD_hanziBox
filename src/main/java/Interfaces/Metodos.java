@@ -83,7 +83,7 @@ public interface Metodos {
     
     public void eliminarTextoBiblioteca(JComboBox<String> biblioteca, String texto_eliminar);
     
-    public void agregarAutoTodosHanzi(JTextPane textPane);
+    public String agregarAutoTodosHanzi(JTextPane texto, procesador_texto acceso);
     
     
 }
