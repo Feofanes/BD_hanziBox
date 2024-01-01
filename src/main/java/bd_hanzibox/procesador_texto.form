@@ -188,7 +188,7 @@
                 <Property name="dragEnabled" type="boolean" value="true"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="// COPIADO Y PEGADO --------------------------------------------------------&#xa;    &#xa;    // Crear men&#xfa; emergente para copiar y pegar&#xa;        JPopupMenu popupMenu = new JPopupMenu();&#xa;        JMenuItem copiar = new JMenuItem(new DefaultEditorKit.CopyAction());&#xa;        JMenuItem pegar = new JMenuItem(new DefaultEditorKit.PasteAction());&#xa;&#xa;        copiar.setText(&quot;Copiar&quot;);&#xa;        pegar.setText(&quot;Pegar&quot;);&#xa;&#xa;        popupMenu.add(copiar);&#xa;        popupMenu.add(pegar);&#xa;        &#xa;        pane_texto.setComponentPopupMenu(popupMenu);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="// COPIADO Y PEGADO --------------------------------------------------------&#xa;    &#xa;    // Crear men&#xfa; emergente para copiar y pegar&#xa;        JPopupMenu popupMenu = new JPopupMenu();&#xa;        JMenuItem copiar = new JMenuItem(new DefaultEditorKit.CopyAction());&#xa;        JMenuItem pegar = new JMenuItem(new DefaultEditorKit.PasteAction());&#xa;&#xa;        copiar.setText(&quot;jButton_Copiar&quot;);&#xa;        pegar.setText(&quot;Pegar&quot;);&#xa;&#xa;        popupMenu.add(copiar);&#xa;        popupMenu.add(pegar);&#xa;        &#xa;        pane_texto.setComponentPopupMenu(popupMenu);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -218,9 +218,6 @@
                 <Property name="toolTipText" type="java.lang.String" value="Buscar palabra seleccionada en base de datos"/>
                 <Property name="focusable" type="boolean" value="false" postCode="Buscar.setVisible(true);"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[32, 32]"/>
-                </Property>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
@@ -258,48 +255,60 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_analisisActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JToolBar$Separator" name="jSeparator1">
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton_agrandar_texto">
+            <Component class="javax.swing.JButton" name="jButton_agregadoAUTO">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/agrandar.png"/>
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/varita.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Agrandar texto"/>
+                <Property name="toolTipText" type="java.lang.String" value="Agrega autom&#xe1;ticamente todos los hanzis nuevo del texto"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_agrandar_textoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_agregadoAUTOActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton_achicar_texto">
+            <Component class="javax.swing.JButton" name="jButton_leer">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/achicar.png"/>
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lectura.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Achicar texto"/>
+                <Property name="toolTipText" type="java.lang.String" value="Abrir un elemento de la biblioteca"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_achicar_textoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_leerActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton_justificar">
+            <Component class="javax.swing.JButton" name="jButton_limpiar">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/justificar.png"/>
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/limpiar.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Justificar texto"/>
+                <Property name="toolTipText" type="java.lang.String" value="Borrar todo el texto"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_justificarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_limpiarActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton1">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/editar.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Editar un texto de la biblioteca"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -396,20 +405,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_guardarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton_leer">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lectura.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Abrir un elemento de la biblioteca"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_leerActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="jButton_eliminarTexto">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -424,40 +419,68 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_eliminarTextoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="jButton_pegar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Editar"/>
-                <Property name="toolTipText" type="java.lang.String" value="Editar un texto de la biblioteca"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/pegar.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Pegar"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_Copiar">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/copiar.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Copiar texto"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_agrandar_texto">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/agrandar.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Agrandar texto"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_agrandar_textoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton_limpiar">
+            <Component class="javax.swing.JButton" name="jButton_achicar_texto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Limpiar"/>
-                <Property name="toolTipText" type="java.lang.String" value="Borrar todo el texto"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/achicar.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Achicar texto"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_limpiarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_achicar_textoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton_agregadoAUTO">
+            <Component class="javax.swing.JButton" name="jButton_justificar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="AUTO"/>
-                <Property name="toolTipText" type="java.lang.String" value="Agrega autom&#xe1;ticamente todos los hanzis nuevo del texto"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/justificar.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Justificar texto"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_agregadoAUTOActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_justificarActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
