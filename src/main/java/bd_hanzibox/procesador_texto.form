@@ -195,7 +195,13 @@
         </Container>
         <Container class="javax.swing.JToolBar" name="jToolBar1">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="66" type="rgb"/>
+            </Property>
             <Property name="floatable" type="boolean" value="true"/>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="ff" red="0" type="rgb"/>
+            </Property>
             <Property name="orientation" type="int" value="1"/>
             <Property name="rollover" type="boolean" value="true"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -205,18 +211,24 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="Buscar">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="botonLupa" type="code"/>
                 </Property>
-                <Property name="text" postCode="//Buscar.setIcon(new ImageIcon(&quot;/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png&quot;));"/>
+                <Property name="text" postCode="//Buscar.setSize(32, 32); imagenOriginal.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH); Buscar.setIcon(new javax.swing.ImageIcon(&quot;/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png&quot;)); // NOI18N&#xa;//ImagenIcon.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);"/>
                 <Property name="toolTipText" type="java.lang.String" value="Buscar palabra seleccionada en base de datos"/>
                 <Property name="focusable" type="boolean" value="false" postCode="Buscar.setVisible(true);"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[32, 32]"/>
+                </Property>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscarActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="ImageIcon botonLupa = new ImageIcon(&quot;/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png&quot;);"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="jButton_agregar">
               <Properties>
@@ -361,6 +373,9 @@
         </Component>
         <Container class="javax.swing.JToolBar" name="jToolBar2">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="66" type="rgb"/>
+            </Property>
             <Property name="orientation" type="int" value="1"/>
             <Property name="rollover" type="boolean" value="true"/>
           </Properties>
@@ -369,7 +384,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButton_guardar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Guardar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/guardar.png"/>
+                </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Guardar el texto actual en la biblioteca"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -381,7 +398,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton_leer">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Leer"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lectura.png"/>
+                </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Abrir un elemento de la biblioteca"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -393,7 +412,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton_eliminarTexto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Eliminar"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/eliminar.png"/>
+                </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Eliminar un elemento de la biblioteca"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>

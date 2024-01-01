@@ -7,10 +7,14 @@ import Interfaces.Implementacion_metodos;
 import static Interfaces.Implementacion_metodos.getRutaCompleta;
 import static Interfaces.Implementacion_metodos.getRuta_archivo;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -142,17 +146,22 @@ public class procesador_texto extends javax.swing.JFrame {
 
         pane_texto.setComponentPopupMenu(popupMenu);
 
+        jToolBar1.setBackground(new java.awt.Color(102, 102, 102));
         jToolBar1.setFloatable(true);
+        jToolBar1.setForeground(new java.awt.Color(0, 255, 0));
         jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
         jToolBar1.setToolTipText("");
 
-        Buscar.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png")); // NOI18N
-        //Buscar.setIcon(new ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png"));
+        ImageIcon botonLupa = new ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png");
+        Buscar.setIcon(botonLupa);
+        //Buscar.setSize(32, 32); imagenOriginal.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH); Buscar.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lupa.png")); // NOI18N
+        //ImagenIcon.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
         Buscar.setToolTipText("Buscar palabra seleccionada en base de datos");
         Buscar.setFocusable(false);
         Buscar.setVisible(true);
         Buscar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        Buscar.setSize(new java.awt.Dimension(32, 32));
         Buscar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,10 +276,11 @@ public class procesador_texto extends javax.swing.JFrame {
             }
         });
 
+        jToolBar2.setBackground(new java.awt.Color(102, 102, 102));
         jToolBar2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar2.setRollover(true);
 
-        jButton_guardar.setText("Guardar");
+        jButton_guardar.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/guardar.png")); // NOI18N
         jButton_guardar.setToolTipText("Guardar el texto actual en la biblioteca");
         jButton_guardar.setFocusable(false);
         jButton_guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -282,7 +292,7 @@ public class procesador_texto extends javax.swing.JFrame {
         });
         jToolBar2.add(jButton_guardar);
 
-        jButton_leer.setText("Leer");
+        jButton_leer.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/lectura.png")); // NOI18N
         jButton_leer.setToolTipText("Abrir un elemento de la biblioteca");
         jButton_leer.setFocusable(false);
         jButton_leer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -294,7 +304,7 @@ public class procesador_texto extends javax.swing.JFrame {
         });
         jToolBar2.add(jButton_leer);
 
-        jButton_eliminarTexto.setText("Eliminar");
+        jButton_eliminarTexto.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/eliminar.png")); // NOI18N
         jButton_eliminarTexto.setToolTipText("Eliminar un elemento de la biblioteca");
         jButton_eliminarTexto.setFocusable(false);
         jButton_eliminarTexto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
