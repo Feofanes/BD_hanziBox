@@ -21,9 +21,38 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
         </dependency>
+        
+        
+        <!-- poi-x.x.x.jar para manejo de hojas de calculo -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.2.5</version>
+        </dependency>
+        
+        <!-- poi-ooxml-x.x.x.jar -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.2.5</version>
+        </dependency>
+        
+        
+        <!-- lo tiro chat -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.16.0</version> <!-- Utiliza la versión más reciente disponible -->
+        </dependency>
 
 
     </dependencies>
+    
+    
+        <!-- Otras dependencias pueden ir aquí -->
+        
+    
+
 
 
     

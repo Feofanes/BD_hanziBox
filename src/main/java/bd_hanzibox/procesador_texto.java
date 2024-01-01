@@ -87,6 +87,7 @@ public class procesador_texto extends javax.swing.JFrame {
         jButton_agrandar_texto = new javax.swing.JButton();
         jButton_achicar_texto = new javax.swing.JButton();
         jButton_justificar = new javax.swing.JButton();
+        jButton_prueba = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -364,6 +365,17 @@ public class procesador_texto extends javax.swing.JFrame {
             }
         });
         jToolBar2.add(jButton_justificar);
+
+        jButton_prueba.setText("prueba");
+        jButton_prueba.setFocusable(false);
+        jButton_prueba.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton_prueba.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_prueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_pruebaActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButton_prueba);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -854,6 +866,11 @@ public class procesador_texto extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton_agregadoAUTOActionPerformed
+
+    private void jButton_pruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_pruebaActionPerformed
+        
+        
+    }//GEN-LAST:event_jButton_pruebaActionPerformed
     //  ------------------------------------------------------------------------
     
     
@@ -951,6 +968,7 @@ public class procesador_texto extends javax.swing.JFrame {
     private javax.swing.JButton jButton_leer;
     private javax.swing.JButton jButton_limpiar;
     private javax.swing.JButton jButton_pegar;
+    private javax.swing.JButton jButton_prueba;
     private javax.swing.JButton jButton_volver;
     private javax.swing.JComboBox<String> jComboBox_biblioteca;
     private javax.swing.JLabel jLabel_titulo;

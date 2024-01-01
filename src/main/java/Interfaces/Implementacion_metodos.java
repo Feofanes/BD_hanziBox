@@ -9,11 +9,14 @@ import bd_hanzibox.*;
 import static bd_hanzibox.procesador_texto.resultados_seleccion;
 import bd_hanzibox.ventana_principal;
 import static bd_hanzibox.ventana_principal.busqueda_resultados;
+import com.mysql.cj.result.Row;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.List;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,6 +48,12 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import jdk.dynalink.StandardOperation;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class Implementacion_metodos implements Metodos {
@@ -1562,4 +1571,102 @@ public class Implementacion_metodos implements Metodos {
     return mensajito;
     
 }
-}
+
+    
+    //  COMPARA LA LISTA HSK1 CON LA BD Y DEVUELVE EL PORCENTAJE DE COBERTURA
+    @Override
+    public int comparadorHSK(String hsk_comparar) {
+        
+        Connection conectar = conexion.conectar();  // conectamos
+       
+        // variables para sacar %   --------------------------------------------
+        
+        int contador_palabras = 0;
+        int porcentaje_cobertura;
+        
+        int vueltas_dadas = 0;
+        
+        //  creamos un array y le asignamos el retorno del metodo --------------
+        
+        ArrayList <String> lista_HSK = new ArrayList<>();  // aca almacenaremos las palabras
+        
+        lista_HSK = cargarListasHSK(hsk_comparar);
+        
+        try {
+            
+            //  recorremos el array buscando cada palabra   --------------------
+            
+            for(String palabra : lista_HSK){
+                
+                vueltas_dadas ++;
+                
+                //  buscamos en el campo
+                PreparedStatement comparar = conectar.prepareStatement("SELECT * FROM hanzi_entrada WHERE Hanzi = ?");
+
+                //  seteamos la instancia con el parametro del metodo, que sera el parametro de busqueda tambien
+                comparar.setString(1, palabra);
+
+                //  la consulta en si
+                ResultSet consulta = comparar.executeQuery();
+                
+                //  contabilizamos los match    --------------------------------
+                
+                if(consulta.next()){
+                    
+                    contador_palabras ++;
+                    
+                    System.out.println("en el bucle las vuelts fueron: " + vueltas_dadas);
+                    
+                }
+            }
+            
+            conexion.desconectar();
+            
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        porcentaje_cobertura = contador_palabras * 100 / lista_HSK.size();
+        
+        System.out.println("palabras encontradas: "+contador_palabras);
+        System.out.println("tamano de la lista hsk: " + lista_HSK.size());
+        System.out.println("porcentaje de cobertura del HSK: " + porcentaje_cobertura + " para " + hsk_comparar);
+        
+
+        return porcentaje_cobertura;
+    }
+
+    
+    //  CARGA LA LISTA DE PALABRAS HSK EN UN ARRAYLIST
+    @Override
+    public ArrayList<String> cargarListasHSK(String lista) { // throws IOException 
+        
+        ArrayList<String> lista_HSK = new ArrayList<>();    // donde se guardaran las palabras
+        
+        //  la ruta se completa con el parametro -nombre de la lista- que se le pase 
+        String ruta_completa = "/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/Listas HSK/" + lista + ".txt"; 
+        
+        try{
+            
+            BufferedReader br = new BufferedReader(new FileReader(ruta_completa));  //  se lee linea a linea
+
+            String linea;
+
+            while ((linea = br.readLine()) != null) {   //  se almacena en un string si la linea NO esta vacia
+
+                lista_HSK.add(linea);   //  se guarda el strin en el array
+            }
+
+        }catch(IOException e){
+            
+            e.printStackTrace();
+            
+        }
+
+        return lista_HSK;
+    }
+        
+        
+        
+    }
+
