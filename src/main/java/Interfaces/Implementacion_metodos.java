@@ -1570,10 +1570,12 @@ public class Implementacion_metodos implements Metodos {
 
     return mensajito;
     
-}
+}   //  FUNCIONA
 
     
-    //  COMPARA LA LISTA HSK1 CON LA BD Y DEVUELVE EL PORCENTAJE DE COBERTURA
+    //  ------------------------------------------------------------------------
+    
+    //  COMPARA LA LISTA HSK CON LA BD Y DEVUELVE EL PORCENTAJE DE COBERTURA
     @Override
     public int comparadorHSK(String hsk_comparar) {
         
@@ -1634,9 +1636,8 @@ public class Implementacion_metodos implements Metodos {
         
 
         return porcentaje_cobertura;
-    }
+    }   //  FUNCIONA
 
-    
     //  CARGA LA LISTA DE PALABRAS HSK EN UN ARRAYLIST
     @Override
     public ArrayList<String> cargarListasHSK(String lista) { // throws IOException 
@@ -1664,7 +1665,50 @@ public class Implementacion_metodos implements Metodos {
         }
 
         return lista_HSK;
-    }
+    }   //  FUNCIONA
+
+    @Override
+    public boolean mostrarIconLevel(String hskA,String hskB, String hskC) {
+        
+        boolean completado = false;
+       
+        int nivel_hskA = 0;
+        int nivel_hskB = 0;
+        int nivel_hskC = 0;
+        
+        nivel_hskA = comparadorHSK(hskA);   // deberia meter un sout de todos los elementos
+        nivel_hskB = comparadorHSK(hskB);
+        nivel_hskC = comparadorHSK(hskC);
+        
+        if(nivel_hskA >= 90 && nivel_hskB  >= 90 && nivel_hskC >= 90){
+            
+            completado = true;
+            
+        }
+        
+        return completado;
+        
+    }   //  NO PROBADO
+
+    @Override
+    public boolean mostrarIconLevel_avanzado(String hsk) {
+        
+        boolean completado = false;
+       
+        int nivel_hsk = 0;
+        
+        nivel_hsk = comparadorHSK(hsk);   // deberia meter un sout de todos los elementos
+        
+        
+        if(nivel_hsk >= 90){
+            
+            completado = true;
+            
+        }
+        
+        return completado;
+        
+    }   //  NO PROBADO
         
         
         

@@ -111,7 +111,13 @@
                               <Component id="jLabel_contador_entradas_unicas" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel_contador_entradas" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel_principiante" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabel_avanzado" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel_intermedio" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel_principiante" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Component id="jLabel_tareaEjecutada_2" alignment="1" max="32767" attributes="0"/>
@@ -174,15 +180,25 @@
                           <Component id="jButton_modificar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton_buscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jLabel_contador_entradas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                              <Component id="jLabel_contador_entradas_unicas" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                      <Component id="jLabel_contador_entradas_unicas" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jLabel_intermedio" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="jLabel_avanzado" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jLabel_principiante" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -384,7 +400,23 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel_tareaEjecutada_3">
     </Component>
+    <Component class="javax.swing.JLabel" name="jLabel_intermedio">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/nivel_1.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Nivel principiante"/>
+      </Properties>
+    </Component>
     <Component class="javax.swing.JLabel" name="jLabel_principiante">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/nivel_1.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Nivel principiante"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel_avanzado">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="2" name="/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/nivel_1.png"/>

@@ -93,5 +93,9 @@ public interface Metodos {
     
     public int comparadorHSK(String hsk_comparar);
     
+    public boolean mostrarIconLevel(String hskA,String hskB, String hskC);
+    
+    public boolean mostrarIconLevel_avanzado(String hsk);
+    
     
 }

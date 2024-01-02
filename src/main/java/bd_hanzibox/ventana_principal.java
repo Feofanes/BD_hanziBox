@@ -91,16 +91,16 @@ public class ventana_principal extends javax.swing.JFrame {
         String hsk1 = "hsk1";
         String hsk2 = "hsk2";
         String hsk3 = "hsk3";
+        String hsk4 = "hsk4";
+        String hsk5 = "hsk5";
+        String hsk6 = "hsk6";
+        String hsk7 = "hsk7";
         
-        int nivel_hsk1 = 0;
-        int nivel_hsk2 = 0;
-        int nivel_hsk3 = 0;
+        boolean mostrar_insignia_1 = aplicar.mostrarIconLevel(hsk1, hsk2, hsk3);
+        boolean mostrar_insignia_2 = aplicar.mostrarIconLevel(hsk4, hsk5, hsk6);
+        boolean mostrar_insignia_3 = aplicar.mostrarIconLevel_avanzado(hsk7);
         
-        nivel_hsk1 = aplicar.comparadorHSK(hsk1);   // deberia meter un sout de todos los elementos
-        nivel_hsk2 = aplicar.comparadorHSK(hsk2);
-        nivel_hsk3 = aplicar.comparadorHSK(hsk3);
-        
-        if(nivel_hsk1 >= 75 && nivel_hsk2  >= 75 && nivel_hsk3 >= 75){
+        if(mostrar_insignia_1){
             
             jLabel_principiante.setVisible(true);
             
@@ -110,6 +110,28 @@ public class ventana_principal extends javax.swing.JFrame {
             
         }
         
+        if(mostrar_insignia_2){
+            
+            jLabel_intermedio.setVisible(true);
+            
+        }else{
+            
+            jLabel_intermedio.setVisible(false);
+            
+        }
+        
+        if(mostrar_insignia_3){
+            
+            jLabel_avanzado.setVisible(true);
+            
+        }else{
+            
+            jLabel_avanzado.setVisible(false);
+            
+        }
+        
+        
+       
         
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -215,7 +237,9 @@ public class ventana_principal extends javax.swing.JFrame {
         jLabel_tareaEjecutada = new javax.swing.JLabel();
         jLabel_tareaEjecutada_2 = new javax.swing.JLabel();
         jLabel_tareaEjecutada_3 = new javax.swing.JLabel();
+        jLabel_intermedio = new javax.swing.JLabel();
         jLabel_principiante = new javax.swing.JLabel();
+        jLabel_avanzado = new javax.swing.JLabel();
         jMenuBar_barraSup = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -348,8 +372,14 @@ public class ventana_principal extends javax.swing.JFrame {
 
         jLabel_tareaEjecutada.setText("<html>Tareas ejecutada:<br></html>");
 
+        jLabel_intermedio.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/nivel_1.png")); // NOI18N
+        jLabel_intermedio.setToolTipText("Nivel principiante");
+
         jLabel_principiante.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/nivel_1.png")); // NOI18N
         jLabel_principiante.setToolTipText("Nivel principiante");
+
+        jLabel_avanzado.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/nivel_1.png")); // NOI18N
+        jLabel_avanzado.setToolTipText("Nivel principiante");
 
         jMenu1.setText("BD");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
@@ -416,7 +446,12 @@ public class ventana_principal extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel_contador_entradas_unicas)
                                 .addComponent(jLabel_contador_entradas))
-                            .addComponent(jLabel_principiante, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel_avanzado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel_intermedio)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel_principiante))))
                     .addComponent(jLabel_tareaEjecutada_2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel_tareaEjecutada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -463,14 +498,21 @@ public class ventana_principal extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton_modificar)
                             .addComponent(jButton_buscar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel_contador_entradas)
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel_contador_entradas_unicas))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addComponent(jLabel_contador_entradas_unicas)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel_intermedio))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel_avanzado))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel_principiante)))))
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1585,8 +1627,10 @@ public class ventana_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLab_pinyin;
     private javax.swing.JLabel jLab_traduccion;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel_avanzado;
     private javax.swing.JLabel jLabel_contador_entradas;
     private javax.swing.JLabel jLabel_contador_entradas_unicas;
+    private javax.swing.JLabel jLabel_intermedio;
     private javax.swing.JLabel jLabel_principiante;
     private javax.swing.JLabel jLabel_tareaEjecutada;
     private javax.swing.JLabel jLabel_tareaEjecutada_2;
