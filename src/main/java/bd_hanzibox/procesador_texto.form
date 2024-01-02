@@ -188,7 +188,7 @@
                 <Property name="dragEnabled" type="boolean" value="true"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="// COPIADO Y PEGADO --------------------------------------------------------&#xa;    &#xa;    // Crear men&#xfa; emergente para copiar y pegar&#xa;        JPopupMenu popupMenu = new JPopupMenu();&#xa;        JMenuItem copiar = new JMenuItem(new DefaultEditorKit.CopyAction());&#xa;        JMenuItem pegar = new JMenuItem(new DefaultEditorKit.PasteAction());&#xa;&#xa;        copiar.setText(&quot;jButton_Copiar&quot;);&#xa;        pegar.setText(&quot;Pegar&quot;);&#xa;&#xa;        popupMenu.add(copiar);&#xa;        popupMenu.add(pegar);&#xa;        &#xa;        pane_texto.setComponentPopupMenu(popupMenu);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="// COPIADO Y PEGADO --------------------------------------------------------&#xa;    &#xa;    // Crear men&#xfa; emergente para copiar y pegar&#xa;        JPopupMenu popupMenu = new JPopupMenu();&#xa;        JMenuItem copiar = new JMenuItem(new DefaultEditorKit.CopyAction());&#xa;        JMenuItem pegar = new JMenuItem(new DefaultEditorKit.PasteAction());&#xa;&#xa;        copiar.setText(&quot;Copiar&quot;);&#xa;        pegar.setText(&quot;Pegar&quot;);&#xa;&#xa;        popupMenu.add(copiar);&#xa;        popupMenu.add(pegar);&#xa;        &#xa;        pane_texto.setComponentPopupMenu(popupMenu);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -429,6 +429,9 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_pegarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton_Copiar">
               <Properties>
@@ -440,6 +443,9 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_CopiarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton_agrandar_texto">
               <Properties>
@@ -481,17 +487,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_justificarActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton_prueba">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="prueba"/>
-                <Property name="focusable" type="boolean" value="false"/>
-                <Property name="horizontalTextPosition" type="int" value="0"/>
-                <Property name="verticalTextPosition" type="int" value="3"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_pruebaActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

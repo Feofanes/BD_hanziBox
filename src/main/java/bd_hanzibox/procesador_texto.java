@@ -87,7 +87,6 @@ public class procesador_texto extends javax.swing.JFrame {
         jButton_agrandar_texto = new javax.swing.JButton();
         jButton_achicar_texto = new javax.swing.JButton();
         jButton_justificar = new javax.swing.JButton();
-        jButton_prueba = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -140,7 +139,7 @@ public class procesador_texto extends javax.swing.JFrame {
         JMenuItem copiar = new JMenuItem(new DefaultEditorKit.CopyAction());
         JMenuItem pegar = new JMenuItem(new DefaultEditorKit.PasteAction());
 
-        copiar.setText("jButton_Copiar");
+        copiar.setText("Copiar");
         pegar.setText("Pegar");
 
         popupMenu.add(copiar);
@@ -321,6 +320,11 @@ public class procesador_texto extends javax.swing.JFrame {
         jButton_pegar.setFocusable(false);
         jButton_pegar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_pegar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_pegar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_pegarActionPerformed(evt);
+            }
+        });
         jToolBar2.add(jButton_pegar);
 
         jButton_Copiar.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/copiar.png")); // NOI18N
@@ -328,6 +332,11 @@ public class procesador_texto extends javax.swing.JFrame {
         jButton_Copiar.setFocusable(false);
         jButton_Copiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton_Copiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton_Copiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_CopiarActionPerformed(evt);
+            }
+        });
         jToolBar2.add(jButton_Copiar);
 
         jButton_agrandar_texto.setIcon(new javax.swing.ImageIcon("/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/main/java/bd_hanzibox/iconos/agrandar.png")); // NOI18N
@@ -365,17 +374,6 @@ public class procesador_texto extends javax.swing.JFrame {
             }
         });
         jToolBar2.add(jButton_justificar);
-
-        jButton_prueba.setText("prueba");
-        jButton_prueba.setFocusable(false);
-        jButton_prueba.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton_prueba.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton_prueba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_pruebaActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(jButton_prueba);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -866,11 +864,25 @@ public class procesador_texto extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton_agregadoAUTOActionPerformed
+    
 
-    private void jButton_pruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_pruebaActionPerformed
+    //  BOTON DE COPIAR
+    private void jButton_CopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CopiarActionPerformed
         
+      Implementacion_metodos acceso = new Implementacion_metodos();
+      
+      acceso.copiarTexto(pane_texto);
+      
+    }//GEN-LAST:event_jButton_CopiarActionPerformed
+
+    //  BOTON PARA PEGAR   
+    private void jButton_pegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_pegarActionPerformed
         
-    }//GEN-LAST:event_jButton_pruebaActionPerformed
+        Implementacion_metodos acceso = new Implementacion_metodos();
+
+        acceso.pegarTexto(pane_texto);
+
+    }//GEN-LAST:event_jButton_pegarActionPerformed
     //  ------------------------------------------------------------------------
     
     
@@ -968,7 +980,6 @@ public class procesador_texto extends javax.swing.JFrame {
     private javax.swing.JButton jButton_leer;
     private javax.swing.JButton jButton_limpiar;
     private javax.swing.JButton jButton_pegar;
-    private javax.swing.JButton jButton_prueba;
     private javax.swing.JButton jButton_volver;
     private javax.swing.JComboBox<String> jComboBox_biblioteca;
     private javax.swing.JLabel jLabel_titulo;

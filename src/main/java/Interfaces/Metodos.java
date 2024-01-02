@@ -85,6 +85,10 @@ public interface Metodos {
     
     public String agregarAutoTodosHanzi(JTextPane texto, procesador_texto acceso);
     
+    public void copiarTexto(JTextPane texto);
+    
+    public void pegarTexto(JTextPane texto);
+    
     
     
     //  COMPARADORES HSK -------------------------------------------------------

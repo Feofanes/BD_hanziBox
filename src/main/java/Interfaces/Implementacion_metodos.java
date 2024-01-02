@@ -13,6 +13,10 @@ import com.mysql.cj.result.Row;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.List;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -1571,6 +1575,49 @@ public class Implementacion_metodos implements Metodos {
     return mensajito;
     
 }   //  FUNCIONA
+    
+    @Override
+    public void copiarTexto(JTextPane texto){
+        
+        // Texto que se copiará al portapapeles
+                String textoACopiar = texto.getSelectedText();
+
+                // Crea una StringSelection con el texto
+                StringSelection seleccion = new StringSelection(textoACopiar);
+
+                // Obtiene el sistema del portapapeles
+                Clipboard portapapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+                // Copia la selección al portapapeles
+                portapapeles.setContents(seleccion, null);
+    
+    }   //  FUNCIONA
+    
+    @Override
+    public void pegarTexto(JTextPane texto){
+        
+        Clipboard portapapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+                try {
+                    // Obtiene el contenido actual del JTextPane
+                    String contenidoActual = texto.getText();
+
+                    // Obtiene el contenido del portapapeles
+                    String contenidoPortapapeles = (String) portapapeles.getData(DataFlavor.stringFlavor);
+
+                    // Combina el contenido actual con el contenido del portapapeles
+                    String contenidoCombinado = contenidoActual + contenidoPortapapeles;
+
+                    // Establece el contenido combinado en el JTextPane
+                    texto.setText(contenidoCombinado);
+
+                    
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            
+            }   //  FUNCIONA
+        
+    
 
     
     //  ------------------------------------------------------------------------
