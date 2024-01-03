@@ -1191,13 +1191,9 @@ public class Implementacion_metodos implements Metodos {
 
                 registroExistente = true;
 
-                System.out.println("Encontro que ya esta");
-
             } else {
 
                 registroExistente = false;
-
-                System.out.println("No lo encontro");
 
             }
 
@@ -1213,23 +1209,34 @@ public class Implementacion_metodos implements Metodos {
 
     }
 
+    //  IDENTIFICA HANZI NUEVOS EN EL TEXTO Y LOS RESALTA EN ROJO
     @Override
     public void analizadorTexto(JTextPane texto, procesador_texto acceso) {
+        
         try {
             Connection conectar = conexion.conectar(); // Conectar a la base de datos
             StyledDocument doc = texto.getStyledDocument();
-            int tamano = doc.getLength();
             
+            int tamano = doc.getLength();
+            boolean chequeando_que_sea_hanzi;
             
 
             for (int i = 0; i < tamano; i++) {
                 char caracter = doc.getText(i, 1).charAt(0);
-
-                // Puedes agregar la lógica para evaluar el carácter en la base de datos
-                if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter))) {
-                    aplicarEstiloColor(texto, i, 1, Color.RED);
+                
+                //  comprobamos que se trate de un hanzi y no otra cosa
+                chequeando_que_sea_hanzi = quedarseSoloHanzi(String.valueOf(caracter));
+                
+                if(chequeando_que_sea_hanzi){
                     
+                    // Puedes agregar la lógica para evaluar el carácter en la base de datos
+                    if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter))) {
+                        aplicarEstiloColor(texto, i, 1, Color.RED);
+
+                    }
+
                 }
+                
             }
 
             conexion.desconectar();
@@ -1241,16 +1248,18 @@ public class Implementacion_metodos implements Metodos {
         } catch (BadLocationException ex) {
             Logger.getLogger(Implementacion_metodos.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
+    }   //  FUNCIONANDO
+    
+    //  COLOREA (ACCESORIO DE analizadorTexto())
     @Override
     public void aplicarEstiloColor(JTextPane textPane, int start, int length, Color color) {
         StyledDocument doc = textPane.getStyledDocument();
         Style estilo = textPane.addStyle("miEstilo", null);
         StyleConstants.setForeground(estilo, color);
         doc.setCharacterAttributes(start, length, estilo, false);
-    }
+    }   //  FUNCIONANDO
 
+    //  BUSCA EN BD (ACCESORIO DE analizadorTexto())
     @Override
     public boolean existeEnBaseDeDatos(Connection conexion, String caracter) throws SQLException {
         PreparedStatement analizando = conexion.prepareStatement("SELECT * FROM hanzi WHERE Hanzi = ?");
@@ -1258,6 +1267,52 @@ public class Implementacion_metodos implements Metodos {
         ResultSet consulta = analizando.executeQuery();
         return consulta.next();
     }
+    
+    //  EXCLUYE ELEMENTOS QUE NO SEAN HANZI (ACCESORIO DE analizadorTexto())
+    @Override
+    public boolean quedarseSoloHanzi(String caracter) {
+        
+        boolean es_hanzi = true;
+        
+        //  ruta del txt con simbolos NO hanzi
+        String ruta_simbolos = "/Users/nahuellaluce/NetBeansProjects/BD_hanziBox/src/Archivos varios/Simbolos puntuacion.txt";
+        
+        try{
+            
+            FileReader lectura = new FileReader(ruta_simbolos);     // leemos la lista de los simbolos
+            
+            BufferedReader br = new BufferedReader(lectura); 
+            
+            String linea;
+            
+            while ((linea = br.readLine()) != null) {
+                
+                for(int i = 0; i <linea.length(); i++){
+                    
+                    char simbolo = linea.charAt(i);     // capturamos el simbolo por reglon
+                    
+                    if(caracter.equalsIgnoreCase(String.valueOf(simbolo))){
+                        
+                        es_hanzi = false;   //  cambiamos el boolean que retornamos de acuerdo a la comparacion
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        } catch (IOException e) {
+
+             e.printStackTrace();
+
+         }
+        
+        return es_hanzi;
+        
+        }   //  FUNCIONANDO
+        
+        
+    
 
     //  ------------------------------------------------------------------------
     
@@ -1511,6 +1566,7 @@ public class Implementacion_metodos implements Metodos {
 
     }   //   FUNCIONA !!!!
 
+    //  AGREGA TODOS LOS HANZIS NUEVOS, DISCRIMINANDO LOS SIGNOS DE PUNTUACION
     @Override
     public String agregarAutoTodosHanzi(JTextPane texto, procesador_texto acceso) {
         
@@ -1527,8 +1583,8 @@ public class Implementacion_metodos implements Metodos {
             for (int i = 0; i < tamano; i++) {
                 char caracter = doc.getText(i, 1).charAt(0);
 
-                // Puedes agregar la lógica para evaluar el carácter en la base de datos
-                if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter))) {
+                // agrega a lista de hanzi individual solo si no existe y solo si NO es un signo de puntuacion, numero, letra, etc
+                if (!existeEnBaseDeDatos(conectar, String.valueOf(caracter)) && quedarseSoloHanzi(String.valueOf(caracter))) {
                     aplicarEstiloColor(texto, i, 1, Color.BLACK);
                     
                     //  agregamos los hanzi nuevos a un array ------------------
@@ -1576,6 +1632,7 @@ public class Implementacion_metodos implements Metodos {
     
 }   //  FUNCIONA
     
+    //  COPIAR
     @Override
     public void copiarTexto(JTextPane texto){
         
@@ -1593,6 +1650,7 @@ public class Implementacion_metodos implements Metodos {
     
     }   //  FUNCIONA
     
+    //  PEGAR
     @Override
     public void pegarTexto(JTextPane texto){
         
@@ -1756,6 +1814,8 @@ public class Implementacion_metodos implements Metodos {
         return completado;
         
     }   //  NO PROBADO
+
+   
         
         
         

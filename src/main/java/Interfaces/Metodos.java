@@ -73,6 +73,8 @@ public interface Metodos {
     
     public boolean existeEnBaseDeDatos(Connection conexion, String caracter) throws SQLException;
     
+    public boolean quedarseSoloHanzi(String caracter);
+    
     public void guardarTexto(String ruta, JTextPane textPane, String titulo, JComboBox<String> biblioteca) throws IOException;
     
     public void completarBiblioteca(JComboBox<String> biblioteca);
