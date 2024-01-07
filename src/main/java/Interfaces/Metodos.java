@@ -5,11 +5,13 @@ import Entradas.Hanzi;
 import Entradas.Hanzi_molde;
 import Entradas.Unidad_final;
 import Entradas.Unidad_min;
+import bd_hanzibox.Tabla_radicales;
 import bd_hanzibox.procesador_texto;
 import bd_hanzibox.ventana_principal;
 import java.awt.Color;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
@@ -44,6 +46,9 @@ public interface Metodos {
     public int contarHanziUnicos();
     
     public String autocompletarRadicales(Unidad_min hanzi_autocompletar);
+    
+    public void tablaRadicales(String tabla);
+    
     
     
     
@@ -90,6 +95,8 @@ public interface Metodos {
     public void copiarTexto(JTextPane texto);
     
     public void pegarTexto(JTextPane texto);
+    
+    public boolean evaluarCompletitudEntrada(String entrada);
     
     
     
